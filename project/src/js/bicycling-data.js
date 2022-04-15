@@ -37,3 +37,32 @@ export function groupPerDay(data) {
     }));
   return groupedData;
 }
+
+export function combineMinutesToHours(data){
+  let result = []
+  let i = 0
+  let obj = ({uur5minuten: "0", datum: "", tegenrichting: "0", hoofdrichting: "0", totaal: "0", locatie: ""})
+
+  for (const d of data){
+    obj.tegenrichting = parseInt(obj.tegenrichting) + parseInt(d.tegenrichting);
+    obj.hoofdrichting = parseInt(obj.hoofdrichting) + parseInt(d.hoofdrichting);
+    obj.totaal = parseInt(obj.totaal) + parseInt(d.totaal);
+    obj.datum = d.datum;
+    obj.locatie = d.locatie;
+    obj.uur5minuten = parseInt(d.uur5minuten.split(":")[0]) // + ":00";
+    i += 1;
+
+    if (i == 12){
+      result.push(obj);
+      i = 0;
+      obj = ({uur5minuten: "0", datum: "", tegenrichting: "0", hoofdrichting: "0", totaal: "0", locatie: ""})
+    }
+  }
+  return result;
+}
+
+export function getDataFromDate(data, date){
+  return data.filter(function (el) {
+    return el.datum == date;
+  });
+}

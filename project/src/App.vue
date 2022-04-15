@@ -14,6 +14,10 @@ import HeatmapsComponent from './components/HeatmapsComponent.vue';</script>
         <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
         <HeatmapsComponent :stations="stations" :datasets="getAllDatasets()"></HeatmapsComponent>
       </el-main>
+      <el-main>
+        <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
+        <HeatmapsComponent :stations="stations" :datasets="getAllDatasets()"></HeatmapsComponent>
+      </el-main>
     </el-container>
   </div>
 </template>

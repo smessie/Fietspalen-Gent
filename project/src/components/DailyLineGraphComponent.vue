@@ -1,0 +1,66 @@
+<template>
+  <el-row :gutter="10">
+    <el-col :xs="{span: 12, offset: 0}" :sm="{span: 10, offset: 2}" :md="{span: 8, offset: 4}"
+            :lg="{span: 6, offset: 4}" :xl="{span: 6, offset: 4}">
+      <el-select v-model="selectedStations" multiple placeholder="Select">
+        <el-option
+            v-for="item in Object.values(stations)"
+            :key="item.value"
+            :label="item.name + ' ' + item.year"
+            :value="item.value"
+        >
+          <span style="float: left">{{ item.name }}</span>
+          <span
+              style="
+          float: right;
+          color: var(--el-text-color-secondary);
+          font-size: 13px;
+        "
+          >{{ item.year }}</span
+          >
+        </el-option>
+      </el-select>
+    </el-col>
+    <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+      <div v-for="stationValue in selectedStations" :key="stationValue">
+        <h4>{{ stations[stationValue].name }} {{ stations[stationValue].year }}</h4>
+        <calendar-heatmap :values="groupDatasets[stationValue]"
+                          :end-date="stations[stationValue].year + '-12-31'"
+                          tooltip-unit="fietsers"
+        ></calendar-heatmap>
+      </div>
+    </el-col>
+  </el-row>
+</template>
+
+<script>
+import {CalendarHeatmap} from 'vue3-calendar-heatmap';
+import {groupPerDay} from '../js/bicycling-data';
+
+export default {
+  name: 'HeatmapsComponent',
+  components: {CalendarHeatmap},
+  props: [
+    'stations',
+    'datasets'
+  ],
+  data() {
+    return {
+      selectedStations: [],
+    }
+  },
+  computed: {
+    groupDatasets() {
+      const groupedDatasets = {};
+      for (const [key, value] of Object.entries(this.datasets)) {
+        groupedDatasets[key] = groupPerDay(value);
+      }
+      return groupedDatasets;
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
