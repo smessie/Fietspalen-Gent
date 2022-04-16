@@ -44,12 +44,12 @@ export function combineMinutesToHours(data){
   let obj = ({uur5minuten: "0", datum: "", tegenrichting: "0", hoofdrichting: "0", totaal: "0", locatie: ""})
 
   for (const d of data){
-    obj.tegenrichting = parseInt(obj.tegenrichting) + parseInt(d.tegenrichting);
-    obj.hoofdrichting = parseInt(obj.hoofdrichting) + parseInt(d.hoofdrichting);
-    obj.totaal = parseInt(obj.totaal) + parseInt(d.totaal);
+    obj.tegenrichting = (parseInt(obj.tegenrichting) || 0) + (parseInt(d.tegenrichting) || 0);
+    obj.hoofdrichting = (parseInt(obj.hoofdrichting) || 0)+ (parseInt(d.hoofdrichting) || 0);
+    obj.totaal = (parseInt(obj.totaal) || 0) + (parseInt(d.totaal) || 0);
     obj.datum = d.datum;
     obj.locatie = d.locatie;
-    obj.uur5minuten = parseInt(d.uur5minuten.split(":")[0]) // + ":00";
+    obj.uur5minuten = parseInt(d.uur5minuten.split(":")[0]) + ":00";
     i += 1;
 
     if (i == 12){
