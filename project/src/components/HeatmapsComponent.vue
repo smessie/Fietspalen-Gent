@@ -24,22 +24,23 @@
     <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
       <div v-for="stationValue in selectedStations" :key="stationValue">
         <h4>{{ stations[stationValue].name }} {{ stations[stationValue].year }}</h4>
-        <calendar-heatmap :values="groupDatasets[stationValue]"
-                          :end-date="stations[stationValue].year + '-12-31'"
-                          tooltip-unit="fietsers"
-        ></calendar-heatmap>
+        <CalendarHeatmapComponent :value="stations[stationValue].value"
+                                  :name="stations[stationValue].name"
+                                  :year="stations[stationValue].year"
+                                  :values="groupDatasets[stationValue]"
+        ></CalendarHeatmapComponent>
       </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import {CalendarHeatmap} from 'vue3-calendar-heatmap';
 import {groupPerDay} from '../js/bicycling-data';
+import CalendarHeatmapComponent from './CalendarHeatmapComponent.vue';
 
 export default {
   name: 'HeatmapsComponent',
-  components: {CalendarHeatmap},
+  components: {CalendarHeatmapComponent},
   props: [
     'stations',
     'datasets'
