@@ -31,7 +31,7 @@ export function groupPerDay(data) {
   const groupedData = Array.from(dataMap).map(([key, value]) => (
     {
       date: new Date(key),
-      count: value.map(item => parseInt(item.fields.totaal) || 0).reduce((a, b) => a + b),
+      totaal: value.map(item => parseInt(item.fields.totaal) || 0).reduce((a, b) => a + b),
       hoofdrichting: value.map(item => parseInt(item.fields.hoofdrichting) || 0).reduce((a, b) => a + b),
       tegenrichting: value.map(item => parseInt(item.fields.tegenrichting) || 0).reduce((a, b) => a + b)
     }));
