@@ -4,11 +4,14 @@
 
 <script>
 import * as d3 from 'd3';
+import {getDataLambda,
+		getYScaleLambda } from '../js/bicycling-data';
     
 export default {
   name: 'LineGraphComponent',
   props: [
     'data',
+	'direction',
   ], 
   data() {
    return {
@@ -60,7 +63,7 @@ export default {
 								.range([padding.left, width - padding.right]);
 			
 			const yScale = d3.scaleLinear()
-								.domain([0, d3.max(data, d => d.totaal)+10])
+								.domain([0, d3.max(data, getDataLambda(this.direction))+10])
 								.range([height - padding.bottom, padding.top]);
 			
 			const xAxis = d3.axisBottom()
@@ -74,7 +77,7 @@ export default {
 			
 			const line = d3.line() 
 								.x(d => xScale(timeParse(d.uur5minuten)))
-								.y(d => yScale(d.totaal));
+								.y(getYScaleLambda(yScale, this.direction));
 			
 			graph.append("path") 
 				.datum(data)

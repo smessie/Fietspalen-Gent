@@ -3,6 +3,7 @@
  * Functions related to a specific visualisation should be defined in its own component.
  *
  */
+import { assert } from '@vue/compiler-core';
 import * as d3 from 'd3';
 
 export async function getDataFromStation(station, year = null, start = 0, rows = 100) {
@@ -65,4 +66,26 @@ export function getDataFromDate(data, date){
   return data.filter(function (el) {
     return el.datum == date;
   });
+}
+
+export function getDataLambda(direction){
+  if (direction == "totaal"){
+    return (d) => d.totaal;
+  } else if (direction == "hoofd"){
+    return (d) => d.hoofdrichting;
+  } else if (direction == "tegen") {
+    return (d) => d.tegenrichting;
+  }
+  assert(false, "Given direction that doesn't exist.");
+}
+
+export function getYScaleLambda(yScale, direction){
+  if (direction == "totaal"){
+    return (d) => yScale(d.totaal);
+  } else if (direction == "hoofd"){
+    return (d) => yScale(d.hoofdrichting);
+  } else if (direction == "tegen") {
+    return (d) => yScale(d.tegenrichting);
+  }
+  assert(false, "Given direction that doesn't exist.");
 }
