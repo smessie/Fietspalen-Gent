@@ -25,7 +25,7 @@ import DailyLineGraphComponent from './components/DailyLineGraphComponent.vue'
 </template>
 
 <script>
-import {getAllDataFromStation} from '/src/js/bicycling-data.js';
+import {data} from '/src/js/bicycling-data.js';
 
 export default {
   data() {
@@ -136,13 +136,7 @@ export default {
   },
   methods: {
     getAllDatasets() {
-      const datasets = {};
-      for (const station of Object.keys(this.stations)) {
-        getAllDataFromStation(station).then(result => {
-          datasets[station] = result;
-        });
-      }
-      return datasets;
+      return data;
     }
   }
 }
