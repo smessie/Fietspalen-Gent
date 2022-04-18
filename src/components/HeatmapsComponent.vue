@@ -23,7 +23,6 @@
     </el-col>
     <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
       <div v-for="stationValue in selectedStations" :key="stationValue">
-        <h4>{{ stations[stationValue].name }} {{ stations[stationValue].year }}</h4>
         <CalendarHeatmapComponent :value="stations[stationValue].value"
                                   :name="stations[stationValue].name"
                                   :year="stations[stationValue].year"
