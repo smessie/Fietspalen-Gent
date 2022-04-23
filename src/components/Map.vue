@@ -3,7 +3,7 @@
     <l-map style="height:50vh" :zoom="zoom" :center="center">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <l-marker v-for="bikePole in bikePoles" :key="bikePole" 
-        :lat-lng="transformCoordinates(bikePole.geometry.coordinates)" 
+        :lat-lng="bikePole.fields.geo_point_2d" 
         v-on:click="selectPole(bikePole)"
       >
        <l-popup ref="popup">
@@ -43,9 +43,6 @@ export default {
   methods: {
     selectPole(pole) {
       console.log(pole)
-    },
-    transformCoordinates(coords) {
-      return [coords[1], coords[0]]
     },
   },
   mounted() {
