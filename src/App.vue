@@ -1,8 +1,8 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HeatmapsComponent from './components/HeatmapsComponent.vue';
-import DailyLineGraphComponent from './components/DailyLineGraphComponent.vue'
+import Heatmaps from './components/Heatmaps.vue';
+import DailyLineGraph from './components/DailyLineGraph.vue'
 </script>
 
 <template>
@@ -14,11 +14,11 @@ import DailyLineGraphComponent from './components/DailyLineGraphComponent.vue'
       </el-header>
       <el-main>
         <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
-        <HeatmapsComponent :stations="stations" :datasets="getAllDatasets()"></HeatmapsComponent>
+        <Heatmaps :stations="stations" :datasets="getAllDatasets()"></Heatmaps>
       </el-main>
       <el-main>
         <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
-        <DailyLineGraphComponent :stations="stations" :datasets="getAllDatasets()"></DailyLineGraphComponent>
+        <DailyLineGraph :stations="stations" :datasets="getAllDatasets()"></DailyLineGraph>
       </el-main>
     </el-container>
   </div>

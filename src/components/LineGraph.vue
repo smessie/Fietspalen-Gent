@@ -8,7 +8,7 @@ import {getDataLambda,
 		getYScaleLambda } from '../js/bicycling-data';
     
 export default {
-  name: 'LineGraphComponent',
+  name: 'LineGraph',
   props: [
     'data',
 	'direction',

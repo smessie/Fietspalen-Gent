@@ -23,11 +23,11 @@
     </el-col>
     <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
       <div v-for="stationValue in selectedStations" :key="stationValue">
-        <CalendarHeatmapComponent :value="stations[stationValue].value"
+        <CalendarHeatmap :value="stations[stationValue].value"
                                   :name="stations[stationValue].name"
                                   :year="stations[stationValue].year"
                                   :values="groupDatasets[stationValue]"
-        ></CalendarHeatmapComponent>
+        ></CalendarHeatmap>
       </div>
     </el-col>
   </el-row>
@@ -35,11 +35,11 @@
 
 <script>
 import {groupPerDay} from '../js/bicycling-data';
-import CalendarHeatmapComponent from './CalendarHeatmapComponent.vue';
+import CalendarHeatmap from './CalendarHeatmap.vue';
 
 export default {
-  name: 'HeatmapsComponent',
-  components: {CalendarHeatmapComponent},
+  name: 'Heatmaps',
+  components: {CalendarHeatmap},
   props: [
     'stations',
     'datasets'

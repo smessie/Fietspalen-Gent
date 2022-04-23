@@ -26,7 +26,7 @@
       value-format="YYYY-MM-DD">
 </el-date-picker>
 </div>
-<LineGraphComponent :data="this.hourlyDayRecords" :direction="'totaal'"></LineGraphComponent>
+<LineGraph :data="this.hourlyDayRecords" :direction="'totaal'"></LineGraph>
 </div>
 </template>
 
@@ -35,11 +35,11 @@ import {getDataFromResultObject,
 		getDataFromDate,
 		combineMinutesToHours,
 		} from '../js/bicycling-data';
-import LineGraphComponent from './LineGraphComponent.vue' 
+import LineGraph from './LineGraph.vue' 
     
 export default {
-  name: 'DailyLineGraphComponent',
-  components: {LineGraphComponent},
+  name: 'DailyLineGraph',
+  components: {LineGraph},
   props: [
     'stations',
     'datasets'

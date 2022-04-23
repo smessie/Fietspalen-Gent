@@ -6,7 +6,7 @@
 import * as d3 from 'd3';
 
 export default {
-  name: 'CalendarHeatmapComponent',
+  name: 'CalendarHeatmap',
   props: [
     'value',
     'name',
