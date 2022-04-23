@@ -2,17 +2,17 @@
   <div class="center">
     <l-map style="height:50vh" :zoom="zoom" :center="center">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <l-marker v-for="bikePole in bikePoles" :key="bikePole" 
-        :lat-lng="bikePole.fields.geo_point_2d" 
-        v-on:click="selectPole(bikePole)"
+      <l-marker v-for="station in stations" :key="station" 
+        :lat-lng="station.geo_point_2d" 
+        v-on:click="selectStation(station)"
       >
        <l-popup ref="popup">
-        {{ bikePole.fields.naam }}
+        {{ station.naam }}
       </l-popup> 
       </l-marker>
     </l-map>
   </div>
-  <h1 v-if="selectedPole">huidige paal: {{ selectedPole.fields.naam }}</h1>
+  <h3 style="color: red" v-if="mapSelectedStation">De data voor {{ mapSelectedStation.naam }} is niet beschikbaar</h3>
 </template>
 
 <script>
@@ -20,12 +20,15 @@
 // Its CSS is needed though, if not imported elsewhere in your application.
 import "leaflet/dist/leaflet.css"
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
-import { getBikePoles } from '../js/bicycling-data';
+import { getStations, getAllYearsFor, dataIsAvailable } from '../js/bicycling-data';
 
 
 export default {
   name: 'Map',
   emits: ['changeSelected'],
+  props: [
+    'selectStation',
+  ],
   components: {
     LMap,
     LTileLayer,
@@ -39,18 +42,23 @@ export default {
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       zoom: 13,
       center: [51.052709, 3.724825],
-      bikePoles: [],
-      selectedPole: null,
+      stations: [],
+      mapSelectedStation: null,
     };
   },
   methods: {
-    selectPole(pole) {
-      this.selectedPole = pole
-      this.$emit('change-selected', pole);
+    selectStation(station) {
+      if (dataIsAvailable(station)) {
+        this.$emit('change-selected', station)
+        this.mapSelectedStation = null
+      } else {
+        this.$emit('change-selected', null)
+        this.mapSelectedStation = station
+      }
     },
   },
   mounted() {
-    this.bikePoles = getBikePoles()
+    this.stations = getStations()
   },
 };
 </script>

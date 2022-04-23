@@ -52,7 +52,14 @@ export const data = {
   'fietspalen': fietspalen,
 };
 
-
+export const unavailable = [
+   'Visserij',
+   'Isabellakaai',
+   'Gaardeniersbrug',
+]
+export function dataIsAvailable(station) {
+  return !unavailable.includes(station.naam)
+}
 export async function getDataFromStation(station, year = null, start = 0, rows = 100) {
   // v2 // return await d3.json('https://data.stad.gent/api/v2/catalog/datasets/fietstelpaal-' + station + (year == null ? '' : '-' + year) + '-gent/records?offset=' + start +'&limit=' + rows);
   return await d3.json('https://data.stad.gent/api/records/1.0/search/?dataset=fietstelpaal-' + station + (year == null ? '' : '-' + year) + '-gent&q=&start=' + start + '&rows=' + rows + '&sort=-ordening&facet=ordening');
@@ -127,6 +134,30 @@ export function getYScaleLambda(yScale, direction){
   assert(false, "Given direction that doesn't exist.");
 }
 
-export function getBikePoles() {
-  return data['fietspalen'];
+export function getStations() {
+  return data['fietspalen'].map(el => el.fields);
+}
+
+export function getDataFor(station, year) {
+  const dataSetName = station.toLowerCase().replaceAll(' ', '-') + "-" + year
+  return data[dataSetName]
+}
+
+export function getAllYearsFor(station) {
+  let years = []
+  let yearItr = station.bouwjaar
+  let currentYear = new Date().getFullYear()
+  while (yearItr < currentYear) {
+    years.push(yearItr)
+    yearItr++
+  }
+  return years
+}
+
+export function getNameForDataset(station, year) {
+  return station.naam.toLowerCase().replaceAll(' ', '-') + "-" + year
+}
+
+export function getAllDatasetsFor(station) {
+  return getAllYearsFor(station).map((year) => getNameForDataset(station,year))
 }

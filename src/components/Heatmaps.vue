@@ -34,19 +34,29 @@
 </template>
 
 <script>
-import {groupPerDay} from '../js/bicycling-data';
+import {groupPerDay, getAllDatasetsFor} from '../js/bicycling-data';
 import CalendarHeatmap from './CalendarHeatmap.vue';
 
 export default {
   name: 'Heatmaps',
   components: {CalendarHeatmap},
   props: [
+    'selectedStation',
     'stations',
     'datasets'
   ],
   data() {
     return {
       selectedStations: [],
+    }
+  },
+  watch: {
+    selectedStation: function(newVal) {
+      if (newVal) {
+        this.selectedStations = getAllDatasetsFor(newVal);
+      } else {
+        this.selectedStations = []
+      }
     }
   },
   computed: {

@@ -1,11 +1,3 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Heatmaps from './components/Heatmaps.vue';
-import DailyLineGraph from './components/DailyLineGraph.vue'
-import Map from './components/Map.vue'
-</script>
-
 <template>
   <div class="common-layout">
     <el-container>
@@ -15,11 +7,11 @@ import Map from './components/Map.vue'
       </el-header>
       <el-main>
         <h2>Map</h2>
-        <Map @change-selected="changeSelected"/>
+        <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
       </el-main>
       <el-main>
         <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
-        <Heatmaps :stations="stations" :datasets="getAllDatasets()"></Heatmaps>
+        <Heatmaps :selectedStation="selectedStation" :stations="stations" :datasets="getAllDatasets()"></Heatmaps>
       </el-main>
       <el-main>
         <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
@@ -30,9 +22,17 @@ import Map from './components/Map.vue'
 </template>
 
 <script>
+import Heatmaps from './components/Heatmaps.vue';
+import DailyLineGraph from './components/DailyLineGraph.vue'
+import Map from './components/Map.vue'
 import {data} from '/src/js/bicycling-data.js';
 
 export default {
+  components: {
+    Heatmaps,
+    DailyLineGraph,
+    Map,
+  },
   data() {
     return {
       selectedStation: null,
@@ -142,6 +142,7 @@ export default {
   },
   methods: {
     getAllDatasets() {
+      console.log(data)
       return data;
     },
     changeSelected(newStation) {
