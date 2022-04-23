@@ -12,6 +12,7 @@
       </l-marker>
     </l-map>
   </div>
+  <h1 v-if="selectedPole">huidige paal: {{ selectedPole.fields.naam }}</h1>
 </template>
 
 <script>
@@ -37,12 +38,13 @@ export default {
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       zoom: 13,
       center: [51.052709, 3.724825],
-      bikePoles: []
+      bikePoles: [],
+      selectedPole: null,
     };
   },
   methods: {
     selectPole(pole) {
-      console.log(pole)
+      this.selectedPole = pole
     },
   },
   mounted() {
