@@ -138,6 +138,10 @@ export function getStations() {
   return data['fietspalen'].map(el => el.fields);
 }
 
+export function getDataset(name) {
+  return data[name]
+}
+
 export function getDataFor(station, year) {
   const dataSetName = station.toLowerCase().replaceAll(' ', '-') + "-" + year
   return data[dataSetName]
@@ -158,6 +162,30 @@ export function getNameForDataset(station, year) {
   return station.naam.toLowerCase().replaceAll(' ', '-') + "-" + year
 }
 
-export function getAllDatasetsFor(station) {
+export function getAllDatasetNamesFor(station) {
   return getAllYearsFor(station).map((year) => getNameForDataset(station,year))
+}
+
+export function getAllDatasetNames() {
+  let stations = getStations()
+  let datasets = []
+  stations.forEach((s) => {
+    if (dataIsAvailable(s)) {
+      datasets = datasets.concat(getAllDatasetNamesFor(s))
+    }
+  })
+  return datasets
+}
+
+export function getAllDatasetNamesWithout(exclude) {
+  if (!exclude) return getAllDatasetNames()
+
+  let stations = getStations()
+  let datasets = []
+  stations.forEach((s) => {
+    if (dataIsAvailable(s) && s.naam != exclude.naam) {
+      datasets = datasets.concat(getAllDatasetNamesFor(s))
+    }
+  })
+  return datasets
 }
