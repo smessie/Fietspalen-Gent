@@ -7,7 +7,7 @@
         v-on:click="selectPole(bikePole)"
       >
        <l-popup ref="popup">
-        {{ bikePole.datasetid }}
+        {{ bikePole.fields.naam }}
       </l-popup> 
       </l-marker>
     </l-map>
