@@ -15,7 +15,7 @@ import Map from './components/Map.vue'
       </el-header>
       <el-main>
         <h2>Map</h2>
-        <Map/>
+        <Map @change-selected="changeSelected"/>
       </el-main>
       <el-main>
         <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
@@ -35,6 +35,7 @@ import {data} from '/src/js/bicycling-data.js';
 export default {
   data() {
     return {
+      selectedStation: null,
       stations: {
         'coupure-links-2021': {
           value: 'coupure-links-2021',
@@ -142,6 +143,9 @@ export default {
   methods: {
     getAllDatasets() {
       return data;
+    },
+    changeSelected(newStation) {
+      this.selectedStation = newStation 
     }
   }
 }

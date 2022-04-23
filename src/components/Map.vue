@@ -25,6 +25,7 @@ import { getBikePoles } from '../js/bicycling-data';
 
 export default {
   name: 'Map',
+  emits: ['changeSelected'],
   components: {
     LMap,
     LTileLayer,
@@ -45,6 +46,7 @@ export default {
   methods: {
     selectPole(pole) {
       this.selectedPole = pole
+      this.$emit('change-selected', pole);
     },
   },
   mounted() {
