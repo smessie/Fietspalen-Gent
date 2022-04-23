@@ -25,6 +25,7 @@ import zuidparklaan2018 from '../assets/datasets/fietstelpaal-zuidparklaan-2018-
 import zuidparklaan2019 from '../assets/datasets/fietstelpaal-zuidparklaan-2019-gent.json';
 import zuidparklaan2020 from '../assets/datasets/fietstelpaal-zuidparklaan-2020-gent.json';
 import zuidparklaan2021 from '../assets/datasets/fietstelpaal-zuidparklaan-2021-gent.json';
+import fietspalen  from '../assets/datasets/fietstelpalen-gent.json';
 
 
 export const data = {
@@ -48,6 +49,7 @@ export const data = {
   'zuidparklaan-2019': zuidparklaan2019,
   'zuidparklaan-2020': zuidparklaan2020,
   'zuidparklaan-2021': zuidparklaan2021,
+  'fietspalen': fietspalen,
 };
 
 
@@ -123,4 +125,8 @@ export function getYScaleLambda(yScale, direction){
     return (d) => yScale(d.tegenrichting);
   }
   assert(false, "Given direction that doesn't exist.");
+}
+
+export function getBikePoles() {
+  return data['fietspalen'];
 }
