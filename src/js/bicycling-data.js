@@ -56,8 +56,8 @@ export async function getDataFromStation(station, year = null, start = 0, rows =
   return await d3.json('https://data.stad.gent/api/records/1.0/search/?dataset=fietstelpaal-' + station + (year == null ? '' : '-' + year) + '-gent&q=&start=' + start + '&rows=' + rows + '&sort=-ordening&facet=ordening');
 }
 
-export function getDataFromResultObject(result) {
-  return result.records.map(r => r.fields);
+export function getDataFromResultObject(records) {
+  return records.map(r => r.fields);
 }
 
 export async function getAllDataFromStation(station, year = null) {
@@ -100,9 +100,7 @@ export function combineMinutesToHours(data){
 }
 
 export function getDataFromDate(data, date){
-  return data.filter(function (el) {
-    return el.datum == date;
-  });
+  return data.filter((el) => el.datum == date)
 }
 
 export function getDataLambda(direction){

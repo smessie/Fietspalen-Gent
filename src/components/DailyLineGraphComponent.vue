@@ -47,8 +47,8 @@ export default {
   data() {
    return {
       selectedStation: null,
-	  date: null,
-	  hourlyDayRecords: null,
+			date: null,
+			hourlyDayRecords: null,
    };
  },
   watch: {
@@ -61,12 +61,12 @@ export default {
   },
   methods: {
     updateDailyData() {
-		const records = getDataFromResultObject(this.datasets[this.selectedStation]);
-		if (this.date) {
-			const dayRecords = getDataFromDate(records, this.date.toString());
-			this.hourlyDayRecords = combineMinutesToHours(dayRecords);
-		}
-    },
+			const records = getDataFromResultObject(this.datasets[this.selectedStation]);
+			if (this.date) {
+				const dayRecords = getDataFromDate(records, this.date.toString());
+				this.hourlyDayRecords = combineMinutesToHours(dayRecords);
+			}
+		},
   },
 }
 </script>
