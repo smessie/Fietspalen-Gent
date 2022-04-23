@@ -2,7 +2,14 @@
   <div class="center">
     <l-map style="height:50vh" :zoom="zoom" :center="center">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <l-marker v-for="bikePole in bikePoles" :key="bikePole" :lat-lng=bikePole ></l-marker>
+      <l-marker v-for="bikePole in bikePoles" :key="bikePole" 
+        :lat-lng="transformCoordinates(bikePole.geometry.coordinates)" 
+        v-on:click="selectPole(bikePole)"
+      >
+       <l-popup ref="popup">
+        {{ bikePole.datasetid }}
+      </l-popup> 
+      </l-marker>
     </l-map>
   </div>
 </template>
@@ -11,7 +18,7 @@
 // DON'T load Leaflet components here!
 // Its CSS is needed though, if not imported elsewhere in your application.
 import "leaflet/dist/leaflet.css"
-import { LMap, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 import { getBikePoles } from '../js/bicycling-data';
 
 
@@ -21,6 +28,7 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
+    LPopup
   },
   data() {
     return {
@@ -32,8 +40,16 @@ export default {
       bikePoles: []
     };
   },
+  methods: {
+    selectPole(pole) {
+      console.log(pole)
+    },
+    transformCoordinates(coords) {
+      return [coords[1], coords[0]]
+    },
+  },
   mounted() {
-    this.bikePoles = getBikePoles().map((pole) => [pole.geometry.coordinates[1], pole.geometry.coordinates[0]])
+    this.bikePoles = getBikePoles()
   },
 };
 </script>
