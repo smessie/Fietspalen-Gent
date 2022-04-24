@@ -16,7 +16,6 @@
     </el-col>
     <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
       <div v-for="dataset in namesToDatasets(selectedDatasets)" :key="dataset">
-        <h1>{{dataset.name}}</h1>
         <CalendarHeatmap :value="dataset.name"
                                   :name="dataset.station.naam"
                                   :year="dataset.year"
