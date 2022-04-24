@@ -22,6 +22,7 @@
 			/>
 		</div>
 	<div v-if="selectedDataset && date">
+		<VegaLineGraph :data="hourlyDayRecords"/>
 		<MultipleLineGraph :data="hourlyDayRecords"/>
 	</div>
 </div>
@@ -30,11 +31,12 @@
 <script>
 import { getDataset, getDataForDate, combineMinutesToHours } from '../js/bicycling-data';
 import LineGraph from './LineGraph.vue' 
+import VegaLineGraph from './VegaLineGraph.vue' 
 import MultipleLineGraph from './MultipleLineGraph.vue' 
     
 export default {
   name: 'DailyLineGraph',
-  components: { LineGraph, MultipleLineGraph },
+  components: { LineGraph, MultipleLineGraph, VegaLineGraph },
   props: [
 		'selectedStation',
     'datasets'
