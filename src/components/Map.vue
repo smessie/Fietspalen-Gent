@@ -25,7 +25,7 @@ import { getStations, dataIsAvailable } from '../js/bicycling-data';
 
 export default {
   name: 'Map',
-  emits: ['changeSelected'],
+  emits: ['change-selected'],
   props: [
     'selectedStation',
   ],

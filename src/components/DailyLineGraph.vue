@@ -1,31 +1,29 @@
 <template>
 <div>
 	<div style="display:flex">
-<el-select v-model="selectedDataset" placeholder="Select">
-<el-option v-for="dataset in datasets"
-	:key="dataset.name"
-	:label="dataset.station.naam + ' ' + dataset.year"
-	:value="dataset.name"
->
-	<span style="float: left">{{ dataset.station.naam }}</span>
-	<span style="float: right; color: var(--el-text-color-secondary); font-size: 13px;" >{{ dataset.year }}</span>
-</el-option>
-</el-select>
-	<el-date-picker
-			v-if="selectedDataset"
-      v-model="date"
-      type="date"
-      format="DD/MM/YYYY"
-      value-format="YYYY-MM-DD"
-			:default-value="new Date(date)"
-			:disabled-date="disableDate"
-				>
-</el-date-picker>
-</div>
-<MultipleLineGraph :fields="['hoofdrichting', 'tegenrichting']" :data="hourlyDayRecords"/>
-<LineGraph :name="'totaal'" :data="hourlyDayRecords" :direction="'totaal'"></LineGraph>
-<LineGraph :name="'hoofd'" :data="hourlyDayRecords" :direction="'hoofd'"></LineGraph>
-<LineGraph :name="'tegen'" :data="hourlyDayRecords" :direction="'tegen'"></LineGraph>
+		<el-select v-model="selectedDataset" placeholder="Select">
+		<el-option v-for="dataset in datasets"
+			:key="dataset.name"
+			:label="dataset.station.naam + ' ' + dataset.year"
+			:value="dataset.name"
+		>
+			<span style="float: left">{{ dataset.station.naam }}</span>
+			<span style="float: right; color: var(--el-text-color-secondary); font-size: 13px;" >{{ dataset.year }}</span>
+		</el-option>
+		</el-select>
+			<el-date-picker
+				v-if="selectedDataset"
+				v-model="date"
+				type="date"
+				format="DD/MM/YYYY"
+				value-format="YYYY-MM-DD"
+				:default-value="new Date(date)"
+				:disabled-date="disableDate"
+			/>
+		</div>
+	<div v-if="selectedDataset && date">
+		<MultipleLineGraph :data="hourlyDayRecords"/>
+	</div>
 </div>
 </template>
 
@@ -38,6 +36,7 @@ export default {
   name: 'DailyLineGraph',
   components: { LineGraph, MultipleLineGraph },
   props: [
+		'selectedStation',
     'datasets'
   ], 
   data() {
@@ -55,9 +54,19 @@ export default {
 	  },
 	  date: function(){
 		  this.updateDailyData()
-	  }
+	  },
+    selectedStation: function(newStation) {
+      if (newStation) {
+        this.selectedDataset = this.getDatasetFor(newStation);
+      } else {
+        this.selectedDataset = null 
+      }
+		},
   },
   methods: {
+    getDatasetFor(station) {
+      return this.$props.datasets.filter((dataset) => dataset.station.naam == station.naam).map(d => d.name)[0]
+    },
     updateDailyData() {
 			if (this.selectedDataset && this.date) {
 				const data = getDataset(this.selectedDataset)
@@ -66,11 +75,13 @@ export default {
 			}
 		},
 		setDatumVariables() {
-			const data = getDataset(this.selectedDataset)
-			this.date = data[0].datum
-			this.dateLowerBound = new Date(data[0].datum)
-			this.dateLowerBound.setDate(this.dateLowerBound.getDate() - 1)
-			this.dateUpperBound = new Date(data[data.length - 1].datum)
+			if (this.selectedDataset) {
+				const data = getDataset(this.selectedDataset)
+				this.date = data[0].datum
+				this.dateLowerBound = new Date(data[0].datum)
+				this.dateLowerBound.setDate(this.dateLowerBound.getDate() - 1)
+				this.dateUpperBound = new Date(data[data.length - 1].datum)
+			}
 		},
 		disableDate(date) {
 			if (!this.selectedDataset || !this.dateLowerBound || !this.dateUpperBound) return false
