@@ -15,7 +15,7 @@
       </el-main>
       <el-main>
         <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
-        <!-- <DailyLineGraph :stations="stations" :datasets="getAllDatasets()"></DailyLineGraph> -->
+        <DailyLineGraph :datasets="datasets"></DailyLineGraph>
       </el-main>
     </el-container>
   </div>

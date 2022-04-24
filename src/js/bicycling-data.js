@@ -74,13 +74,13 @@ export async function getAllDataFromStation(station, year = null) {
 }
 
 export function groupPerDay(data) {
-  const dataMap = d3.group(data, (element) => element.fields.datum);
+  const dataMap = d3.group(data, (element) => element.datum);
   const groupedData = Array.from(dataMap).map(([key, value]) => (
     {
       date: new Date(key),
-      totaal: value.map(item => parseInt(item.fields.totaal) || 0).reduce((a, b) => a + b),
-      hoofdrichting: value.map(item => parseInt(item.fields.hoofdrichting) || 0).reduce((a, b) => a + b),
-      tegenrichting: value.map(item => parseInt(item.fields.tegenrichting) || 0).reduce((a, b) => a + b)
+      totaal: value.map(item => parseInt(item.totaal) || 0).reduce((a, b) => a + b),
+      hoofdrichting: value.map(item => parseInt(item.hoofdrichting) || 0).reduce((a, b) => a + b),
+      tegenrichting: value.map(item => parseInt(item.tegenrichting) || 0).reduce((a, b) => a + b)
     }));
   return groupedData;
 }
@@ -108,7 +108,7 @@ export function combineMinutesToHours(data){
   return result;
 }
 
-export function getDataFromDate(data, date){
+export function getDataForDate(data, date){
   return data.filter((el) => el.datum == date)
 }
 
@@ -139,7 +139,7 @@ export function getStations() {
 }
 
 export function getDataset(name) {
-  return data[name]
+  return data[name].map(el => el.fields)
 }
 
 export function getDataFor(station, year) {
