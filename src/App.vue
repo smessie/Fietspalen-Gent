@@ -10,6 +10,8 @@
         <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
         <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
         <Heatmaps :selectedStation="selectedStation" :datasets="datasets"></Heatmaps>
+        <h2>Visualisatie van gemiddeld aantal fietsers per dag</h2>
+        <DailyAveragesBarchart :selectedStation="selectedStation" :datasets="datasets"></DailyAveragesBarchart>
         <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
         <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"></DailyLineGraph>
       </el-main>
@@ -20,6 +22,7 @@
 <script>
 import Heatmaps from './components/Heatmaps.vue';
 import DailyLineGraph from './components/DailyLineGraph.vue'
+import DailyAveragesBarchart from './components/DailyAveragesBarchart.vue'
 import Map from './components/Map.vue'
 import { getDatasets } from '/src/js/bicycling-data.js';
 
@@ -28,6 +31,7 @@ export default {
     Heatmaps,
     DailyLineGraph,
     Map,
+    DailyAveragesBarchart,
   },
   data() {
     return {
