@@ -11,7 +11,7 @@
       </el-main>
       <el-main>
         <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
-        <Heatmaps :selectedStation="selectedStation"></Heatmaps>
+        <Heatmaps :selectedStation="selectedStation" :datasets="datasets"></Heatmaps>
       </el-main>
       <el-main>
         <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
@@ -25,7 +25,7 @@
 import Heatmaps from './components/Heatmaps.vue';
 import DailyLineGraph from './components/DailyLineGraph.vue'
 import Map from './components/Map.vue'
-import {data} from '/src/js/bicycling-data.js';
+import { getDatasets } from '/src/js/bicycling-data.js';
 
 export default {
   components: {
@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       selectedStation: null,
+      datasets: getDatasets(),
     }
   },
   methods: {

@@ -189,3 +189,23 @@ export function getAllDatasetNamesWithout(exclude) {
   })
   return datasets
 }
+
+export function getDatasets() {
+  let stations = getStations()
+  let datasets = []
+  stations.forEach((station) => {
+    if (dataIsAvailable(station)) {
+      let datasetYears = getAllYearsFor(station)
+      datasetYears.forEach(year => {
+        let name = getNameForDataset(station, year)
+        datasets.push({
+          name,
+          year,
+          station,
+        })
+      })
+    }
+  })
+  return datasets
+
+}
