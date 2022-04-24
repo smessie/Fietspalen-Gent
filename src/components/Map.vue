@@ -20,14 +20,14 @@
 // Its CSS is needed though, if not imported elsewhere in your application.
 import "leaflet/dist/leaflet.css"
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
-import { getStations, getAllYearsFor, dataIsAvailable } from '../js/bicycling-data';
+import { getStations, dataIsAvailable } from '../js/bicycling-data';
 
 
 export default {
   name: 'Map',
   emits: ['changeSelected'],
   props: [
-    'selectStation',
+    'selectedStation',
   ],
   components: {
     LMap,
