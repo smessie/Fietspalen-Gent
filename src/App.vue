@@ -8,12 +8,8 @@
       <el-main>
         <h2>Map</h2>
         <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
-      </el-main>
-      <el-main>
         <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
         <Heatmaps :selectedStation="selectedStation" :datasets="datasets"></Heatmaps>
-      </el-main>
-      <el-main>
         <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
         <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"></DailyLineGraph>
       </el-main>
