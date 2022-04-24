@@ -18,7 +18,9 @@
       value-format="YYYY-MM-DD">
 </el-date-picker>
 </div>
-<LineGraph :data="hourlyDayRecords" :direction="'totaal'"></LineGraph>
+<LineGraph :name="'totaal'" :data="hourlyDayRecords" :direction="'totaal'"></LineGraph>
+<LineGraph :name="'hoofd'" :data="hourlyDayRecords" :direction="'hoofd'"></LineGraph>
+<LineGraph :name="'tegen'" :data="hourlyDayRecords" :direction="'tegen'"></LineGraph>
 </div>
 </template>
 
@@ -53,6 +55,7 @@ export default {
 				const data = getDataset(this.selectedDataset)
 				const dayRecords = getDataForDate(data, this.date.toString());
 				this.hourlyDayRecords = combineMinutesToHours(dayRecords);
+				console.log(this.hourlyDayRecords)
 			}
 		},
   },
