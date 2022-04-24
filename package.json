@@ -11,6 +11,9 @@
     "@vuepic/vue-datepicker": "^3.1.0",
     "d3": "^7.4.4",
     "element-plus": "^2.1.9",
+    "vega": "5.22.1",
+    "vega-embed": "^6.20.8",
+    "vega-lite": "^5.2.0",
     "vue": "^3.2.25"
   },
   "devDependencies": {

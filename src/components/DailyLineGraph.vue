@@ -12,10 +12,14 @@
 </el-option>
 </el-select>
 	<el-date-picker
+			v-if="selectedDataset"
       v-model="date"
       type="date"
       format="DD/MM/YYYY"
-      value-format="YYYY-MM-DD">
+      value-format="YYYY-MM-DD"
+			:default-value="new Date(date)"
+			:disabled-date="disableDate"
+				>
 </el-date-picker>
 </div>
 <MultipleLineGraph :fields="['hoofdrichting', 'tegenrichting']" :data="hourlyDayRecords"/>
@@ -41,11 +45,13 @@ export default {
       selectedDataset: null,
 			date: null,
 			hourlyDayRecords: null,
+			dateLowerBound: null, 
+			dateUpperBound: null,
    };
  },
   watch: {
 	  selectedDataset: function(){
-		  this.updateDailyData()
+		  this.setDatumVariables()
 	  },
 	  date: function(){
 		  this.updateDailyData()
@@ -55,11 +61,21 @@ export default {
     updateDailyData() {
 			if (this.selectedDataset && this.date) {
 				const data = getDataset(this.selectedDataset)
-				console.log(this.date)
-				const dayRecords = getDataForDate(data, this.date.toString());
+				const dayRecords = getDataForDate(data, this.date);
 				this.hourlyDayRecords = combineMinutesToHours(dayRecords);
 			}
 		},
+		setDatumVariables() {
+			const data = getDataset(this.selectedDataset)
+			this.date = data[0].datum
+			this.dateLowerBound = new Date(data[0].datum)
+			this.dateLowerBound.setDate(this.dateLowerBound.getDate() - 1)
+			this.dateUpperBound = new Date(data[data.length - 1].datum)
+		},
+		disableDate(date) {
+			if (!this.selectedDataset || !this.dateLowerBound || !this.dateUpperBound) return false
+			return date < this.dateLowerBound || this.dateUpperBound < date
+		}
   },
 }
 </script>
