@@ -212,25 +212,25 @@ export function getDatasets() {
 
 export function calculateDailyAverages(datasets){
   let weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  total = { "Sunday": 0, "Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday":0}; 
-  counts = { "Sunday": 0, "Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday":0}; 
-  for (let data of datasets){
+  let total = { "Sunday": 0, "Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday":0}; 
+  let counts = { "Sunday": 0, "Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday":0}; 
+  datasets.forEach(data => {
     let previous = "";
     let weekday = "";
-    for (let record of data){
+
+    data.forEach(record => {
       let weekday = weekdays[record.time.getDay()];
       total[weekday] += record.totaal;
       if (previous != weekday){
         counts[weekday] += 1;
         previous = weekday;
       }
-    }
+    })
     counts[weekday] += 1;
 
     for (let key of Object.keys()){
       total[key] = total[key]/counts[key];
     }
-
-    return total;
-  }
+  })
+  return total;
 }

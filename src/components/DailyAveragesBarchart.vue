@@ -8,9 +8,8 @@ import vegaEmbed from 'vega-embed'
 export default {
   name: 'DailyAveragesBarchart',
   props: [
-	'selectedStation',
+    'selectedStation',
     'datasets',
-	'selectedDatasets',
   ], 
   watch: {
     selectedStation: function(newStation) {
@@ -29,7 +28,6 @@ export default {
       return this.$props.datasets.filter((dataset) => dataset.station.naam == station.naam).map(d => d.name)
     },
 	setLineGraph(){
-		return;
 		// todo: zet selectedDatasets om met getDataset naar een lijst van de data (nu is het een lijst van dataset namen)
 		// geef dan door aan calculateDailyAverages in bycicling-data
       if (!this.$props.data) return

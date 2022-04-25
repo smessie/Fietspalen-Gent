@@ -67,6 +67,7 @@ export default {
   },
   methods: {
     getDatasetFor(station) {
+			// !!!!!! takes last element not all
       return this.$props.datasets.filter((dataset) => dataset.station.naam == station.naam).map(d => d.name)[0]
     },
     updateDailyData() {
