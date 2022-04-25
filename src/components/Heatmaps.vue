@@ -17,10 +17,12 @@
     <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
       <div v-for="dataset in namesToDatasets(selectedDatasets)" :key="dataset">
         <CalendarHeatmap :value="dataset.name"
-                                  :name="dataset.station.naam"
-                                  :year="dataset.year"
-                                  :values="groupDataset(dataset.name)"
-                                  :max="maxValue"
+                         :name="dataset.station.naam"
+                         :year="dataset.year"
+                         :values="groupDataset(dataset.name)"
+                         :max="maxValue"
+                         :offset-x="offsetX"
+                         :offset-y="offsetY"
         ></CalendarHeatmap>
       </div>
     </el-col>
@@ -37,7 +39,9 @@ export default {
   components: {CalendarHeatmap},
   props: [
     'selectedStation',
-    'datasets'
+    'datasets',
+    'offsetX',
+    'offsetY'
   ],
   data() {
     return {
@@ -45,7 +49,7 @@ export default {
     }
   },
   watch: {
-    selectedStation: function(newStation) {
+    selectedStation: function (newStation) {
       if (newStation) {
         this.selectedDatasets = this.getDatasetsFor(newStation);
       } else {

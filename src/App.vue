@@ -17,7 +17,7 @@
             <h3>Map</h3>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
             <h3>Heatmap visualisatie van aantal fietsers voor bepaald station</h3>
-            <Heatmaps :selectedStation="selectedStation" :datasets="datasets"/>
+            <Heatmaps :selectedStation="selectedStation" :datasets="datasets" id="heatmaps" :offset-x="offsetX" :offset-y="offsetY"/>
             <h3>Visualisatie van gemiddeld aantal fietsers per dag</h3>
             <BarchartsContainer :selectedStation="selectedStation" :datasets="datasets"/>
             <h3>Dag visualisatie van aantal fietsers voor bepaald station</h3>
@@ -59,7 +59,9 @@ export default {
       selectedStation: null,
       datasets: getDatasets(),
       activeName: ref('first'),
-      loaded: false
+      loaded: false,
+      offsetX: 0,
+      offsetY: 0
     }
   },
   methods: {
@@ -73,7 +75,12 @@ export default {
   mounted() {
     load().then(() => {
       this.loaded = true;
-    })
+      this.$nextTick(() => {
+        const rect = document.getElementById('heatmaps').getBoundingClientRect();
+        this.offsetX = rect.x;
+        this.offsetY = rect.y;
+      });
+    });
   }
 }
 </script>

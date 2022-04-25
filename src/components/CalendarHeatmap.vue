@@ -12,7 +12,9 @@ export default {
     'name',
     'year',
     'values',
-    'max'
+    'max',
+    'offsetX',
+    'offsetY'
   ],
   mounted() {
     this.makeGraph();
@@ -60,8 +62,8 @@ export default {
                 .duration(200)
                 .style('opacity', .9);
             div.html(`${d.totaal} fietsers<br>op ${d.date.toLocaleDateString()}`)
-                .style('left', (event.pageX) + 'px')
-                .style('top', (event.pageY - 300) + 'px');
+                .style('left', (event.pageX - this.offsetX) + 'px')
+                .style('top', (event.pageY - this.offsetY - 28) + 'px');
           })
           .on('mouseout', (event, d) => {
             div.transition()
