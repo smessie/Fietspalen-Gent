@@ -8,21 +8,21 @@
       <el-main>
         <el-tabs v-model="activeName" class="demo-tabs" @tab-click="changeTab">
           <el-tab-pane label="Fietspalen" name="first">
-            <h2>Map</h2>
+            <h3>Map</h3>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
-            <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
+            <h3>Heatmap visualisatie van aantal fietsers voor bepaald station</h3>
             <Heatmaps :selectedStation="selectedStation" :datasets="datasets"/>
-            <h2>Visualisatie van gemiddeld aantal fietsers per dag</h2>
+            <h3>Visualisatie van gemiddeld aantal fietsers per dag</h3>
             <BarchartsContainer :selectedStation="selectedStation" :datasets="datasets"/>
-            <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
+            <h3>Dag visualisatie van aantal fietsers voor bepaald station</h3>
             <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
-            <h2>piechart</h2>
-            <YearData :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
 
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
+            <h3>piechart</h3>
+            <YearData :datasets="datasets"/>
 
           </el-tab-pane>
         </el-tabs>
