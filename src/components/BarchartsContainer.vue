@@ -1,20 +1,18 @@
 <template>
 <div>
 	<div v-if="selectedDatasets">
-		<MultipleLineGraph :data="dailyData"/>
+		<BarChart :data="dailyData"/>
 	</div>
 </div>
 </template>
 
 <script>
-import { getDataset, getDataForDate, calculateDailyAverages } from '../js/bicycling-data';
-import LineGraph from './LineGraph.vue' 
-import VegaLineGraph from './VegaLineGraph.vue' 
-import MultipleLineGraph from './MultipleLineGraph.vue' 
+import { getDataset, calculateDailyAverages } from '../js/bicycling-data';
+import  BarChart from './BarChart.vue' 
     
 export default {
   name: 'BarchartsContainer',
-  components: { LineGraph, MultipleLineGraph, VegaLineGraph },
+  components: { BarChart },
   props: [
 		'selectedStation',
     'datasets'

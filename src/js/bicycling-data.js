@@ -142,6 +142,10 @@ export function getDataset(name) {
   return data[name].map(el => el.fields)
 }
 
+export function getCompleteDataset(name) {
+  return data[name]
+}
+
 export function getDataFor(station, year) {
   const dataSetName = station.toLowerCase().replaceAll(' ', '-') + "-" + year
   return data[dataSetName]
@@ -211,26 +215,32 @@ export function getDatasets() {
 
 
 export function calculateDailyAverages(datasets){
-  let weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  let total = { "Sunday": 0, "Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday":0}; 
-  let counts = { "Sunday": 0, "Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday":0}; 
+  let weekdays = ["Zondag","Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag"];
+  let total = { "Zondag": 0, "Maandag": 0, "Dinsdag": 0, "Woensdag": 0, "Donderdag": 0, "Vrijdag": 0, "Zaterdag":0}; 
+  let counts = { "Zondag": 0, "Maandag": 0, "Dinsdag": 0, "Woensdag": 0, "Donderdag": 0, "Vrijdag": 0, "Zaterdag":0}; 
+
   datasets.forEach(data => {
     let previous = "";
     let weekday = "";
 
     data.forEach(record => {
-      let weekday = weekdays[record.time.getDay()];
-      total[weekday] += record.totaal;
+      let date = new Date(record.datum);
+      weekday = weekdays[date.getDay()];
+      total[weekday] += (record.totaal | 0);
+
       if (previous != weekday){
         counts[weekday] += 1;
         previous = weekday;
       }
-    })
-    counts[weekday] += 1;
+      counts[weekday] += 1;
 
-    for (let key of Object.keys()){
-      total[key] = total[key]/counts[key];
-    }
+    })
   })
-  return total;
+
+  let result = [];
+
+  for (let key in total){
+    result.push({day: key, total: total[key]/counts[key]});
+  }
+  return result;
 }
