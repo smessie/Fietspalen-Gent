@@ -6,14 +6,26 @@
         <h4>Freya Van Speybroeck, Thor Dossche & Ieben Smessaert</h4>
       </el-header>
       <el-main>
-        <h2>Map</h2>
-        <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
-        <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
-        <Heatmaps :selectedStation="selectedStation" :datasets="datasets"></Heatmaps>
-        <h2>Visualisatie van gemiddeld aantal fietsers per dag</h2>
-        <BarchartsContainer :selectedStation="selectedStation" :datasets="datasets"></BarchartsContainer>
-        <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
-        <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"></DailyLineGraph>
+        <el-tabs v-model="activeName" class="demo-tabs" @tab-click="changeTab">
+          <el-tab-pane label="Fietspalen" name="first">
+            <h2>Map</h2>
+            <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
+            <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
+            <Heatmaps :selectedStation="selectedStation" :datasets="datasets"/>
+            <h2>Visualisatie van gemiddeld aantal fietsers per dag</h2>
+            <BarchartsContainer :selectedStation="selectedStation" :datasets="datasets"/>
+            <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
+            <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
+            <h2>piechart</h2>
+            <YearData :datasets="datasets"/>
+          </el-tab-pane>
+          <el-tab-pane label="Weer" name="second">
+
+          </el-tab-pane>
+          <el-tab-pane label="Uitgelicht" name="third">
+
+          </el-tab-pane>
+        </el-tabs>
       </el-main>
     </el-container>
   </div>
@@ -24,7 +36,9 @@ import Heatmaps from './components/Heatmaps.vue';
 import DailyLineGraph from './components/DailyLineGraph.vue'
 import BarchartsContainer from './components/BarchartsContainer.vue'
 import Map from './components/Map.vue'
+import YearData from './components/YearData.vue'
 import { getDatasets } from '/src/js/bicycling-data.js';
+import { ref } from 'vue'
 
 export default {
   components: {
@@ -32,16 +46,21 @@ export default {
     DailyLineGraph,
     Map,
     BarchartsContainer,
+    YearData,
   },
   data() {
     return {
       selectedStation: null,
       datasets: getDatasets(),
+      activeName: ref('first')
     }
   },
   methods: {
     changeSelected(newStation) {
-      this.selectedStation = newStation 
+      this.selectedStation = newStation
+    },
+    changeTab() {
+      return
     }
   }
 }
@@ -59,5 +78,12 @@ export default {
 
 .el-main {
   margin-top: 5em;
+}
+
+.demo-tabs > .el-tabs__content {
+  padding: 32px;
+  color: #6b778c;
+  font-size: 32px;
+  font-weight: 600;
 }
 </style>
