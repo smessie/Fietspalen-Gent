@@ -1,0 +1,45 @@
+<template>
+	<div id="bar"></div>
+</template>
+
+<script>
+import vegaEmbed from 'vega-embed'
+
+export default {
+  name: 'BarChart',
+  props: [
+    'data'
+  ], 
+  methods: {
+	setLineGraph(){
+      let weekdays = ["Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag", "Zondag"];
+      if (!this.$props.data) return
+
+			let chart = {
+        $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+        data: { values: this.$props.data },
+        layer: [
+          {
+            width: 300,
+            height: 200,
+            mark: { type: 'bar', width: {band: 0.8} },
+            encoding: {
+              x: {field: 'day', title: 'Dag', type: 'ordinal',
+                  sort: weekdays },
+              y: {field: 'total', aggregate: 'sum', title: 'gemiddeld aantal'},
+            }
+          },
+        ],
+      };
+      vegaEmbed('#bar', chart);
+    },
+  },
+  mounted() {
+    this.setLineGraph()
+  } 
+}
+</script>
+
+<style scoped>
+
+</style>

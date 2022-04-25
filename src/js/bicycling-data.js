@@ -142,6 +142,10 @@ export function getDataset(name) {
   return data[name].map(el => el.fields)
 }
 
+export function getCompleteDataset(name) {
+  return data[name]
+}
+
 export function getDataFor(station, year) {
   const dataSetName = station.toLowerCase().replaceAll(' ', '-') + "-" + year
   return data[dataSetName]
@@ -207,7 +211,38 @@ export function getDatasets() {
     }
   })
   return datasets
+}
 
+
+export function calculateDailyAverages(datasets){
+  let weekdays = ["Zondag","Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag"];
+  let total = { "Zondag": 0, "Maandag": 0, "Dinsdag": 0, "Woensdag": 0, "Donderdag": 0, "Vrijdag": 0, "Zaterdag":0}; 
+  let counts = { "Zondag": 0, "Maandag": 0, "Dinsdag": 0, "Woensdag": 0, "Donderdag": 0, "Vrijdag": 0, "Zaterdag":0}; 
+
+  datasets.forEach(data => {
+    let previous = "";
+    let weekday = "";
+
+    data.forEach(record => {
+      let date = new Date(record.datum);
+      weekday = weekdays[date.getDay()];
+      total[weekday] += (record.totaal | 0);
+
+      if (previous != weekday){
+        counts[weekday] += 1;
+        previous = weekday;
+      }
+      counts[weekday] += 1;
+
+    })
+  })
+
+  let result = [];
+
+  for (let key in total){
+    result.push({day: key, total: total[key]/counts[key]});
+  }
+  return result;
 }
 
 function calculateYearTotal(dataset) {
