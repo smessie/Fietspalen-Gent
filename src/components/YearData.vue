@@ -24,9 +24,7 @@ export default {
 	},
   methods: {
 		setYearData() {
-			console.log(this.datasets)	
 			this.yeardata = calculateTotalsByYear(this.datasets)
-			console.log(this.yeardata)
 		}
 	},
 	mounted() {

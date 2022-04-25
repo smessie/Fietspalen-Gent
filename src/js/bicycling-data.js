@@ -218,7 +218,6 @@ function calculateYearTotal(dataset) {
 }
 
 export function calculateTotalsByYear(datasets) {
-  console.log(datasets)
   let years = {}
   datasets.forEach(dataset => {
     if (!years[dataset.year]) {
