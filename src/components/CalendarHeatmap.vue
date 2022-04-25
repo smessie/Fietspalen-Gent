@@ -11,7 +11,8 @@ export default {
     'value',
     'name',
     'year',
-    'values'
+    'values',
+    'max'
   ],
   mounted() {
     this.makeGraph();
@@ -37,7 +38,7 @@ export default {
       const height = 220;
 
       const cScale = d3.scaleSequential().interpolator(d3.interpolateGreens);
-      cScale.domain([0, d3.max(this.values, d => d.totaal)]);
+      cScale.domain([0, this.max]);
 
       const div = d3.select('.' + this.value).append('div')
           .attr('class', 'tooltip')

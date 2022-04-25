@@ -20,6 +20,7 @@
                                   :name="dataset.station.naam"
                                   :year="dataset.year"
                                   :values="groupDataset(dataset.name)"
+                                  :max="maxValue"
         ></CalendarHeatmap>
       </div>
     </el-col>
@@ -29,6 +30,7 @@
 <script>
 import {groupPerDay, getDataset} from '../js/bicycling-data';
 import CalendarHeatmap from './CalendarHeatmap.vue';
+import * as d3 from 'd3';
 
 export default {
   name: 'Heatmaps',
@@ -53,15 +55,20 @@ export default {
   },
   methods: {
     getDatasetsFor(station) {
-      return this.datasets.filter((dataset) => dataset.station.naam == station.naam).map(d => d.name)
+      return this.datasets.filter((dataset) => dataset.station.naam === station.naam).map(d => d.name)
     },
     namesToDatasets(names) {
-      return names.map((name) => this.datasets.find((dataset) => dataset.name == name))
+      return names.map((name) => this.datasets.find((dataset) => dataset.name === name))
     },
     groupDataset(name) {
       return groupPerDay(getDataset(name));
     },
   },
+  computed: {
+    maxValue() {
+      return d3.max(this.selectedDatasets.map(name => this.groupDataset(name)).flat(), d => d.totaal);
+    }
+  }
 }
 </script>
 
