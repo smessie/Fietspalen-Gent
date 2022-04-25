@@ -6,14 +6,16 @@
         <h4>Freya Van Speybroeck, Thor Dossche & Ieben Smessaert</h4>
       </el-header>
       <el-main>
-        <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+        <el-tabs v-model="activeName" class="demo-tabs" @tab-click="changeTab">
           <el-tab-pane label="Fietspalen" name="first">
             <h2>Map</h2>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
             <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
-            <Heatmaps :selectedStation="selectedStation" :datasets="datasets"></Heatmaps>
+            <Heatmaps :selectedStation="selectedStation" :datasets="datasets"/>
             <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
-            <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"></DailyLineGraph>
+            <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
+            <h2>piechart</h2>
+            <YearData :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
 
@@ -31,6 +33,7 @@
 import Heatmaps from './components/Heatmaps.vue';
 import DailyLineGraph from './components/DailyLineGraph.vue'
 import Map from './components/Map.vue'
+import YearData from './components/YearData.vue'
 import { getDatasets } from '/src/js/bicycling-data.js';
 import { ref } from 'vue'
 
@@ -39,6 +42,7 @@ export default {
     Heatmaps,
     DailyLineGraph,
     Map,
+    YearData,
   },
   data() {
     return {
@@ -50,6 +54,9 @@ export default {
   methods: {
     changeSelected(newStation) {
       this.selectedStation = newStation
+    },
+    changeTab() {
+      return
     }
   }
 }

@@ -209,3 +209,22 @@ export function getDatasets() {
   return datasets
 
 }
+
+function calculateYearTotal(dataset) {
+  return getDataset(dataset.name).reduce((total, newDay) => {
+      if (parseInt(newDay.totaal)) return parseInt(newDay.totaal) + total
+      return total 
+  }, 0)
+}
+
+export function calculateTotalsByYear(datasets) {
+  console.log(datasets)
+  let years = {}
+  datasets.forEach(dataset => {
+    if (!years[dataset.year]) {
+      years[dataset.year] = []
+    }
+    years[dataset.year].push({name: dataset.station.naam, amount: calculateYearTotal(dataset)})
+  })
+  return years
+}
