@@ -216,12 +216,12 @@ export function getDatasets() {
 
 export function calculateDailyAverages(datasets){
   let weekdays = ["Zondag","Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag"];
-  let total = { "Zondag": 0, "Maandag": 0, "Dinsdag": 0, "Woensdag": 0, "Donderdag": 0, "Vrijdag": 0, "Zaterdag":0}; 
-  let counts = { "Zondag": 0, "Maandag": 0, "Dinsdag": 0, "Woensdag": 0, "Donderdag": 0, "Vrijdag": 0, "Zaterdag":0}; 
+  let total  = { Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag:0}; 
+  let counts = { Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag:0}; 
 
   datasets.forEach(data => {
-    let previous = "";
-    let weekday = "";
+    let previous;
+    let weekday;
 
     data.forEach(record => {
       let date = new Date(record.datum);
@@ -232,9 +232,8 @@ export function calculateDailyAverages(datasets){
         counts[weekday] += 1;
         previous = weekday;
       }
-      counts[weekday] += 1;
-
     })
+    counts[weekday] += 1;
   })
 
   let result = [];

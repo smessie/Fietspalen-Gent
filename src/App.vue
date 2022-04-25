@@ -6,7 +6,7 @@
         <h4>Freya Van Speybroeck, Thor Dossche & Ieben Smessaert</h4>
       </el-header>
       <el-main>
-        <el-tabs v-model="activeName" class="demo-tabs" @tab-click="changeTab">
+        <el-tabs v-model="activeName" class="demo-tabs">
           <el-tab-pane label="Fietspalen" name="first">
             <h3>Map</h3>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
