@@ -19,11 +19,18 @@ export async function load() {
     'gaardeniersbrug-2021', 'groendreef-2018', 'groendreef-2019', 'groendreef-2020', 'groendreef-2021', 'zuidparklaan-2018',
     'zuidparklaan-2019', 'zuidparklaan-2020', 'zuidparklaan-2021'
   ];
-  for (let dataset of datasets) {
-    const res = await fetch(`./datasets/fietstelpaal-${dataset}-gent.json`);
-    data[dataset] = await res.json();
-  }
+
+  let loaders = []
+  datasets.forEach((dataset) => loaders.push(loadDataset(dataset)))
+  await Promise.all(loaders)
+
   return true;
+}
+
+async function loadDataset(dataset) {
+  return fetch(`./datasets/fietstelpaal-${dataset}-gent.json`)
+    .then((result) => result.json())
+    .then((result) => data[dataset] = result)
 }
 
 export const unavailable = [
