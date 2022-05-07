@@ -36,7 +36,6 @@ async function loadDataset(dataset) {
 export const unavailable = [
   'Visserij',
   'Isabellakaai',
-  'Gaardeniersbrug',
 ]
 
 export function dataIsAvailable(station) {
