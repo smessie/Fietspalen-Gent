@@ -22,9 +22,11 @@
       />
     </div>
     <div v-if="selectedDataset && date">
-      <VegaLineGraph :data="hourlyDayRecords"/>
-      <MultipleLineGraph :data="hourlyDayRecords" :station="selectedDataset.substring(0, selectedDataset.length - 5)"/>
+      <VegaLineGraph v-if="hourlyDayRecords.filter(x => x.totaal !== 0).length" :data="hourlyDayRecords"/>
+      <MultipleLineGraph v-if="hourlyDayRecords.filter(x => x.totaal !== 0).length" :data="hourlyDayRecords" :station="selectedDataset.substring(0, selectedDataset.length - 5)"/>
+      <p v-else>Er is geen data beschikbaar voor deze dag voor de geselecteerde fietstelpaal.</p>
     </div>
+    <p v-else>Selecteer eerst een fietstelpaal en datum om de visualisatie te zien te krijgen.</p>
   </div>
 </template>
 
