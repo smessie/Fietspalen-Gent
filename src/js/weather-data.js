@@ -1,18 +1,14 @@
 import * as d3 from 'd3';
 import moment from 'moment';
 
-const STATION_ID = 'lPh9kCaXyDhdcmI1dSY4WjDF' // sterrewacht armand pien (most central station)
+export const STATION_LINK = 'https://mooncake.ugent.be/api/measurements/zZ6ZeSg11dJ5zp5GrNwNck9A'; // UGent campus Sterre
 
-export const STATION_LINK = 'https://mooncake.ugent.be/api/measurements/lPh9kCaXyDhdcmI1dSY4WjDF'
+export let data = [];
 
-// is also hardcoded in STATION_LINK
-export async function getWeatherStationLink() {
-  let data = await d3.json('https://mooncake.ugent.be/api/stations');
-  for (let obj of data) {
-    if (obj['id'] === STATION_ID) {
-      return obj['measurements'];
-    }
-  }
+export async function load() {
+  const start = new Date('01/01/2020');
+  const end = new Date();
+  data = await getWeatherData(start, end);
 }
 
 // example:
@@ -20,7 +16,7 @@ export async function getWeatherStationLink() {
 // this will get all weather data until the day before end day!
 // this takes some time, but it might be good because else we would send the requests too fast
 // solution: loading image (for now it doesn't really matter)
-export async function getWeatherData(start = null, end = null) {
+async function getWeatherData(start = null, end = null) {
   let result = [];
 
   if (start === null) {
@@ -60,8 +56,5 @@ export async function getWeatherData(start = null, end = null) {
 export async function getWeatherDataForYear(year) {
   let start = new Date('01/01/' + year.toString());
   let end = new Date('01/01/' + (year + 1).toString());
-  if (end > new Date()) {
-    end = new Date();
-  }
-  return await getWeatherData(start, end);
+  return data.filter(x => x.time >= start && x.time < end);
 }
