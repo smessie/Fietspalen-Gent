@@ -45,6 +45,7 @@ import Map from './components/Map.vue'
 import YearData from './components/YearData.vue'
 import { getDatasets, load } from '/src/js/bicycling-data.js';
 import { ref } from 'vue'
+import {getWeatherStationLink, getWeatherStationData, STATION_LINK} from '/src/js/weather-data.js'
 
 export default {
   components: {
