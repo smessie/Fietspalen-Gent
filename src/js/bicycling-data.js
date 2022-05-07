@@ -67,12 +67,11 @@ export function groupPerDay(data) {
 }
 
 export function groupPerWeek(data) {
-  const dailyData = groupPerDay(data)
-  const dataMap = d3.group(dailyData, (element) => getWeek(element.date, 1));
+  const dataMap = d3.group(data, (element) => getWeek(new Date(element.datum), 1));
   return Array.from(dataMap).map(([key, value]) => (
-     {
+    {
       week: key,
-      year: value[0].date.getFullYear(),
+      year: new Date(value[0].datum).getFullYear(),
       totaal: value.map(item => parseInt(item.totaal) || 0).reduce((a, b) => a + b),
       hoofdrichting: value.map(item => parseInt(item.hoofdrichting) || 0).reduce((a, b) => a + b),
       tegenrichting: value.map(item => parseInt(item.tegenrichting) || 0).reduce((a, b) => a + b)
@@ -284,8 +283,7 @@ export default function getWeek(date, dowOffset = 0) {
       return nday < 4 ? 1 : 53;
     }
     return weeknum;
-  }
-  else {
+  } else {
     return Math.floor((daynum + day - 1) / 7);
   }
 }
@@ -299,6 +297,7 @@ const labelMapper = {
   'groendreef': {hoofdrichting: 'Gent in', tegenrichting: 'Gent uit'},
   'zuidparklaan': {hoofdrichting: 'Gent in', tegenrichting: 'Gent uit'},
 }
+
 export function getLabelForDirection(station, direction) {
   return labelMapper[station][direction];
 }
