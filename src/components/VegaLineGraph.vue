@@ -16,6 +16,7 @@ export default {
   methods: {
 		setLineGraph(){
       if (!this.$props.data) return
+      return
       let data = this.$props.data.map((elem) => {
         elem.time = new Date(elem.datum + ' ' + elem.uur5minuten)
         return elem

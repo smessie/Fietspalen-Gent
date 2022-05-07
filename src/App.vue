@@ -20,6 +20,8 @@
             <Heatmaps :selectedStation="selectedStation" :datasets="datasets" id="heatmaps" :offset-x="offsetX" :offset-y="offsetY"/>
             <h3>Visualisatie van gemiddeld aantal fietsers per dag</h3>
             <BarchartsContainer :selectedStation="selectedStation" :datasets="datasets"/>
+            <h3>Visualisatie fietsers door de jaren heen</h3>
+            <yearly-line-graph :selectedStation="selectedStation" :datasets="datasets"/>
             <h3>Dag visualisatie van aantal fietsers voor bepaald station</h3>
             <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
           </el-tab-pane>
@@ -43,6 +45,7 @@ import DailyLineGraph from './components/DailyLineGraph.vue'
 import BarchartsContainer from './components/BarchartsContainer.vue'
 import Map from './components/Map.vue'
 import YearData from './components/YearData.vue'
+import YearlyLineGraph from './components/YearlyLineGraph.vue'
 import { getDatasets, load } from '/src/js/bicycling-data.js';
 import { ref } from 'vue'
 
@@ -53,6 +56,7 @@ export default {
     Map,
     BarchartsContainer,
     YearData,
+    YearlyLineGraph,
   },
   data() {
     return {
