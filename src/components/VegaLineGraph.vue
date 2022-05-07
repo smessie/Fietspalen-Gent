@@ -16,12 +16,12 @@ export default {
   methods: {
     setLineGraph() {
       if (!this.$props.data) return;
-      let data = this.$props.data.map((elem) => {
+      const data = this.$props.data.map((elem) => {
         elem.time = new Date(elem.datum + ' ' + elem.uur5minuten);
         return elem;
-      })
+      });
 
-      let chart = {
+      const chart = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {values: data},
         layer: [

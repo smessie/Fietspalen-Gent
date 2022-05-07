@@ -1,5 +1,5 @@
 <template>
-	<div id="bar"></div>
+  <div id="bar"></div>
 </template>
 
 <script>
@@ -9,23 +9,25 @@ export default {
   name: 'BarChart',
   props: [
     'data'
-  ], 
+  ],
   methods: {
-	setLineGraph(){
-      let weekdays = ["Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag", "Zondag"];
-      if (!this.$props.data) return
+    setLineGraph() {
+      const weekdays = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'];
+      if (!this.$props.data) return;
 
-			let chart = {
+      const chart = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-        data: { values: this.$props.data },
+        data: {values: this.$props.data},
         layer: [
           {
             width: 300,
             height: 200,
-            mark: { type: 'bar', width: {band: 0.8} },
+            mark: {type: 'bar', width: {band: 0.8}},
             encoding: {
-              x: {field: 'day', title: 'Dag', type: 'ordinal',
-                  sort: weekdays },
+              x: {
+                field: 'day', title: 'Dag', type: 'ordinal',
+                sort: weekdays
+              },
               y: {field: 'total', aggregate: 'sum', title: 'gemiddeld aantal'},
             }
           },
@@ -35,8 +37,8 @@ export default {
     },
   },
   mounted() {
-    this.setLineGraph()
-  } 
+    this.setLineGraph();
+  }
 }
 </script>
 

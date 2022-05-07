@@ -1,59 +1,50 @@
 <template>
-<div>
-	<div v-if="selectedDatasets">
-    <div id="year-compare-vis"></div>
-	</div>
-</div>
+  <div>
+    <div v-if="selectedDatasets">
+      <div id="year-compare-vis"></div>
+    </div>
+  </div>
 </template>
 
 <script>
 import vegaEmbed from 'vega-embed'
-import { getDataset, groupPerDay, groupPerWeek } from '../js/bicycling-data';
-import  BarChart from './BarChart.vue' 
-    
+import {getDataset, groupPerDay, groupPerWeek} from '../js/bicycling-data';
+
 export default {
-  name: 'BarchartsContainer',
-  components: { BarChart },
+  name: 'YearlyLineGraph',
   props: [
-		'selectedStation',
+    'selectedStation',
     'datasets'
-  ], 
+  ],
   data() {
-   return {
+    return {
       selectedDatasets: null,
-   };
- },
+    };
+  },
   watch: {
-    selectedStation: function(newStation) {
+    selectedStation: function (newStation) {
       if (newStation) {
         this.selectedDatasets = this.getDatasetsFor(newStation);
-        this.setLineGraph()
+        this.setLineGraph();
       } else {
-        this.selectedDatasets = []
+        this.selectedDatasets = [];
       }
     },
   },
   methods: {
     getDatasetsFor(station) {
-      return this.$props.datasets.filter((dataset) => dataset.station.naam == station.naam).map(d => d.name)
+      return this.$props.datasets.filter((dataset) => dataset.station.naam === station.naam).map(d => d.name);
     },
-		setLineGraph(){
-      if (!this.selectedDatasets) return
+    setLineGraph() {
+      if (!this.selectedDatasets) return;
       this.selectedDatasets.map(dataset => groupPerWeek(getDataset(dataset)));
 
-      let dailyData = this.selectedDatasets.map(dataset => {
-        return groupPerDay(getDataset(dataset)).map(record => {
-          record.year = record.date.getFullYear()
-          return record
-        })
-      }).flat();
+      const weeklyData = this.selectedDatasets.map(dataset => groupPerWeek(getDataset(dataset))).flat();
 
-      let weeklyData = this.selectedDatasets.map(dataset => groupPerWeek(getDataset(dataset))).flat();
-
-			let chart = {
+      const chart = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-        data: { values: weeklyData },
-        mark: { type: 'line'},
+        data: {values: weeklyData},
+        mark: {type: 'line'},
         encoding: {
           x: {field: 'week', type: 'nominal', title: 'week'},
           y: {field: 'totaal', type: 'quantitative', title: 'aantal'},
@@ -65,8 +56,8 @@ export default {
     },
   },
   mounted() {
-    this.setLineGraph()
-  } 
+    this.setLineGraph();
+  }
 }
 </script>
 

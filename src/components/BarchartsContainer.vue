@@ -1,42 +1,42 @@
 <template>
-<div>
-	<div v-if="selectedDatasets">
-		<BarChart :data="dailyData"/>
-	</div>
-</div>
+  <div>
+    <div v-if="selectedDatasets">
+      <BarChart :data="dailyData"/>
+    </div>
+  </div>
 </template>
 
 <script>
-import { getDataset, calculateDailyAverages } from '../js/bicycling-data';
-import  BarChart from './BarChart.vue' 
-    
+import {getDataset, calculateDailyAverages} from '../js/bicycling-data';
+import BarChart from './BarChart.vue'
+
 export default {
   name: 'BarchartsContainer',
-  components: { BarChart },
+  components: {BarChart},
   props: [
-		'selectedStation',
+    'selectedStation',
     'datasets'
-  ], 
+  ],
   data() {
-   return {
+    return {
       selectedDatasets: null,
       dailyData: null,
-   };
- },
+    };
+  },
   watch: {
-    selectedStation: function(newStation) {
+    selectedStation: function (newStation) {
       if (newStation) {
         this.selectedDatasets = this.getDatasetsFor(newStation);
-        this.setDailyData()
+        this.setDailyData();
       } else {
-        this.selectedDatasets = []
-        this.dailyData = null
+        this.selectedDatasets = [];
+        this.dailyData = null;
       }
     },
   },
   methods: {
     getDatasetsFor(station) {
-      return this.$props.datasets.filter((dataset) => dataset.station.naam == station.naam).map(d => d.name)
+      return this.$props.datasets.filter((dataset) => dataset.station.naam === station.naam).map(d => d.name);
     },
     setDailyData() {
       this.dailyData = calculateDailyAverages(this.selectedDatasets.map(dataset => getDataset(dataset)));

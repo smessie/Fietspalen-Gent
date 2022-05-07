@@ -2,13 +2,13 @@
   <div class="center">
     <l-map style="height:50vh" :zoom="zoom" :center="center">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <l-marker v-for="station in stations" :key="station" 
-        :lat-lng="station.geo_point_2d" 
-        v-on:click="selectStation(station)"
+      <l-marker v-for="station in stations" :key="station"
+                :lat-lng="station.geo_point_2d"
+                v-on:click="selectStation(station)"
       >
-       <l-popup ref="popup">
-        {{ station.naam }}
-      </l-popup> 
+        <l-popup ref="popup">
+          {{ station.naam }}
+        </l-popup>
       </l-marker>
     </l-map>
   </div>
@@ -18,9 +18,9 @@
 <script>
 // DON'T load Leaflet components here!
 // Its CSS is needed though, if not imported elsewhere in your application.
-import "leaflet/dist/leaflet.css"
-import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
-import { getStations, dataIsAvailable } from '../js/bicycling-data';
+import 'leaflet/dist/leaflet.css'
+import {LMap, LTileLayer, LMarker, LPopup} from '@vue-leaflet/vue-leaflet';
+import {getStations, dataIsAvailable} from '../js/bicycling-data';
 
 
 export default {
@@ -39,7 +39,7 @@ export default {
     return {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
-        '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+          '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       zoom: 13,
       center: [51.052709, 3.724825],
       stations: [],
@@ -49,16 +49,16 @@ export default {
   methods: {
     selectStation(station) {
       if (dataIsAvailable(station)) {
-        this.$emit('change-selected', station)
-        this.mapSelectedStation = null
+        this.$emit('change-selected', station);
+        this.mapSelectedStation = null;
       } else {
-        this.$emit('change-selected', null)
-        this.mapSelectedStation = station
+        this.$emit('change-selected', null);
+        this.mapSelectedStation = station;
       }
     },
   },
   mounted() {
-    this.stations = getStations()
+    this.stations = getStations();
   },
 };
 </script>
