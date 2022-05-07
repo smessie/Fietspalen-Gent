@@ -36,7 +36,6 @@ async function loadDataset(dataset) {
 export const unavailable = [
   'Visserij',
   'Isabellakaai',
-  'Gaardeniersbrug',
 ]
 
 export function dataIsAvailable(station) {
@@ -289,4 +288,17 @@ export default function getWeek(date, dowOffset = 0) {
   else {
     return Math.floor((daynum + day - 1) / 7);
   }
+}
+
+const labelMapper = {
+  'bataviabrug': {hoofdrichting: 'Gent uit', tegenrichting: 'Gent in'},
+  'bijlokekaai': {hoofdrichting: 'Gent in', tegenrichting: 'Gent uit'},
+  'coupure-links': {hoofdrichting: 'Gent uit', tegenrichting: 'Gent in'},
+  'dampoort-zuid': {hoofdrichting: 'Gent uit', tegenrichting: 'Gent in'},
+  'gaardeniersbrug': {hoofdrichting: 'Gent in', tegenrichting: 'Gent uit'},
+  'groendreef': {hoofdrichting: 'Gent in', tegenrichting: 'Gent uit'},
+  'zuidparklaan': {hoofdrichting: 'Gent in', tegenrichting: 'Gent uit'},
+}
+export function getLabelForDirection(station, direction) {
+  return labelMapper[station][direction];
 }
