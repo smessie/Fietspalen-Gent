@@ -56,5 +56,16 @@ async function getWeatherData(start = null, end = null) {
 export async function getWeatherDataForYear(year) {
   let start = new Date('01/01/' + year.toString());
   let end = new Date('01/01/' + (year + 1).toString());
-  return data.filter(x => x.time >= start && x.time < end);
+  return data.filter(x => new Date(x.time) >= start && new Date(x.time) < end);
+}
+
+export function groupPerMonth() {
+  const monthNames = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'Septempber', 'Oktober', 'November', 'December'];
+  const dataMap = d3.group(data, (element) => new Date(element.time).getMonth());
+  return Array.from(dataMap).map(([key, value]) => (
+    {
+      month: key,
+      monthName: monthNames[key],
+      rainVolume: value.map(item => item.rainVolume).reduce((a, b) => a + b)
+    }));
 }

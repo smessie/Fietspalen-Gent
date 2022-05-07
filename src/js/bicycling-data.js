@@ -78,6 +78,20 @@ export function groupPerWeek(data) {
     }));
 }
 
+export function groupPerMonth(data) {
+  const monthNames = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'Septempber', 'Oktober', 'November', 'December'];
+  const dataMap = d3.group(data, (element) => new Date(element.datum).getMonth());
+  return Array.from(dataMap).map(([key, value]) => (
+    {
+      month: key,
+      monthName: monthNames[key],
+      year: new Date(value[0].datum).getFullYear(),
+      totaal: value.map(item => parseInt(item.totaal) || 0).reduce((a, b) => a + b),
+      hoofdrichting: value.map(item => parseInt(item.hoofdrichting) || 0).reduce((a, b) => a + b),
+      tegenrichting: value.map(item => parseInt(item.tegenrichting) || 0).reduce((a, b) => a + b)
+    }));
+}
+
 export function combineMinutesToHours(data) {
   let result = [];
   let i = 0;

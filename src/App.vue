@@ -11,9 +11,9 @@
       </el-main>
       <el-main v-else>
         <el-tabs v-model="activeName" class="demo-tabs">
+          <h2 v-if="activeName !== 'third'">Map</h2>
+          <Map v-if="activeName !== 'third'" :selectedStation="selectedStation" @change-selected="changeSelected"/>
           <el-tab-pane label="Fietspalen" name="first">
-            <h2>Map</h2>
-            <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
             <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
             <Heatmaps :selectedStation="selectedStation" :datasets="datasets" id="heatmaps" :offset-x="offsetX"
                       :offset-y="offsetY"/>
@@ -25,7 +25,8 @@
             <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
-
+            <h2>Visualisatie van verband tussen neerslag en aantal fieters per maand</h2>
+            <BarLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
             <h2>piechart</h2>
@@ -48,9 +49,11 @@ import YearlyLineGraph from './components/YearlyLineGraph.vue'
 import {getDatasets, load as loadBicyclingData} from '/src/js/bicycling-data.js';
 import {ref} from 'vue'
 import {load as loadWeatherData} from '/src/js/weather-data.js';
+import BarLineGraph from './components/BarLineGraph.vue';
 
 export default {
   components: {
+    BarLineGraph,
     Heatmaps,
     DailyLineGraph,
     Map,
