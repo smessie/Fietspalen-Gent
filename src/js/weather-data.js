@@ -54,3 +54,13 @@ export async function getWeatherData(start = null, end = null){
 
 	return result;
 }
+
+// year should be integer!
+export async function getWeatherDataForYear(year){
+	let start = new Date("01/01/" + year.toString());
+	let end = new Date("01/01/" + (year+1).toString());
+	if (end > new Date()) {
+		end = new Date();
+	}
+	return await getWeatherData(start, end);
+}

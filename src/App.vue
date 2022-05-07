@@ -47,6 +47,7 @@ import YearData from './components/YearData.vue'
 import YearlyLineGraph from './components/YearlyLineGraph.vue'
 import { getDatasets, load } from '/src/js/bicycling-data.js';
 import { ref } from 'vue'
+import {getWeatherDataForYear} from '/src/js/weather-data.js';
 
 export default {
   components: {
@@ -73,6 +74,7 @@ export default {
     }
   },
   mounted() {
+    //getWeatherDataForYear(2022).then(result => console.log(result));
     load().then(() => {
       this.loaded = true;
       this.$nextTick(() => {
