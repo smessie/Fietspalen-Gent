@@ -1,33 +1,32 @@
 <template>
-	<div id="total-vis"></div>
+  <div id="total-vis"></div>
 </template>
 
 <script>
-import vegaEmbed from 'vega-embed'
+import vegaEmbed from 'vega-embed';
 
 export default {
-  name: 'MultipleLineGraph',
+  name: 'VegaLineGraph',
   props: ['data'],
   watch: {
-    data: function() {
-      this.setLineGraph()
+    data: function () {
+      this.setLineGraph();
     }
   },
   methods: {
-		setLineGraph(){
-      if (!this.$props.data) return
-      return
+    setLineGraph() {
+      if (!this.$props.data) return;
       let data = this.$props.data.map((elem) => {
-        elem.time = new Date(elem.datum + ' ' + elem.uur5minuten)
-        return elem
+        elem.time = new Date(elem.datum + ' ' + elem.uur5minuten);
+        return elem;
       })
 
-			let chart = {
+      let chart = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-        data: { values: data },
+        data: {values: data},
         layer: [
           {
-            mark: { type: 'line', point: true, interpolate: 'natural'},
+            mark: {type: 'line', point: true, interpolate: 'natural'},
             encoding: {
               x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'uur'},
               y: {field: 'totaal', type: 'quantitative', title: 'aantal'},
@@ -40,8 +39,8 @@ export default {
     },
   },
   mounted() {
-    this.setLineGraph()
-  } 
+    this.setLineGraph();
+  }
 }
 </script>
 
