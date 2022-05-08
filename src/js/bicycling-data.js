@@ -236,15 +236,59 @@ export function calculateDailyAverages(datasets) {
   datasets.forEach(data => {
     let previous;
     let weekday;
+    let totalPerDay = 0;
 
     data.forEach(record => {
       let date = new Date(record.datum);
       weekday = weekdays[date.getDay()];
       total[weekday] += (record.totaal | 0);
+      totalPerDay += (record.totaal | 0);
 
       if (previous !== weekday) {
-        counts[weekday] += 1;
+        // dont count the day if there were 0 bikers, as this is an error in the station
+        if (totalPerDay > 0) {
+          counts[weekday] += 1;
+        }
         previous = weekday;
+        totalPerDay = 0;
+      }
+    })
+    counts[weekday] += 1;
+  })
+
+  let result = [];
+
+  for (let key in total) {
+    result.push({day: key, total: total[key] / counts[key]});
+  }
+  return result;
+}
+
+export function calculateDailyAveragesRain(datasets) {
+  let weekdays = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
+  let totalRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
+  let countsRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
+  let totalNoRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
+  let countsNoRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
+
+  datasets.forEach(data => {
+    let previous;
+    let weekday;
+    let totalPerDay = 0;
+
+    data.forEach(record => {
+      let date = new Date(record.datum);
+      weekday = weekdays[date.getDay()];
+      total[weekday] += (record.totaal | 0);
+      totalPerDay += (record.totaal | 0);
+
+      if (previous !== weekday) {
+        // dont count the day if there were 0 bikers, as this is an error in the station
+        if (totalPerDay > 0) {
+          counts[weekday] += 1;
+        }
+        previous = weekday;
+        totalPerDay = 0;
       }
     })
     counts[weekday] += 1;
