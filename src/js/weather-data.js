@@ -5,6 +5,8 @@ export const STATION_LINK = 'https://mooncake.ugent.be/api/measurements/zZ6ZeSg1
 
 export let data = [];
 
+const RAIN_THRESHOLD = 20000;
+
 export async function load() {
   const start = new Date('01/01/2020');
   const end = new Date();
@@ -53,10 +55,30 @@ async function getWeatherData(start = null, end = null) {
 /**
  * year should be integer!
  */
-export async function getWeatherDataForYear(year) {
+export function getWeatherDataForYear(year) {
   let start = new Date('01/01/' + year.toString());
   let end = new Date('01/01/' + (year + 1).toString());
   return data.filter(x => new Date(x.time) >= start && new Date(x.time) < end);
+}
+
+export function getWeatherDataForDay(day) {
+  day = new Date(day);
+  return data.filter(x => day.isSameDateAs(new Date(x.time)));
+}
+
+export function getRainVolumeSum(data){
+  let totalRain = 0;
+  for (const item of data){
+    totalRain += item.rainVolume;
+  }
+  return totalRain;
+}
+
+export function isRainyDay(day){
+  const data = getWeatherDataForDay(day);
+  const totalRain = getRainVolumeSum(data);
+
+  return totalRain > RAIN_THRESHOLD;
 }
 
 export function groupPerMonth() {
@@ -68,4 +90,12 @@ export function groupPerMonth() {
       monthName: monthNames[key],
       rainVolume: value.map(item => item.rainVolume).reduce((a, b) => a + b)
     }));
+}
+
+Date.prototype.isSameDateAs = function(pDate) {
+  return (
+    this.getFullYear() === pDate.getFullYear() &&
+    this.getMonth() === pDate.getMonth() &&
+    this.getDate() === pDate.getDate()
+  );
 }

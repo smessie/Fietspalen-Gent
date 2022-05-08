@@ -67,7 +67,6 @@ export default {
             bicycle: value,
             weather: monthlyWeatherData[value.month]
           }));
-      console.log(monthlyData);
 
       const chart = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',

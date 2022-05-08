@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {getDataset, calculateDailyAverages} from '../js/bicycling-data';
+import {getDataset, calculateDailyAverages, calculateDailyAveragesRain} from '../js/bicycling-data';
 import BarChart from './BarChart.vue'
 
 export default {
@@ -40,6 +40,11 @@ export default {
     },
     setDailyData() {
       this.dailyData = calculateDailyAverages(this.selectedDatasets.map(dataset => getDataset(dataset)));
+
+      // todo: (thor, start hier) code hieronder moet naar apparte chart
+      let test = [this.selectedDatasets.map(dataset => getDataset(dataset)).at(-1)];
+      console.log(test);
+      console.log(calculateDailyAveragesRain(test));
     }
   },
 }

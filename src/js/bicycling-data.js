@@ -6,6 +6,7 @@
 import {assert} from '@vue/compiler-core';
 import * as d3 from 'd3';
 import fietspalen from '../../public/datasets/fietstelpalen-gent.json';
+import {isRainyDay} from './weather-data.js';
 
 
 export const data = {
@@ -264,42 +265,61 @@ export function calculateDailyAverages(datasets) {
   return result;
 }
 
+// todo: dit opkuisen lmao
 export function calculateDailyAveragesRain(datasets) {
   let weekdays = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
   let totalRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
-  let countsRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
   let totalNoRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
-  let countsNoRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
+  let countsRain = {Zondag: 1, Maandag: 1, Dinsdag: 1, Woensdag: 1, Donderdag: 1, Vrijdag: 1, Zaterdag: 1};
+  let countsNoRain = {Zondag: 1, Maandag: 1, Dinsdag: 1, Woensdag: 1, Donderdag: 1, Vrijdag: 1, Zaterdag: 1};
 
   datasets.forEach(data => {
     let previous;
+    let prevDate;
     let weekday;
     let totalPerDay = 0;
 
     data.forEach(record => {
       let date = new Date(record.datum);
+      if (prevDate == null){
+        prevDate = date;
+      }
       weekday = weekdays[date.getDay()];
-      total[weekday] += (record.totaal | 0);
       totalPerDay += (record.totaal | 0);
 
       if (previous !== weekday) {
         // dont count the day if there were 0 bikers, as this is an error in the station
-        if (totalPerDay > 0) {
-          counts[weekday] += 1;
+        if (isRainyDay(prevDate)){
+          totalRain[weekday] += totalPerDay;
+          if (totalPerDay > 0) {
+            countsRain[weekday] += 1;
+          }
+        } else {
+          totalNoRain[weekday] += totalPerDay;
+          if (totalPerDay > 0) {
+            countsNoRain[weekday] += 1;
+          }
         }
         previous = weekday;
+        prevDate = date;
         totalPerDay = 0;
       }
     })
-    counts[weekday] += 1;
+
+    // todo: fix dat laatste dag ook juist wordt geteld
+    //counts[weekday] += 1;
   })
 
-  let result = [];
-
-  for (let key in total) {
-    result.push({day: key, total: total[key] / counts[key]});
+  let rainResult = [];
+  for (let key in totalRain) {
+    rainResult.push({day: key, total: totalRain[key] / countsRain[key]});
   }
-  return result;
+
+  let noRainResult = [];
+  for (let key in totalNoRain) {
+    noRainResult.push({day: key, total: totalNoRain[key] / countsNoRain[key]});
+  }
+  return { normalDays: noRainResult, rainyDays: rainResult };
 }
 
 function calculateYearTotal(dataset) {
