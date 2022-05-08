@@ -68,7 +68,7 @@ export function groupPerDay(data) {
 
 export function groupPerWeek(data) {
   const dataMap = d3.group(data, (element) => getWeek(new Date(element.datum), 1));
-  return Array.from(dataMap).map(([key, value]) => (
+  const weekData = Array.from(dataMap).map(([key, value]) => (
     {
       week: key,
       year: new Date(value[0].datum).getFullYear(),
@@ -76,6 +76,13 @@ export function groupPerWeek(data) {
       hoofdrichting: value.map(item => parseInt(item.hoofdrichting) || 0).reduce((a, b) => a + b),
       tegenrichting: value.map(item => parseInt(item.tegenrichting) || 0).reduce((a, b) => a + b)
     }));
+  if (weekData.at(-1).week == 1) {
+    weekData.at(-2).totaal += weekData.at(-1).totaal
+    weekData.at(-2).hoofdrichting += weekData.at(-1).hoofdrichting
+    weekData.at(-2).tegenrichting += weekData.at(-1).tegenrichting
+    weekData.pop()
+  }
+  return weekData
 }
 
 export function groupPerMonth(data) {

@@ -8,7 +8,7 @@
 
 <script>
 import vegaEmbed from 'vega-embed'
-import {getDataset, groupPerWeek} from '../js/bicycling-data';
+import { getDataset, groupPerWeek } from '../js/bicycling-data';
 
 export default {
   name: 'YearlyLineGraph',
