@@ -5,6 +5,7 @@
  */
 import {assert} from '@vue/compiler-core';
 import * as d3 from 'd3';
+import { createLoadingComponent } from 'element-plus/es/components/loading/src/loading';
 import fietspalen from '../../public/datasets/fietstelpalen-gent.json';
 import {isRainyDay} from './weather-data.js';
 
@@ -427,3 +428,39 @@ Date.prototype.getDOY = function() {
     if(mn > 1 && this.isLeapYear()) dayOfYear++;
     return dayOfYear;
 };
+
+export function bucketObject(obj, amountOfBuckets, minValue = 0) {
+  const result = {}
+  const maxValue = Math.max(...Object.keys(obj).map(key => parseInt(key)))
+  const bucketSize = Math.ceil(maxValue / amountOfBuckets)
+
+  let bucketLowerBound = minValue
+  let bucketUpperBound = bucketSize
+  for (let bucketNr = 0; bucketNr < amountOfBuckets; bucketNr++) {
+    result[bucketLowerBound] = []
+    Object.keys(obj).forEach(key => {
+      key = parseFloat(key)
+      if (bucketLowerBound <= key && key < bucketUpperBound) {
+        result[bucketLowerBound] = result[bucketLowerBound].concat(obj[key])
+        delete obj[key]
+      }
+    })
+
+    bucketLowerBound += bucketSize
+    bucketUpperBound += bucketSize
+  }
+  return result
+}
+
+// const o = {
+//   1: [1],
+//   2: [2],
+//   3: [3],
+//   4: [4],
+//   5: [5],
+//   6: [6],
+//   7: [7],
+//   8: [8],
+//   9: [9],
+// }
+// bucketObject(o, 4)
