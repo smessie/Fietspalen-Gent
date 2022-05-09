@@ -452,16 +452,3 @@ export function bucketObject(obj, amountOfBuckets, minValue = 0) {
   }
   return result
 }
-
-// const o = {
-//   1: [1],
-//   2: [2],
-//   3: [3],
-//   4: [4],
-//   5: [5],
-//   6: [6],
-//   7: [7],
-//   8: [8],
-//   9: [9],
-// }
-// bucketObject(o, 4)
