@@ -4,6 +4,8 @@ import moment from 'moment';
 export const STATION_LINK = 'https://mooncake.ugent.be/api/measurements/zZ6ZeSg11dJ5zp5GrNwNck9A'; // UGent campus Sterre
 
 export let data = [];
+export let rainyDayMap = new Map();
+export let dailyWeatherData = [];
 
 const RAIN_THRESHOLD = 20000;
 
@@ -11,6 +13,11 @@ export async function load() {
   const start = new Date('01/01/2020');
   const end = new Date();
   data = await fetchWeatherData(start, end);
+  dailyWeatherData = groupWeatherByDay(data); 
+  dailyWeatherData.forEach( record => {
+    let dateString = moment(record.date).format('YYYY-MM-DD');
+    rainyDayMap.set(dateString, record.rainVolume > RAIN_THRESHOLD);
+  });
 }
 
 // example:
@@ -70,19 +77,18 @@ export function getWeatherDataForDay(day) {
   return data.filter(x => day.isSameDateAs(new Date(x.time)));
 }
 
-export function getRainVolumeSum(data){
+export function getRainVolumeSum(weatherData){
   let totalRain = 0;
-  for (const item of data){
+  for (const item of weatherData){
     totalRain += item.rainVolume;
   }
   return totalRain;
 }
 
 export function isRainyDay(day){
-  const data = getWeatherDataForDay(day);
-  const totalRain = getRainVolumeSum(data);
-
-  return totalRain > RAIN_THRESHOLD;
+  let date = new Date(day);
+  let dateString = moment(date).format('YYYY-MM-DD');
+  return rainyDayMap.get(dateString);
 }
 
 export function groupPerMonth() {
