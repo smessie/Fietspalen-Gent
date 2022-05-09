@@ -11,9 +11,9 @@
       </el-main>
       <el-main v-else>
         <el-tabs v-model="activeName" class="demo-tabs">
-          <h2 v-if="activeName !== 'third'">Map</h2>
-          <Map v-if="activeName !== 'third'" :selectedStation="selectedStation" @change-selected="changeSelected"/>
           <el-tab-pane label="Fietspalen" name="first">
+            <h2>Map</h2>
+            <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
             <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
             <Heatmaps :selectedStation="selectedStation" :datasets="datasets" id="heatmaps" :offset-x="offsetX"
                       :offset-y="offsetY"/>
@@ -34,7 +34,6 @@
           <el-tab-pane label="Uitgelicht" name="third">
             <h2>piechart</h2>
             <YearData :datasets="datasets"/>
-
           </el-tab-pane>
         </el-tabs>
       </el-main>
