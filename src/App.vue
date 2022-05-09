@@ -18,7 +18,7 @@
             <Heatmaps :selectedStation="selectedStation" :datasets="datasets" id="heatmaps" :offset-x="offsetX"
                       :offset-y="offsetY"/>
             <h2>Visualisatie van gemiddeld aantal fietsers per dag</h2>
-            <BarchartsContainer :selectedStation="selectedStation" :datasets="datasets"/>
+            <BarchartDailyAverages :selectedStation="selectedStation" :datasets="datasets"/>
             <h2>Visualisatie fietsers door de jaren heen</h2>
             <yearly-line-graph :selectedStation="selectedStation" :datasets="datasets"/>
             <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
@@ -28,9 +28,9 @@
             <h2>Visualisatie van verband tussen neerslag en aantal fieters per maand</h2>
             <BarLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
             <h2>Visualisatie van verband tussen temperatuur en gemiddeld aantal fietsers</h2>
-
-
             <temperature-influence :datasets="datasets"/>
+            <h2>Visualisatie van gemiddeldes op regen en niet-regen dagen</h2>
+            <BarchartsRain :selectedStation="selectedStation" :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
             <h2>piechart</h2>
@@ -46,7 +46,7 @@
 <script>
 import Heatmaps from './components/Heatmaps.vue';
 import DailyLineGraph from './components/DailyLineGraph.vue'
-import BarchartsContainer from './components/BarchartsContainer.vue'
+import BarchartDailyAverages from './components/BarchartDailyAverages.vue'
 import Map from './components/Map.vue'
 import YearData from './components/YearData.vue'
 import YearlyLineGraph from './components/YearlyLineGraph.vue'
@@ -55,6 +55,7 @@ import {ref} from 'vue'
 import {load as loadWeatherData} from '/src/js/weather-data.js';
 import BarLineGraph from './components/BarLineGraph.vue';
 import TemperatureInfluence from './components/TemperatureInfluence.vue';
+import BarchartsRain from './components/BarchartsRain.vue'
 
 export default {
   components: {
@@ -62,10 +63,11 @@ export default {
     Heatmaps,
     DailyLineGraph,
     Map,
-    BarchartsContainer,
+    BarchartDailyAverages,
     YearData,
     YearlyLineGraph,
     TemperatureInfluence,
+    BarchartsRain,
   },
   data() {
     return {

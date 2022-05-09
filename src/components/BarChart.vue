@@ -1,5 +1,5 @@
 <template>
-  <div id="bar"></div>
+  <div :id="name"></div>
 </template>
 
 <script>
@@ -8,7 +8,8 @@ import vegaEmbed from 'vega-embed'
 export default {
   name: 'BarChart',
   props: [
-    'data'
+    'data',
+    'name',
   ],
   methods: {
     setLineGraph() {
@@ -33,7 +34,7 @@ export default {
           },
         ],
       };
-      vegaEmbed('#bar', chart);
+      vegaEmbed("#"+this.$props.name, chart);
     },
   },
   mounted() {

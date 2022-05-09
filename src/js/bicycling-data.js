@@ -289,7 +289,7 @@ export function calculateDailyAverages(datasets) {
   return result;
 }
 
-// todo: dit opkuisen lmao
+// todo: dit opkuisen -> maak dit async (aka zorg dat alle dagen appart en parallel kunnen worden opgeroepen) 
 export function calculateDailyAveragesRain(datasets) {
   let weekdays = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
   let totalRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
