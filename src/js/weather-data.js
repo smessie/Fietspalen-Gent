@@ -10,7 +10,7 @@ const RAIN_THRESHOLD = 20000;
 export async function load() {
   const start = new Date('01/01/2020');
   const end = new Date();
-  data = await getWeatherData(start, end);
+  data = await fetchWeatherData(start, end);
 }
 
 // example:
@@ -18,7 +18,7 @@ export async function load() {
 // this will get all weather data until the day before end day!
 // this takes some time, but it might be good because else we would send the requests too fast
 // solution: loading image (for now it doesn't really matter)
-async function getWeatherData(start = null, end = null) {
+async function fetchWeatherData(start = null, end = null) {
   let result = [];
 
   if (start === null) {
@@ -50,6 +50,10 @@ async function getWeatherData(start = null, end = null) {
   result = result.concat(month);
 
   return result;
+}
+
+export function getWeatherData() {
+  return data
 }
 
 /**
@@ -89,6 +93,17 @@ export function groupPerMonth() {
       month: key,
       monthName: monthNames[key],
       rainVolume: value.map(item => item.rainVolume).reduce((a, b) => a + b)
+    }));
+}
+
+export function groupWeatherByDay(weatherData) {
+  const dataMap = d3.group(weatherData, (element) => (new Date(element.time)).setHours(0, 0, 0, 0));
+  return Array.from(dataMap).map(([key, value]) => (
+    {
+      date: new Date(key),
+      rainVolume: value.map(item => parseInt(item.rainVolume) || 0).reduce((a, b) => a + b),
+      maxTemp: Math.max(...value.map(item => parseInt(item.temp) || 0)),
+      averageWindSpeed: value.map(item => parseInt(item.tegenrichting) || 0).reduce((a, b) => a + b) / value.length
     }));
 }
 

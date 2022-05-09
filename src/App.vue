@@ -27,6 +27,10 @@
           <el-tab-pane label="Weer" name="second">
             <h2>Visualisatie van verband tussen neerslag en aantal fieters per maand</h2>
             <BarLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
+            <h2>Visualisatie van verband tussen temperatuur en gemiddeld aantal fietsers</h2>
+
+
+            <temperature-influence :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
             <h2>piechart</h2>
@@ -50,6 +54,7 @@ import {getDatasets, load as loadBicyclingData} from '/src/js/bicycling-data.js'
 import {ref} from 'vue'
 import {load as loadWeatherData} from '/src/js/weather-data.js';
 import BarLineGraph from './components/BarLineGraph.vue';
+import TemperatureInfluence from './components/TemperatureInfluence.vue';
 
 export default {
   components: {
@@ -60,6 +65,7 @@ export default {
     BarchartsContainer,
     YearData,
     YearlyLineGraph,
+    TemperatureInfluence,
   },
   data() {
     return {

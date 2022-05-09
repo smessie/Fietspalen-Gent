@@ -13,14 +13,14 @@ export const data = {
   'fietspalen': fietspalen,
 };
 
-export async function load() {
-  const datasets = [
-    'bataviabrug-2018', 'bataviabrug-2019', 'bataviabrug-2020', 'bataviabrug-2021', 'bijlokekaai-2021', 'coupure-links-2021',
-    'dampoort-zuid-2018', 'dampoort-zuid-2019', 'dampoort-zuid-2020', 'dampoort-zuid-2021', 'gaardeniersbrug-2020',
-    'gaardeniersbrug-2021', 'groendreef-2018', 'groendreef-2019', 'groendreef-2020', 'groendreef-2021', 'zuidparklaan-2018',
-    'zuidparklaan-2019', 'zuidparklaan-2020', 'zuidparklaan-2021'
-  ];
+const datasets = [
+  'bataviabrug-2018', 'bataviabrug-2019', 'bataviabrug-2020', 'bataviabrug-2021', 'bijlokekaai-2021', 'coupure-links-2021',
+  'dampoort-zuid-2018', 'dampoort-zuid-2019', 'dampoort-zuid-2020', 'dampoort-zuid-2021', 'gaardeniersbrug-2020',
+  'gaardeniersbrug-2021', 'groendreef-2018', 'groendreef-2019', 'groendreef-2020', 'groendreef-2021', 'zuidparklaan-2018',
+  'zuidparklaan-2019', 'zuidparklaan-2020', 'zuidparklaan-2021'
+];
 
+export async function load() {
   let loaders = []
   datasets.forEach((dataset) => loaders.push(loadDataset(dataset)))
   await Promise.all(loaders)
@@ -33,6 +33,15 @@ async function loadDataset(dataset) {
     .then((result) => result.json())
     .then((result) => data[dataset] = result)
 }
+
+export function getAllDatasets() {
+  const allDatastes = []
+  datasets.forEach(name => {
+    allDatastes.push(getDataset(name))
+  })
+  return allDatastes
+}
+
 
 export const unavailable = [
   'Visserij',
@@ -57,10 +66,25 @@ export async function getAllDataFromStation(station, year = null) {
 }
 
 export function groupPerDay(data) {
-  const dataMap = d3.group(data, (element) => element.datum);
+  const dataMap = d3.group(data, (element) => (new Date(element.datum)).setHours(0, 0, 0, 0));
   return Array.from(dataMap).map(([key, value]) => (
     {
       date: new Date(key),
+      totaal: value.map(item => parseInt(item.totaal) || 0).reduce((a, b) => a + b),
+      hoofdrichting: value.map(item => parseInt(item.hoofdrichting) || 0).reduce((a, b) => a + b),
+      tegenrichting: value.map(item => parseInt(item.tegenrichting) || 0).reduce((a, b) => a + b)
+    }));
+}
+
+export function groupDatasetsByDay(data) {
+  return data.map(dataset => groupPerDay(dataset)).flat()
+}
+
+export function groupDatasetsByDayOfYear(data) {
+  const dataMap = d3.group(groupDatasetsByDay(data), (element) => element.date.getDOY());
+  return Array.from(dataMap).map(([key, value]) => (
+    {
+      dayOfYear: key,
       totaal: value.map(item => parseInt(item.totaal) || 0).reduce((a, b) => a + b),
       hoofdrichting: value.map(item => parseInt(item.hoofdrichting) || 0).reduce((a, b) => a + b),
       tegenrichting: value.map(item => parseInt(item.tegenrichting) || 0).reduce((a, b) => a + b)
@@ -386,3 +410,20 @@ const labelMapper = {
 export function getLabelForDirection(station, direction) {
   return labelMapper[station][direction];
 }
+
+// https://stackoverflow.com/questions/8619879/javascript-calculate-the-day-of-the-year-1-366
+Date.prototype.isLeapYear = function() {
+    var year = this.getFullYear();
+    if((year & 3) != 0) return false;
+    return ((year % 100) != 0 || (year % 400) == 0);
+};
+
+// Get Day of Year
+Date.prototype.getDOY = function() {
+    var dayCount = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    var mn = this.getMonth();
+    var dn = this.getDate();
+    var dayOfYear = dayCount[mn] + dn;
+    if(mn > 1 && this.isLeapYear()) dayOfYear++;
+    return dayOfYear;
+};
