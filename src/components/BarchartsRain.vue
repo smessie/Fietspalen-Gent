@@ -41,7 +41,7 @@ export default {
       return this.$props.datasets.filter((dataset) => dataset.station.naam === station.naam).map(d => d.name);
     },
     setDailyData() {
-      let dataList = [this.selectedDatasets.map(dataset => getDataset(dataset)).at(-1)];
+      let dataList = this.selectedDatasets.map(dataset => getDataset(dataset));
       let averages = calculateDailyAveragesRain(dataList);
       console.log(averages);
       this.dailyRainData = averages['rainyDays'];

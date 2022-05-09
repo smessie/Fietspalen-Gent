@@ -313,12 +313,13 @@ export function calculateDailyAveragesRain(datasets) {
 
       if (previous !== weekday) {
         // dont count the day if there were 0 bikers, as this is an error in the station
-        if (isRainyDay(prevDate)){
+        let rain = isRainyDay(prevDate);
+        if (rain == true){
           totalRain[weekday] += totalPerDay;
           if (totalPerDay > 0) {
             countsRain[weekday] += 1;
           }
-        } else {
+        } else if (rain == false){
           totalNoRain[weekday] += totalPerDay;
           if (totalPerDay > 0) {
             countsNoRain[weekday] += 1;
