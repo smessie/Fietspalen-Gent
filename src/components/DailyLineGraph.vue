@@ -22,17 +22,15 @@
       />
     </div>
     <div v-if="selectedDataset && date">
-      <VegaLineGraph v-if="hourlyDayRecords.filter(x => x.totaal !== 0).length" :data="hourlyDayRecords"/>
-      <MultipleLineGraph v-if="hourlyDayRecords.filter(x => x.totaal !== 0).length" :data="hourlyDayRecords"
-                         :station="selectedDataset.substring(0, selectedDataset.length - 5)"/>
-      <p v-else>Er is geen data beschikbaar voor deze dag voor de geselecteerde fietstelpaal.</p>
+      <VegaLineGraph :data="hourlyDayRecords"/>
+      <MultipleLineGraph :data="hourlyDayRecords" :station="selectedDataset.substring(0, selectedDataset.length - 5)"/>
     </div>
     <p v-else>Selecteer eerst een fietstelpaal en datum om de visualisatie te zien te krijgen.</p>
   </div>
 </template>
 
 <script>
-import {getDataset, getDataForDate, combineMinutesToHours} from '../js/bicycling-data';
+import {getDataset, getDataForDate, combineMinutesToHours, groupPerDay} from '../js/bicycling-data';
 import LineGraph from './LineGraph.vue'
 import VegaLineGraph from './VegaLineGraph.vue'
 import MultipleLineGraph from './MultipleLineGraph.vue'
@@ -49,13 +47,27 @@ export default {
       selectedDataset: null,
       date: null,
       hourlyDayRecords: null,
-      dateLowerBound: null,
-      dateUpperBound: null,
+      disableMap: null,
     };
   },
   watch: {
     selectedDataset: function () {
-      this.setDatumVariables();
+      if (this.selectedDataset) {
+        const dataByDay = groupPerDay(getDataset(this.selectedDataset))
+
+        // make map to see when date needs to be disabled
+        this.disableMap = new Map()
+        dataByDay.forEach(day => {
+          this.disableMap.set(day.date.setHours(0,0,0,0), day.totaal)
+        })
+
+        // set first non zero day as current date
+        let currentIndex = 0
+        while (this.disableDate(dataByDay[currentIndex].date)) {
+          currentIndex++;
+        }
+        this.date = dataByDay[currentIndex + 1].date.toISOString().split('T')[0]
+      }
     },
     date: function () {
       this.updateDailyData();
@@ -65,6 +77,7 @@ export default {
         this.selectedDataset = this.getDatasetFor(newStation);
       } else {
         this.selectedDataset = null;
+        this.disableMap = null;
       }
     },
   },
@@ -80,18 +93,11 @@ export default {
         this.hourlyDayRecords = combineMinutesToHours(dayRecords);
       }
     },
-    setDatumVariables() {
-      if (this.selectedDataset) {
-        const data = getDataset(this.selectedDataset);
-        this.date = data[0].datum;
-        this.dateLowerBound = new Date(data[0].datum);
-        this.dateLowerBound.setDate(this.dateLowerBound.getDate() - 1);
-        this.dateUpperBound = new Date(data[data.length - 1].datum);
-      }
-    },
     disableDate(date) {
-      if (!this.selectedDataset || !this.dateLowerBound || !this.dateUpperBound) return false;
-      return date < this.dateLowerBound || this.dateUpperBound < date;
+      date = new Date(date)
+      if (!this.selectedDataset || !this.disableMap) return false;
+      if (!this.disableMap.get(date.setHours(0,0,0,0))) return true;
+      return this.disableMap.get(date.setHours(0,0,0,0)) <= 0;
     }
   },
 }
