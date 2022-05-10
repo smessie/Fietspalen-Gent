@@ -43,7 +43,7 @@ export default {
     setDailyData() {
       let dataList = this.selectedDatasets.map(dataset => getDataset(dataset));
       let averages = calculateDailyAveragesRain(dataList);
-      console.log(averages);
+
       this.dailyRainData = averages['rainyDays'];
       this.dailyNoRainData = averages['normalDays'];
     }
