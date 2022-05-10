@@ -1,36 +1,47 @@
 <template>
   <el-row :gutter="10">
-    <el-col :xs="{span: 12, offset: 0}" :sm="{span: 10, offset: 2}" :md="{span: 8, offset: 4}"
-            :lg="{span: 6, offset: 4}" :xl="{span: 6, offset: 4}">
-      <el-select v-if="datasets" v-model="selectedDatasets" multiple placeholder="Select">
-        <el-option
-            v-for="dataset in datasets"
-            :key="dataset"
-            :label="dataset.station.naam + ' ' + dataset.year"
-            :value="dataset.name"
-        >
-          <span style="float: left">{{ dataset.station.naam }}</span>
-          <span style="float: right; color: var(--el-text-color-secondary); font-size: 13px; ">{{ dataset.year }}</span>
-        </el-option>
-      </el-select>
-    </el-col>
     <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-      <div v-for="dataset in namesToDatasets(selectedDatasets)" :key="dataset">
-        <CalendarHeatmap :value="dataset.name"
-                         :name="dataset.station.naam"
-                         :year="dataset.year"
-                         :values="groupDataset(dataset.name)"
-                         :max="maxValue"
-                         :offset-x="offsetX"
-                         :offset-y="offsetY"
-        ></CalendarHeatmap>
+      <el-select v-if="datasets" v-model="viewType" placeholder="Select">
+        <el-option label="geselecteerde paal" value="station"/>
+        <el-option label="per jaar" value="year"/>
+      </el-select>
+      <div v-if="viewType === 'station'">
+        <div v-for="dataset in namesToDatasets(selectedDatasets)" :key="dataset">
+          <CalendarHeatmap :value="dataset.name"
+                           :name="dataset.station.naam"
+                           :year="dataset.year"
+                           :values="groupDataset(dataset.name)"
+                           :max="maxValue"
+                           :offset-x="offsetX"
+                           :offset-y="offsetY"
+          />
+        </div>
+      </div>
+      <div v-else>
+        <label for="yearSelect">Jaar: </label>
+        <el-select id="yearSelect" v-if="datasets" v-model="selectedYear" placeholder="Select">
+          <el-option :value="2018"/>
+          <el-option :value="2019"/>
+          <el-option :value="2020"/>
+          <el-option :value="2021"/>
+        </el-select>
+        <div v-for="dataset in getAllDatasetsForYear(selectedYear)" :key="dataset">
+          <CalendarHeatmap :value="dataset.name"
+                           :name="dataset.station.naam"
+                           :year="dataset.year"
+                           :values="groupDataset(dataset.name)"
+                           :max="maxValue"
+                           :offset-x="offsetX"
+                           :offset-y="offsetY"
+        />
+        </div>
       </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import {groupPerDay, getDataset} from '../js/bicycling-data';
+import {groupPerDay, getDataset, getDatasets} from '../js/bicycling-data';
 import CalendarHeatmap from './CalendarHeatmap.vue';
 import * as d3 from 'd3';
 
@@ -45,7 +56,9 @@ export default {
   ],
   data() {
     return {
+      viewType: "station",
       selectedDatasets: [],
+      selectedYear: 2021,
     }
   },
   watch: {
@@ -67,6 +80,9 @@ export default {
     groupDataset(name) {
       return groupPerDay(getDataset(name));
     },
+    getAllDatasetsForYear(year) {
+      return getDatasets().filter(dataset => dataset.year === year)
+    }
   },
   computed: {
     maxValue() {
