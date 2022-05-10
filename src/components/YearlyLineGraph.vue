@@ -38,12 +38,12 @@ export default {
     setLineGraph() {
       if (!this.selectedDatasets) return;
 
-      const weeklyData = this.selectedDatasets.map(dataset => groupPerWeek(getDataset(dataset))).flat();
+      const weeklyData = this.selectedDatasets.map(dataset => groupPerWeek(getDataset(dataset))).flat().filter(week => week.totaal > 0);
 
       const chart = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {values: weeklyData},
-        mark: {type: 'line'},
+        mark: {type: 'line', interpolate: 'natural'},
         encoding: {
           x: {field: 'week', type: 'nominal', title: 'week'},
           y: {field: 'totaal', type: 'quantitative', title: 'aantal'},
