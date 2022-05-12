@@ -117,6 +117,7 @@ export default {
 
 .el-main {
   margin-top: 5em;
+  overflow: visible; /* Fix scrollbar showing up for loading animation */
 }
 
 h2 {
