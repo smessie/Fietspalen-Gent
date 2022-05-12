@@ -25,8 +25,6 @@
             <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
-            <h2>Visualisatie van verband tussen neerslag en aantal fieters per maand</h2>
-            <BarLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
             <weather-influence :datasets="datasets"/>
             <h2>Visualisatie van gemiddeldes op regen en niet-regen dagen</h2>
             <BarchartsRain :datasets="datasets"/>
