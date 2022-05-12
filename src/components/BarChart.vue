@@ -31,7 +31,7 @@ export default {
             mark: {type: 'bar', width: {band: 0.8}},
             encoding: {
               x: {
-                field: 'day', title: 'Dag', type: 'ordinal',
+                field: 'day', title: '', type: 'ordinal',
                 sort: weekdays
               },
               y: {field: 'total', aggregate: 'sum', title: 'gemiddeld aantal'},
