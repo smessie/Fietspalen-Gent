@@ -29,7 +29,7 @@
             <BarLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
             <weather-influence :datasets="datasets"/>
             <h2>Visualisatie van gemiddeldes op regen en niet-regen dagen</h2>
-            <BarchartsRain :selectedStation="selectedStation" :datasets="datasets"/>
+            <BarchartsRain :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
             <h2>piechart</h2>
