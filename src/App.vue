@@ -30,7 +30,7 @@
             <BarchartsRain :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
-            <h2>piechart</h2>
+            <h2>Populariteit van de locaties per jaar</h2>
             <YearData :datasets="datasets"/>
           </el-tab-pane>
         </el-tabs>
