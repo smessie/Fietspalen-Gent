@@ -107,7 +107,8 @@ export function groupWeatherByDay(weatherData) {
   return Array.from(dataMap).map(([key, value]) => (
     {
       date: new Date(key),
-      rainVolume: value.map(item => parseInt(item.rainVolume) || 0).reduce((a, b) => a + b),
+      // rainVolume: value.map(item => parseInt(item.rainVolume) || 0).reduce((a, b) => a + b),
+      rainVolume: Math.max(...value.map(item => parseInt(item.rainVolume) || 0)),
       maxTemp: Math.max(...value.map(item => parseInt(item.temp) || 0)),
       averageWindSpeed: (value.map(item => parseInt(item.windSpeed) || 0).reduce((a, b) => a + b) / value.length) * 3.6
     }));
