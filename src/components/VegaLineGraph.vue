@@ -28,8 +28,8 @@ export default {
           {
             mark: {type: 'line', point: true, interpolate: 'natural'},
             encoding: {
-              x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'uur'},
-              y: {field: 'totaal', type: 'quantitative', title: 'aantal'},
+              x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag'},
+              y: {field: 'totaal', type: 'quantitative', title: 'Totaal aantal fietsers'},
               color: {datum: 'totaal'}
             }
           },

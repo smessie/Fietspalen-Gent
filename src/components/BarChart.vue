@@ -34,7 +34,7 @@ export default {
                 field: 'day', title: '', type: 'ordinal',
                 sort: weekdays
               },
-              y: {field: 'total', aggregate: 'sum', title: 'gemiddeld aantal'},
+              y: {field: 'total', aggregate: 'sum', title: 'Gemiddeld aantal fietsers'},
             }
           },
         ],
