@@ -67,7 +67,7 @@ export async function getAllDataFromStation(station, year = null) {
 }
 
 export function groupPerDay(data) {
-  const dataMap = d3.group(data, (element) => (new Date(element.datum)).setHours(0, 0, 0, 0));
+  const dataMap = d3.group(data, (element) => (new Date(element.datum)).setUTCHours(0, 0, 0, 0));
   return Array.from(dataMap).map(([key, value]) => (
     {
       date: new Date(key),
@@ -424,7 +424,7 @@ Date.prototype.isLeapYear = function() {
 Date.prototype.getDOY = function() {
     var dayCount = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
     var mn = this.getMonth();
-    var dn = this.getDate();
+    var dn = this.getUTCDate();
     var dayOfYear = dayCount[mn] + dn;
     if(mn > 1 && this.isLeapYear()) dayOfYear++;
     return dayOfYear;

@@ -47,7 +47,7 @@ export default {
       })
       return totals
     },
-    setLineGraph() {
+    async setLineGraph() {
       const bikesByDay = groupDatasetsByDay(getAllDatasets())
       const weatherByDay = groupWeatherByDay(getWeatherData())
       const dayToData = d3.group(weatherByDay, (day) => day.date);

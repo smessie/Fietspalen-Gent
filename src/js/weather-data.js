@@ -103,15 +103,16 @@ export function groupPerMonth() {
 }
 
 export function groupWeatherByDay(weatherData) {
-  const dataMap = d3.group(weatherData, (element) => (new Date(element.time)).setHours(0, 0, 0, 0));
-  return Array.from(dataMap).map(([key, value]) => (
-    {
+  if (dailyWeatherData.length) return dailyWeatherData
+  const dataMap = d3.group(weatherData, (element) => (new Date(element.time)).setUTCHours(0,0,0,0));
+
+  return Array.from(dataMap).map(([key, value]) => ({
       date: new Date(key),
       // rainVolume: value.map(item => parseInt(item.rainVolume) || 0).reduce((a, b) => a + b),
-      rainVolume: Math.max(...value.map(item => parseInt(item.rainVolume) || 0)),
+      rainVolume: value[value.length - 1].rainVolume - value[0].rainVolume,
       maxTemp: Math.max(...value.map(item => parseInt(item.temp) || 0)),
       averageWindSpeed: (value.map(item => parseInt(item.windSpeed) || 0).reduce((a, b) => a + b) / value.length) * 3.6
-    }));
+    })).filter(day => !day.date.isSameDateAs(new Date(1632268800000))); // filter out day with errors 
 }
 
 Date.prototype.isSameDateAs = function(pDate) {
@@ -121,3 +122,12 @@ Date.prototype.isSameDateAs = function(pDate) {
     this.getDate() === pDate.getDate()
   );
 }
+
+Date.prototype.getDOY = function() {
+    var dayCount = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    var mn = this.getMonth();
+    var dn = this.getUTCDate();
+    var dayOfYear = dayCount[mn] + dn;
+    if(mn > 1 && this.isLeapYear()) dayOfYear++;
+    return dayOfYear;
+};
