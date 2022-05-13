@@ -66,7 +66,7 @@ export default {
         data: {values: temperatureAverageTotal},
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'temperature', type: 'nominal', title: 'temperatuur'},
+          x: {field: 'temperature', type: 'nominal', title: 'temperatuur in °C'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers'},
         }
       };
@@ -87,7 +87,7 @@ export default {
         data: {values: rainAverageTotal},
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'rainVolume', type: 'nominal', title: 'rainVolume'},
+          x: {field: 'rainVolume', type: 'nominal', title: 'neerslag in l/m^2'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers'},
         }
       };
@@ -108,7 +108,7 @@ export default {
         data: {values: windAverageTotal},
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'averageWindSpeed', type: 'nominal', title: 'gemiddelde windsnelheid'},
+          x: {field: 'averageWindSpeed', type: 'nominal', title: 'windsnelheid in km/u'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers'},
         }
       };

@@ -308,6 +308,7 @@ export function calculateDailyAveragesRain(datasets) {
       let date = new Date(record.datum);
       if (prevDate == null){
         prevDate = date;
+        previous = weekdays[date.getDay()];
       }
       weekday = weekdays[date.getDay()];
       totalPerDay += (record.totaal | 0);
@@ -316,14 +317,14 @@ export function calculateDailyAveragesRain(datasets) {
         // dont count the day if there were 0 bikers, as this is an error in the station
         let rain = isRainyDay(prevDate);
         if (rain == true){
-          totalRain[weekday] += totalPerDay;
+          totalRain[previous] += totalPerDay;
           if (totalPerDay > 0) {
-            countsRain[weekday] += 1;
+            countsRain[previous] += 1;
           }
         } else if (rain == false){
-          totalNoRain[weekday] += totalPerDay;
+          totalNoRain[previous] += totalPerDay;
           if (totalPerDay > 0) {
-            countsNoRain[weekday] += 1;
+            countsNoRain[previous] += 1;
           }
         }
         previous = weekday;
@@ -336,16 +337,17 @@ export function calculateDailyAveragesRain(datasets) {
     //counts[weekday] += 1;
   })
 
-  let rainResult = [];
+  let result = [];
   for (let key in totalRain) {
-    rainResult.push({day: key, total: totalRain[key] / countsRain[key]});
+    result.push({day: key, total: totalRain[key] / countsRain[key], 'type dag': "Regen dag"});
   }
 
   let noRainResult = [];
   for (let key in totalNoRain) {
-    noRainResult.push({day: key, total: totalNoRain[key] / countsNoRain[key]});
+    result.push({day: key, total: totalNoRain[key] / countsNoRain[key], 'type dag': "Droge dag"});
   }
-  return { normalDays: noRainResult, rainyDays: rainResult };
+  //return { normalDays: noRainResult, rainyDays: rainResult };
+  return result;
 }
 
 function calculateYearTotal(dataset) {

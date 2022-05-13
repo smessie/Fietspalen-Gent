@@ -32,16 +32,16 @@ export default {
           {
             mark: {type: 'line', point: true, interpolate: 'natural'},
             encoding: {
-              x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'uur'},
-              y: {field: 'hoofdrichting', type: 'quantitative', title: 'aantal'},
+              x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag'},
+              y: {field: 'hoofdrichting', type: 'quantitative', title: 'Totaal aantal fietsers'},
               color: {datum: getLabelForDirection(this.station, 'hoofdrichting')}
             }
           },
           {
             mark: {type: 'line', point: true, interpolate: 'natural'},
             encoding: {
-              x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'uur'},
-              y: {field: 'tegenrichting', type: 'quantitative', title: 'aantal'},
+              x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag'},
+              y: {field: 'tegenrichting', type: 'quantitative', title: 'Totaal aantal fietsers'},
               color: {datum: getLabelForDirection(this.station, 'tegenrichting')}
             },
           },

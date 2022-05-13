@@ -45,9 +45,9 @@ export default {
         data: {values: weeklyData},
         mark: {type: 'line', interpolate: 'natural'},
         encoding: {
-          x: {field: 'week', type: 'nominal', title: 'week'},
-          y: {field: 'totaal', type: 'quantitative', title: 'aantal'},
-          color: {field: 'year', type: 'nominal'}
+          x: {field: 'week', type: 'nominal', title: 'Week nummer'},
+          y: {field: 'totaal', type: 'quantitative', title: 'Totaal aantal fietsers'},
+          color: {field: 'year', type: 'ordinal'}
         }
       };
 

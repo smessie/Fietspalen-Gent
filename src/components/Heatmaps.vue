@@ -1,47 +1,31 @@
 <template>
-  <el-row :gutter="10">
-    <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-      <el-select v-if="datasets" v-model="viewType" placeholder="Select">
-        <el-option label="geselecteerde paal" value="station"/>
-        <el-option label="per jaar" value="year"/>
-      </el-select>
-      <div v-if="viewType === 'station'">
-        <div v-for="dataset in namesToDatasets(selectedDatasets)" :key="dataset">
-          <CalendarHeatmap :value="dataset.name"
-                           :name="dataset.station.naam"
-                           :year="dataset.year"
-                           :values="groupDataset(dataset.name)"
-                           :max="maxValue"
-                           :offset-x="offsetX"
-                           :offset-y="offsetY"
-          />
-        </div>
-      </div>
-      <div v-else>
-        <label for="yearSelect">Jaar: </label>
-        <el-select id="yearSelect" v-if="datasets" v-model="selectedYear" placeholder="Select">
-          <el-option :value="2018"/>
-          <el-option :value="2019"/>
-          <el-option :value="2020"/>
-          <el-option :value="2021"/>
-        </el-select>
-        <div v-for="dataset in getAllDatasetsForYear(selectedYear)" :key="dataset">
-          <CalendarHeatmap :value="dataset.name"
-                           :name="dataset.station.naam"
-                           :year="dataset.year"
-                           :values="groupDataset(dataset.name)"
-                           :max="maxValue"
-                           :offset-x="offsetX"
-                           :offset-y="offsetY"
-        />
-        </div>
-      </div>
-    </el-col>
-  </el-row>
+  <div>
+    <el-select v-if="datasets" v-model="viewType" placeholder="Selecteer">
+      <el-option label="geselecteerde paal" value="station"/>
+      <el-option label="per jaar" value="year"/>
+    </el-select>
+    <label v-if="viewType !== 'station'" for="yearSelect" class="second-select">Jaar: </label>
+    <el-select v-if="viewType !== 'station'" id="yearSelect" v-model="selectedYear" placeholder="Selecteer">
+      <el-option :value="2018"/>
+      <el-option :value="2019"/>
+      <el-option :value="2020"/>
+      <el-option :value="2021"/>
+    </el-select>
+    <div v-for="dataset in getAllDatasets()" :key="dataset">
+      <CalendarHeatmap :max="maxValue"
+                       :name="dataset.station.naam"
+                       :offset-x="offsetX"
+                       :offset-y="offsetY"
+                       :value="dataset.name"
+                       :values="groupDataset(dataset.name)"
+                       :year="dataset.year"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
-import {groupPerDay, getDataset, getDatasets} from '../js/bicycling-data';
+import {getDataset, groupPerDay} from '../js/bicycling-data';
 import CalendarHeatmap from './CalendarHeatmap.vue';
 import * as d3 from 'd3';
 
@@ -56,7 +40,7 @@ export default {
   ],
   data() {
     return {
-      viewType: "station",
+      viewType: 'station',
       selectedDatasets: [],
       selectedYear: 2021,
     }
@@ -66,32 +50,39 @@ export default {
       if (newStation) {
         this.selectedDatasets = this.getDatasetsFor(newStation);
       } else {
-        this.selectedDatasets = []
+        this.selectedDatasets = [];
       }
     },
   },
   methods: {
     getDatasetsFor(station) {
-      return this.datasets.filter((dataset) => dataset.station.naam === station.naam).map(d => d.name)
-    },
-    namesToDatasets(names) {
-      return names.map((name) => this.datasets.find((dataset) => dataset.name === name))
+      return this.datasets.filter((dataset) => dataset.station.naam === station.naam).map(d => d.name);
     },
     groupDataset(name) {
       return groupPerDay(getDataset(name));
     },
-    getAllDatasetsForYear(year) {
-      return getDatasets().filter(dataset => dataset.year === year)
+    getAllDatasets() {
+      if (this.viewType === 'station') {
+        return this.selectedDatasets.map((name) => this.datasets.find((dataset) => dataset.name === name));
+      } else {
+        return this.datasets.filter(dataset => dataset.year === this.selectedYear);
+      }
     }
   },
   computed: {
     maxValue() {
-      return d3.max(this.selectedDatasets.map(name => this.groupDataset(name)).flat(), d => d.totaal);
+      if (this.viewType === 'station') {
+        return d3.max(this.selectedDatasets.map(name => this.groupDataset(name)).flat(), d => d.totaal);
+      } else {
+        return d3.max(this.datasets.filter(dataset => dataset.year === this.selectedYear).map(dataset => this.groupDataset(dataset.name)).flat(), d => d.totaal);
+      }
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style>
+.second-select {
+  margin-left: 3em;
+}
 </style>
