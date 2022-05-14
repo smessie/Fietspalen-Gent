@@ -72,7 +72,12 @@ export default {
   computed: {
     maxValue() {
       if (this.viewType === 'station') {
-        return d3.max(this.selectedDatasets.map(name => this.groupDataset(name)).flat(), d => d.totaal);
+        const mean = d3.mean(this.selectedDatasets.map(name => this.groupDataset(name)).flat(), d => d.totaal);
+        let max = d3.max(this.selectedDatasets.map(name => this.groupDataset(name)).flat(), d => d.totaal);
+        if (max > mean * 3) {
+          max = d3.max(this.selectedDatasets.map(name => this.groupDataset(name)).flat().filter(d => d.totaal !== max), d => d.totaal);
+        }
+        return max;
       } else {
         return d3.max(this.datasets.filter(dataset => dataset.year === this.selectedYear).map(dataset => this.groupDataset(dataset.name)).flat(), d => d.totaal);
       }
