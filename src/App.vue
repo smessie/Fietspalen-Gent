@@ -84,7 +84,7 @@ export default {
       this.$nextTick(() => {
         const rect = document.getElementById('heatmaps').getBoundingClientRect();
         this.offsetX = rect.x;
-        this.offsetY = rect.y;
+        this.offsetY = 240;
       });
     }
   },
