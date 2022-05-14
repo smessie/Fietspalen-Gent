@@ -15,14 +15,14 @@
             <h2>Map</h2>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
             <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
-            <Heatmaps :selectedStation="selectedStation" :datasets="datasets" id="heatmaps" :offset-x="offsetX"
-                      :offset-y="offsetY"/>
+            <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX" :offset-y="offsetY"
+                      :selectedStation="selectedStation"/>
             <h2>Visualisatie van gemiddeld aantal fietsers per dag</h2>
-            <BarchartDailyAverages :selectedStation="selectedStation" :datasets="datasets"/>
+            <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
             <h2>Visualisatie fietsers door de jaren heen</h2>
-            <yearly-line-graph :selectedStation="selectedStation" :datasets="datasets"/>
+            <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
             <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
-            <DailyLineGraph :selectedStation="selectedStation" :datasets="datasets"/>
+            <DailyLineGraph :datasets="datasets" :selectedStation="selectedStation"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
             <weather-influence :datasets="datasets"/>
@@ -32,6 +32,21 @@
           <el-tab-pane label="Uitgelicht" name="third">
             <h2>Populariteit van de locaties per jaar</h2>
             <YearData :datasets="datasets"/>
+
+            <h2>Kan jij zien wanneer de eerste Covid-19 lockdown inging?</h2>
+            <CalendarHeatmap :max="specialHeatmapLockdownMaxValue"
+                             :name="specialHeatmapLockdownDataset.station.naam"
+                             :offset-x="offsetX"
+                             :offset-y="offsetY"
+                             :value="specialHeatmapLockdownDataset.name"
+                             :values="groupDataset(specialHeatmapLockdownDataset.name)"
+                             :year="specialHeatmapLockdownDataset.year"
+                             highlight="80"
+            />
+            <p>Herinner je je 18 maart 2020 nog? Waarschijnlijk helaas wel, het is de dag waarop de Belgische overheid
+              de eerste lockdown aankondigde omwille van Covid-19. Plots mochten we niet meer buiten komen, het ganse
+              leven viel stil, alsook onze fiets. Vanaf 18 maart zie je namelijk dat het aantal fietsers die langs de
+              fietspaal op Dampoort-Zuid passeren drastisch kelderen.</p>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -41,17 +56,19 @@
 
 <script>
 import Heatmaps from './components/Heatmaps.vue';
-import DailyLineGraph from './components/DailyLineGraph.vue'
-import BarchartDailyAverages from './components/BarchartDailyAverages.vue'
-import Map from './components/Map.vue'
-import YearData from './components/YearData.vue'
-import YearlyLineGraph from './components/YearlyLineGraph.vue'
-import {getDatasets, load as loadBicyclingData} from '/src/js/bicycling-data.js';
-import {ref} from 'vue'
+import DailyLineGraph from './components/DailyLineGraph.vue';
+import BarchartDailyAverages from './components/BarchartDailyAverages.vue';
+import Map from './components/Map.vue';
+import YearData from './components/YearData.vue';
+import YearlyLineGraph from './components/YearlyLineGraph.vue';
+import {getDataset, getDatasets, groupPerDay, load as loadBicyclingData} from '/src/js/bicycling-data.js';
+import {ref} from 'vue';
 import {load as loadWeatherData} from '/src/js/weather-data.js';
 import BarLineGraph from './components/BarLineGraph.vue';
 import WeatherInfluence from './components/WeatherInfluence.vue';
-import BarchartsRain from './components/BarchartsRain.vue'
+import BarchartsRain from './components/BarchartsRain.vue';
+import * as d3 from 'd3';
+import CalendarHeatmap from './components/CalendarHeatmap.vue';
 
 export default {
   components: {
@@ -64,6 +81,7 @@ export default {
     YearlyLineGraph,
     WeatherInfluence,
     BarchartsRain,
+    CalendarHeatmap
   },
   data() {
     return {
@@ -73,7 +91,9 @@ export default {
       bicycleDataLoaded: false,
       weatherDataLoaded: false,
       offsetX: 0,
-      offsetY: 0
+      offsetY: 0,
+      specialHeatmapLockdownDataset: null,
+      specialHeatmapLockdownMaxValue: 0
     }
   },
   methods: {
@@ -86,6 +106,13 @@ export default {
         this.offsetX = rect.x;
         this.offsetY = 240;
       });
+    },
+    groupDataset(name) {
+      return groupPerDay(getDataset(name));
+    },
+    setupSpecialHeatmapLockdown() {
+      this.specialHeatmapLockdownDataset = this.datasets.find(dataset => dataset.name === 'dampoort-zuid-2020');
+      this.specialHeatmapLockdownMaxValue = d3.max(this.groupDataset(this.specialHeatmapLockdownDataset.name).flat(), d => d.totaal);
     }
   },
   mounted() {
@@ -97,6 +124,7 @@ export default {
     });
     loadBicyclingData().then(() => {
       this.bicycleDataLoaded = true;
+      this.setupSpecialHeatmapLockdown();
       if (this.weatherDataLoaded) {
         this.configureHeatmapsOffset();
       }

@@ -14,7 +14,8 @@ export default {
     'values',
     'max',
     'offsetX',
-    'offsetY'
+    'offsetY',
+    'highlight'
   ],
   mounted() {
     this.makeGraph();
@@ -57,6 +58,8 @@ export default {
           .attr('width', 13)
           .attr('height', 13)
           .attr('fill', d => d.totaal === 0 ? 'lightgray' : cScale(d.totaal))
+          .attr('stroke', (d, i) => this.highlight && parseInt(this.highlight) === i ? 'red' : '')
+          .attr('stroke-width', (d, i) => this.highlight && parseInt(this.highlight) === i ? '3' : '')
           .on('mouseover', (event, d) => {
             div.transition()
                 .duration(200)
