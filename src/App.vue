@@ -214,6 +214,12 @@ h2 {
   padding-top: 32px;
 }
 
+p {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* BICYCLING LOADING ANIMATION, src: https://cssloaders.github.io */
 .loader {
   width: 106px;
