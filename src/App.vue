@@ -42,8 +42,10 @@
               <DailyLineGraph :datasets="datasets" :selectedStation="selectedStation"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
+            <h2>De invloed van het weer op fietsend Gent</h2>
+            <br>
             <weather-influence :datasets="datasets"/>
-            <h2>Visualisatie van gemiddeldes op regen en niet-regen dagen</h2>
+            <br>
             <BarchartsRain :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
