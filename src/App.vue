@@ -12,7 +12,6 @@
       <el-main v-else>
         <el-tabs v-model="activeName" class="demo-tabs">
           <el-tab-pane label="Fietspalen" name="first">
-            <h2>Map</h2>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
             <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
             <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX" :offset-y="offsetY"
