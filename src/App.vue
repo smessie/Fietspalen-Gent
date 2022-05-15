@@ -95,8 +95,16 @@
               verklaren door alle volwassenen en jongeren die naar hun werk of de les moeten. Dit is niet het geval op
               een zondag en dat zien we dan ook duidelijk terug op bovenstaande grafiek, waar het fietsverkeer pas
               gestaag opgang komt vanaf 10 uur. Ook de piek in de avond rond 17 uur wanneer mensen gedaan hebben met
-              werken of met school en huiswaarts keren valt niet te bespeuren tijdens het weekend. Daar merken we eerder
-              een constante drukte de ganse dag door, eerder dan 2 pieken tijdens een werkdag.</p>
+              werken of met school en huiswaarts keren valt niet te bespeuren tijdens het <b>weekend</b>. Daar merken we
+              eerder een <b>constante drukte</b> de ganse dag door, eerder dan <b>2 pieken</b> tijdens een
+              <b>werkdag</b>.</p>
+            <p>Zoals reeds naar gehint kan dus ook opgemerkt worden dat de piek die we op een <b>weekdag</b> merken in
+              de <b>ochtend veel hoger en smaller</b> is dan deze in de avond. Dit zouden we logisch kunnen verklaren
+              door het feit dat velen rond 8:30 beginnen met werken of aan hun schooldag beginnen. Iedereen moet dus
+              rond hetzelfde tijdstip op locatie zijn in de ochtend. Als we dit nu dus vergelijken met de
+              <b>avondpiek</b> dan zien we dat deze <b>veel meer verspreid</b> is. Niet iedereen heeft namelijk op
+              hetzelfde moment gedaan met school of werk, en sommigen passeren misschien nog langs bijvoorbeeld de
+              winkel voor ze hun fietsroute huiswaarts aanvatten of verderzetten.</p>
           </el-tab-pane>
         </el-tabs>
       </el-main>
