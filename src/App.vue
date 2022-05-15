@@ -19,14 +19,15 @@
               <h3>Hoeveel fietsers komen hier per dag?</h3>
               <p>Hier wordt per jaar getoond hoeveel fietsers er waren op alle dagen van het jaar. Neem eens een kijkje over de jaren heen,
                 of door de weken heen!</p>
-              <p>Er is ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar, zo kan er ook
-              vergeleken worden tussen de fietstelpalen.</p>
+              <p>Er is ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar. Selecteer hier of u
+                per paal of per jaar wilt bekijken:
+              </p>
               <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX" :offset-y="offsetY"
                         :selectedStation="selectedStation"/>
               <br>
               <h3>Wat is de evolutie over de jaren heen?</h3>
-              <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Geen zorgen als de lijn van een jaar plots stopt, 
-              dit is het gevolg van tijdelijk problemen bij de fietstelpaal.</p>
+              <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Een lijn die plots stopt is het gevolg van tijdelijk problemen bij de fietstelpaal.
+              </p>
               <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
               <br>
               <h3>Hoe ziet een gemiddelde week eruit?</h3>
@@ -35,6 +36,7 @@
                 zo dat er minder gefietst wordt tijdens het weekend.
               </p>
               <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
+              <br>
               <h3>Liever wat meer details?</h3>
               <p>Selecteer hieronder de datum waarvoor u het exact aantal fietsers wilt zien. Er wordt zowel een totaal getoond, als de 2
                 mogelijke richtingen. Om te weten hoeveel fietsers er weggaan uit Gent, kijk naar "Gent uit". Het aantal fietsers dat

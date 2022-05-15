@@ -11,6 +11,9 @@
       <el-option :value="2020"/>
       <el-option :value="2021"/>
     </el-select>
+    <br>
+    <br>
+    <br>
     <div v-for="dataset in getAllDatasets()" :key="dataset">
       <CalendarHeatmap :max="maxValue"
                        :name="dataset.station.naam"

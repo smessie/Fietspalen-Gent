@@ -23,7 +23,7 @@ export default {
 
         encoding: {
           theta: {field: 'amount', type: 'quantitative', stack: true},
-          color: {field: 'name', type: 'nominal', legend: null},
+          color: {field: 'name', type: 'nominal', legend: null, "scale": { "range": ["#4c78a8", "#fcbc7c", "#54a44c", "#9cccec", "#8cd47c", "#f4841c", "#f2cf5b"] },},
           order: {"field": "amount", "sort": "descending"},
           tooltip: [
           {"field": "name", "type": "nominal", "title": "Locatie"},
