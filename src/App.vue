@@ -11,8 +11,8 @@
       </el-main>
       <el-main v-else>
         <el-tabs v-model="activeName" class="demo-tabs">
-          <el-tab-pane label="Fietspalen" name="first">
-            <h3>In welke fietstelpaal bent u geïnteresseerd?</h3>
+          <el-tab-pane label="Fietstelpalen" name="first">
+            <h3>In welke locatie bent u geïnteresseerd?</h3>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
               <br>
               <br>
@@ -26,7 +26,7 @@
               <br>
               <h3>Wat is de evolutie over de jaren heen?</h3>
               <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Geen zorgen als de lijn van een jaar plots stopt, 
-              dit is het gevolg van een niet-functionerende fietstelpaal.</p>
+              dit is het gevolg van tijdelijk problemen bij de fietstelpaal.</p>
               <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
               <br>
               <h3>Hoe ziet een gemiddelde week eruit?</h3>
