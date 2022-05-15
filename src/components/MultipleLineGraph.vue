@@ -34,7 +34,7 @@ export default {
             encoding: {
               x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag'},
               y: {field: 'hoofdrichting', type: 'quantitative', title: 'Totaal aantal fietsers'},
-              color: {datum: getLabelForDirection(this.station, 'hoofdrichting')}
+              color: {datum: getLabelForDirection(this.station, 'hoofdrichting'),}
             }
           },
           {
