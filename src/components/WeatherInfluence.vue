@@ -36,20 +36,6 @@ export default {
       })
       return totals
     },
-    median(values){
-      if(values.length ===0) throw new Error("No inputs");
-
-      values.sort(function(a,b){
-        return a-b;
-      });
-
-      var half = Math.floor(values.length / 2);
-      
-      if (values.length % 2)
-        return values[half];
-      
-      return (values[half - 1] + values[half]) / 2.0;
-    },
     cleanUpTotals(totals) {
       Object.keys(totals).forEach(key => {
         const totalsListFiltered = totals[key].filter(amount => amount > 0)
@@ -93,7 +79,6 @@ export default {
         return {
           rainVolume: parseInt(rainVolume),
           average: totals.reduce((a, b) => a + b) / totals.length
-          //average: this.median(totals)
         }
       });
 
@@ -102,7 +87,7 @@ export default {
         data: {values: rainAverageTotal},
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'rainVolume', type: 'quantitative', title: 'neerslag in l/m^2'},
+          x: {field: 'rainVolume', type: 'nominal', title: 'neerslag in l/m^2'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers'},
         }
       };
