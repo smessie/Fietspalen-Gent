@@ -12,16 +12,34 @@
       <el-main v-else>
         <el-tabs v-model="activeName" class="demo-tabs">
           <el-tab-pane label="Fietspalen" name="first">
+            <h3>In welke fietstelpaal bent u geïnteresseerd?</h3>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
-            <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
-            <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX" :offset-y="offsetY"
-                      :selectedStation="selectedStation"/>
-            <h2>Visualisatie van gemiddeld aantal fietsers per dag</h2>
-            <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
-            <h2>Visualisatie fietsers door de jaren heen</h2>
-            <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
-            <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
-            <DailyLineGraph :datasets="datasets" :selectedStation="selectedStation"/>
+              <br>
+              <br>
+              <h3>Hoeveel fietsers komen hier per dag?</h3>
+              <p>Hier wordt per jaar getoond hoeveel fietsers er waren op alle dagen van het jaar. Neem eens een kijkje over de jaren heen,
+                of door de weken heen!</p>
+              <p>Er is ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar, zo kan er ook
+              vergeleken worden tussen de fietstelpalen.</p>
+              <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX" :offset-y="offsetY"
+                        :selectedStation="selectedStation"/>
+              <br>
+              <h3>Wat is de evolutie over de jaren heen?</h3>
+              <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Geen zorgen als de lijn van een jaar plots stopt, 
+              dit is het gevolg van een niet-functionerende fietstelpaal.</p>
+              <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
+              <br>
+              <h3>Hoe ziet een gemiddelde week eruit?</h3>
+              <p>Als u benieuwd bent hoeveel fietsers er per dag deze fietstelpaal passeren, is hier een overzicht gegeven voor het
+                gemiddeld aantal fietsers per dag van de week. Vergelijk eens de weekdagen met het weekend, valt er iets op? Het is vaak
+                zo dat er minder gefietst wordt tijdens het weekend.
+              </p>
+              <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
+              <h3>Liever wat meer details?</h3>
+              <p>Selecteer hieronder de datum waarvoor u het exact aantal fietsers wilt zien. Er wordt zowel een totaal getoond, als de 2
+                mogelijke richtingen. Om te weten hoeveel fietsers er weggaan uit Gent, kijk naar "Gent uit". Het aantal fietsers dat
+                richting Gent rijdt, wordt aangeduid door "Gent in".</p>
+              <DailyLineGraph :datasets="datasets" :selectedStation="selectedStation"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
             <weather-influence :datasets="datasets"/>
