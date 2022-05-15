@@ -85,6 +85,18 @@
               middernacht. Waar er begin 2020 na middernacht nog veel fietsers reden, was dit begin 2021 totaal niet het
               geval. Slechts enkelingen waagden zich nog op de fiets om middernacht, maar daarna is er voor enkele uren
               nagenoeg niemand op de baan.</p>
+
+
+            <h2>Ochtendstond heeft goud in de mond, maar precies niet tijdens het weekend.</h2>
+            <HighlightWeekVsWeekendLineGraph></HighlightWeekVsWeekendLineGraph>
+            <p>Laten we nu even kijken naar het verschil tussen een weekdag en een dag in het weekend. Bijvoorbeeld <b>zondag
+              19 september</b> 2021 en <b>maandag 20 september</b> 2021 bij de fietstelpaal <b>Coupure-Links</b>. We
+              zien duidelijk dat op de weekdag er veel fietsverkeer is rond 8 uur. Dit is hoogswaarschijnlijk te
+              verklaren door alle volwassenen en jongeren die naar hun werk of de les moeten. Dit is niet het geval op
+              een zondag en dat zien we dan ook duidelijk terug op bovenstaande grafiek, waar het fietsverkeer pas
+              gestaag opgang komt vanaf 10 uur. Ook de piek in de avond rond 17 uur wanneer mensen gedaan hebben met
+              werken of met school en huiswaarts keren valt niet te bespeuren tijdens het weekend. Daar merken we eerder
+              een constante drukte de ganse dag door, eerder dan 2 pieken tijdens een werkdag.</p>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -108,9 +120,11 @@ import BarchartsRain from './components/BarchartsRain.vue';
 import * as d3 from 'd3';
 import CalendarHeatmap from './components/CalendarHeatmap.vue';
 import HighlightNewYearLineGraph from './components/HighlightNewYearLineGraph.vue';
+import HighlightWeekVsWeekendLineGraph from './components/HighlightWeekVsWeekendLineGraph.vue';
 
 export default {
   components: {
+    HighlightWeekVsWeekendLineGraph,
     HighlightNewYearLineGraph,
     BarLineGraph,
     Heatmaps,
