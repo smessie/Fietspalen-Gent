@@ -14,34 +14,41 @@
           <el-tab-pane label="Fietstelpalen" name="first">
             <h3>In welke locatie bent u geïnteresseerd?</h3>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
-              <br>
-              <br>
-              <h3>Hoeveel fietsers komen hier per dag?</h3>
-              <p>Hier wordt per jaar getoond hoeveel fietsers er waren op alle dagen van het jaar. Neem eens een kijkje over de jaren heen,
-                of door de weken heen!</p>
-              <p>Er is ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar. Selecteer hier of u
-                per paal of per jaar wilt bekijken:
-              </p>
-              <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX" :offset-y="offsetY"
-                        :selectedStation="selectedStation"/>
-              <br>
-              <h3>Wat is de evolutie over de jaren heen?</h3>
-              <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Een lijn die plots stopt is het gevolg van tijdelijk problemen bij de fietstelpaal.
-              </p>
-              <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
-              <br>
-              <h3>Hoe ziet een gemiddelde week eruit?</h3>
-              <p>Als u benieuwd bent hoeveel fietsers er per dag deze fietstelpaal passeren, is hier een overzicht gegeven voor het
-                gemiddeld aantal fietsers per dag van de week. Vergelijk eens de weekdagen met het weekend, valt er iets op? Het is vaak
-                zo dat er minder gefietst wordt tijdens het weekend.
-              </p>
-              <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
-              <br>
-              <h3>Liever wat meer details?</h3>
-              <p>Selecteer hieronder de datum waarvoor u het exact aantal fietsers wilt zien. Er wordt zowel een totaal getoond, als de 2
-                mogelijke richtingen. Om te weten hoeveel fietsers er weggaan uit Gent, kijk naar "Gent uit". Het aantal fietsers dat
-                richting Gent rijdt, wordt aangeduid door "Gent in".</p>
-              <DailyLineGraph :datasets="datasets" :selectedStation="selectedStation"/>
+            <br>
+            <br>
+            <h3>Hoeveel fietsers komen hier per dag?</h3>
+            <p>Hier wordt per jaar getoond hoeveel fietsers er waren op alle dagen van het jaar. Neem eens een kijkje
+              over de jaren heen,
+              of door de weken heen!</p>
+            <p>Er is ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar. Selecteer hier
+              of u
+              per paal of per jaar wilt bekijken:
+            </p>
+            <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX" :offset-y="offsetY"
+                      :selectedStation="selectedStation"/>
+            <br>
+            <h3>Wat is de evolutie over de jaren heen?</h3>
+            <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Een lijn die plots stopt is het gevolg van
+              tijdelijk problemen bij de fietstelpaal.
+            </p>
+            <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
+            <br>
+            <h3>Hoe ziet een gemiddelde week eruit?</h3>
+            <p>Als u benieuwd bent hoeveel fietsers er per dag deze fietstelpaal passeren, is hier een overzicht gegeven
+              voor het
+              gemiddeld aantal fietsers per dag van de week. Vergelijk eens de weekdagen met het weekend, valt er iets
+              op? Het is vaak
+              zo dat er minder gefietst wordt tijdens het weekend.
+            </p>
+            <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
+            <br>
+            <h3>Liever wat meer details?</h3>
+            <p>Selecteer hieronder de datum waarvoor u het exact aantal fietsers wilt zien. Er wordt zowel een totaal
+              getoond, als de 2
+              mogelijke richtingen. Om te weten hoeveel fietsers er weggaan uit Gent, kijk naar "Gent uit". Het aantal
+              fietsers dat
+              richting Gent rijdt, wordt aangeduid door "Gent in".</p>
+            <DailyLineGraph :datasets="datasets" :selectedStation="selectedStation"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
             <h2>De invloed van het weer op fietsend Gent</h2>
@@ -65,9 +72,19 @@
                              highlight="80"
             />
             <p>Herinner je je 18 maart 2020 nog? Waarschijnlijk helaas wel, het is de dag waarop de Belgische overheid
-              de eerste lockdown aankondigde omwille van Covid-19. Plots mochten we niet meer buiten komen, het ganse
-              leven viel stil, alsook onze fiets. Vanaf 18 maart zie je namelijk dat het aantal fietsers die langs de
-              fietspaal op Dampoort-Zuid passeren drastisch kelderen.</p>
+              de <b>eerste lockdown</b> aankondigde omwille van Covid-19. Plots mochten we niet meer buiten komen, het
+              ganse leven viel stil, alsook onze fiets. Vanaf 18 maart zie je namelijk dat het aantal fietsers die langs
+              de fietspaal op <b>Dampoort-Zuid</b> passeren drastisch kelderen.</p>
+
+            <h2>Fietsend Nieuwjaar tijdens Corona, daar stak de avondklok toch flink een stokje voor!</h2>
+            <HighlightNewYearLineGraph></HighlightNewYearLineGraph>
+            <p>Helaas, nog een Corona-highlight, maar wel een mooie! Tijdens de jaarwissel van 2020 naar <b>2021</b>
+              geldde er een <b>avondklok</b> in ons land wat ons niet toeliet buiten te komen na middernacht. Laten we
+              even inzoomen op het aantal fietsers tijdens deze bijzondere jaarwisseling en deze van het jaar ervoor
+              voor de fietstelpaal aan <b>Dampoort-Zuid</b>. We zien meteen een groot verschil in het aantal fietsers na
+              middernacht. Waar er begin 2020 na middernacht nog veel fietsers reden, was dit begin 2021 totaal niet het
+              geval. Slechts enkelingen waagden zich nog op de fiets om middernacht, maar daarna is er voor enkele uren
+              nagenoeg niemand op de baan.</p>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -90,9 +107,11 @@ import WeatherInfluence from './components/WeatherInfluence.vue';
 import BarchartsRain from './components/BarchartsRain.vue';
 import * as d3 from 'd3';
 import CalendarHeatmap from './components/CalendarHeatmap.vue';
+import HighlightNewYearLineGraph from './components/HighlightNewYearLineGraph.vue';
 
 export default {
   components: {
+    HighlightNewYearLineGraph,
     BarLineGraph,
     Heatmaps,
     DailyLineGraph,
