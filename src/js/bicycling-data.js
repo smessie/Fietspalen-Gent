@@ -397,7 +397,7 @@ export default function getWeek(date, dowOffset = 0) {
     }
     return weeknum;
   } else {
-    return Math.floor((daynum + day - 1) / 7);
+    return Math.floor((daynum + day - 1) / 7) +1;
   }
 }
 
