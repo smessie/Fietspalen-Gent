@@ -23,11 +23,26 @@ export default {
 
         encoding: {
           theta: {field: 'amount', type: 'quantitative', stack: true},
-          color: {field: 'name', type: 'nominal', legend: null, "scale": { "range": ["#4c78a8", "#fcbc7c", "#54a44c", "#9cccec", "#8cd47c", "#f4841c", "#f2cf5b"] },},
-          order: {"field": "amount", "sort": "descending"},
+          color: {
+            field: 'name',
+            type: 'nominal',
+            legend: null,
+            scale: {
+              range: ['#4c78a8', '#fcbc7c', '#54a44c', '#9cccec', '#8cd47c', '#f4841c', '#f2cf5b'],
+              domain: [
+                  'Bataviabrug',
+                  'Zuidparklaan',
+                  'Groendreef',
+                  'Bijlokekaai',
+                  'Gaardeniersbrug',
+                  'Coupure Links',
+                  'Dampoort-Zuid'
+              ]
+            },
+          },
           tooltip: [
-          {"field": "name", "type": "nominal", "title": "Locatie"},
-          {"field": "amount", "type": "quantitative", "title": "Fietsers"}]
+            {'field': 'name', 'type': 'nominal', 'title': 'Locatie'},
+            {'field': 'amount', 'type': 'quantitative', 'title': 'Fietsers'}]
         },
         layer: [
           {
