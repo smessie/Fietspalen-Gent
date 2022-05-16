@@ -37,7 +37,7 @@ export default {
               color: {
                 datum: getLabelForDirection(this.station, 'hoofdrichting'),
                 scale: {
-                  range: ['#92d28f', '#4ca1fc']
+                  range: ['#92d28f', '#0266d4']
                 }
               }
             }
@@ -50,7 +50,7 @@ export default {
               color: {
                 datum: getLabelForDirection(this.station, 'tegenrichting'),
                 scale: {
-                  range: ['#92d28f', '#4ca1fc']
+                  range: ['#92d28f', '#0266d4']
                 }
               }
             },

@@ -30,7 +30,7 @@ export default {
             encoding: {
               x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag'},
               y: {field: 'totaal', type: 'quantitative', title: 'Totaal aantal fietsers'},
-              color: {value:"#0266d4"},
+              color: {value:"#4ca1fc"},
             }
           },
         ],
