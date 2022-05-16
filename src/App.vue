@@ -113,6 +113,13 @@
               werken of met school en huiswaarts keren valt niet te bespeuren tijdens het <b>weekend</b>. Daar merken we
               eerder een <b>constante drukte</b> de ganse dag door, eerder dan <b>2 pieken</b> tijdens een
               <b>werkdag</b>.</p>
+
+            <br>
+            <p>Laten we nu even inzoomen naar enkel deze maandag en het totaal aantal fietsers opsplitsen tussen deze
+              die Gent inwaarts fietsen en deze die Gent uitwaarts fietsen. Dit doen we voor dezelfde fietstelpaal <b>Coupure-Links</b>
+              en op deze zelfde maandag.</p>
+
+            <HighlightPeaksLineGraph></HighlightPeaksLineGraph>
             <p>Zoals reeds naar gehint kan dus ook opgemerkt worden dat de piek die we op een <b>weekdag</b> merken in
               de <b>ochtend veel hoger en smaller</b> is dan deze in de avond. Dit zouden we logisch kunnen verklaren
               door het feit dat velen rond 8:30 beginnen met werken of aan hun schooldag beginnen. Iedereen moet dus
@@ -120,6 +127,10 @@
               <b>avondpiek</b> dan zien we dat deze <b>veel meer verspreid</b> is. Niet iedereen heeft namelijk op
               hetzelfde moment gedaan met school of werk, en sommigen passeren misschien nog langs bijvoorbeeld de
               winkel voor ze hun fietsroute huiswaarts aanvatten of verderzetten.</p>
+            <p>Kijken we specifiek naar het verschil tussen de 2 lijnen dan kunnen we opmerken dat voor deze
+              fietstelpaal er een duidelijk verschil te merken is. We zien dat mensen die deze weg nemen voornamelijk
+              buiten het stadscentrum wonen en voor hun werk of school inwaarts moeten aangezien de piek in de ochtend
+              het grootst is voor Gent in.</p>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -144,9 +155,11 @@ import * as d3 from 'd3';
 import CalendarHeatmap from './components/CalendarHeatmap.vue';
 import HighlightNewYearLineGraph from './components/HighlightNewYearLineGraph.vue';
 import HighlightWeekVsWeekendLineGraph from './components/HighlightWeekVsWeekendLineGraph.vue';
+import HighlightPeaksLineGraph from './components/HighlightPeaksLineGraph.vue';
 
 export default {
   components: {
+    HighlightPeaksLineGraph,
     HighlightWeekVsWeekendLineGraph,
     HighlightNewYearLineGraph,
     BarLineGraph,
