@@ -2,21 +2,33 @@
   <div>
     <h3>Hoe warm is te warm?</h3>
     <p>Hier bekijken we de invloed van de temperatuur.
-      Er is duidelijk een stijging van het dagelijks aantal fietsers te zien bij warmere temperaturen. Merk op dat vanaf 30°C, het toch wat te 
+      Er is duidelijk een stijging van het dagelijks aantal fietsers te zien bij warmere temperaturen. Merk op dat vanaf 31°C, het toch wat te 
       heet wordt voor de Gentenaars. Ook bij heel koude temperaturen wordt er minder voor de fiets gekozen.
     </p>
     <div id="temperature-influence-vis"/>
+    <p>Hieronder wordt meer in detail getoond wat de invloed is van het weer per fietstelpaal. Aangezien niet alle fietstelpalen beschikbaar waren
+      op dezelfde momenten, zijn er soms geen metingen gebeurd. Toch kunnen we dezelfde conclusie trekken voor de meeste locaties. Bij heel lage of heel hoge metingen,
+      zijn er minder fietsers. Het is valt ook op dat voor sommige locaties, het weer minder invloed heeft.
+    </p>
     <div id="temperature-scatter"/>
     <br>
     <h3>Een beetje tegenwind moet wel kunnen...</h3>
     <p>Of toch niet? Het lijkt erop dat niet enkel de temperatuur, maar ook de wind een impact heeft op wie er die dag de fiets bovenhaalt.
     </p>
     <div id="wind-influence-vis"></div>
+    <p>Als we hier ook meer in detail gaan, zien we opnieuw dat voor sommige fietstelpalen er niet zo veel invloed is. Neem bv. eens een kijkje
+      naar Bataviabrug.
+      De invloed over de andere fietstelpalen is ook niet heel sterk, maar op een heel winderige dag (zie bv. 63km/u) is het toch wel opmerkzaam dat het fietsen zo goed als stil ligt.
+    </p>
     <div id="wind-scatter"/>
     <br>
     <h3>Hoe zit het met de regen?</h3>
-    <p>(todo) Hier moet nog een betere grafiek/methode gevonden worden voor een verklaring.</p>
+    <p>In onderstaande grafiek is er een lichte dalende trend te zien in het aantal fietsers tegenover de regen, maar dit is niet zo duidelijk door een paar uitschieters.</p>
     <div id="rain-influence-vis"/>
+    <p>Hieronder zien we wel een verschil tussen de uitsterte punten. Het aantal fietsers op een helemaal droge dag (0 liter neerslag),
+      of op een heel natte dag (19 liter neerslag) is opvallend. De punten hiertussen, lijken in het algemeen wel te dalen, maar het is interessant om te zien
+      dat het ook heel hard kan schommelen, en misschien zelfs wat op toeval kan aankomen.
+    </p>
     <div id="rain-scatter"/>
   </div>
 </template>
@@ -95,8 +107,8 @@ export default {
         width: 700,
         mark: 'point',
         encoding: {
-          x: {field: 'temperature', type: 'quantitative', title: 'temperatuur in °C' },
-          y: {field: 'average', type: 'quantitative', title: 'aantal fietsers'},
+          x: {field: 'temperature', type: 'quantitative', title: 'maximum temperatuur in °C' },
+          y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
           color: {field: 'station', type: 'nominal'}
         }
       };
@@ -142,7 +154,7 @@ export default {
         data: {values: rainAverageTotal},
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'rainVolume', type: 'nominal', title: 'neerslag in l/m^2'},
+          x: {field: 'rainVolume', type: 'nominal', title: 'totale dagneerslag in l/m^2'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
         }
       };
@@ -172,8 +184,8 @@ export default {
         width: 700,
         mark: 'point',
         encoding: {
-          x: {field: 'rainVolume', type: 'quantitative', title: 'neerslag in l/m^2' },
-          y: {field: 'average', type: 'quantitative', title: 'aantal fietsers'},
+          x: {field: 'rainVolume', type: 'quantitative', title: 'totale dagneerslag in l/m^2' },
+          y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
           color: {field: 'station', type: 'nominal'}
         }
       };
@@ -226,8 +238,8 @@ export default {
         width: 700,
         mark: 'point',
         encoding: {
-          x: {field: 'averageWindSpeed', type: 'quantitative', title: 'neerslag in l/m^2' },
-          y: {field: 'average', type: 'quantitative', title: 'aantal fietsers'},
+          x: {field: 'averageWindSpeed', type: 'quantitative', title: 'gemiddelde windsnelheid in km/u' },
+          y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
           color: {field: 'station', type: 'nominal'}
         }
       };

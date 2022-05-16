@@ -70,6 +70,9 @@
             <br>
             <weather-influence :datasets="datasets"/>
             <br>
+            <p>Om toch een overzicht te kunnen krijgen van de algemene invloed van de regen, tonen we hier het verschil
+              tussen het gemiddeld aantal fietsers over alle locaties op een regendag of een droge dag doorheen de week.
+            </p>
             <BarchartsRain :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
