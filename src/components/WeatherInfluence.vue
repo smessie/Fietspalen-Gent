@@ -12,6 +12,7 @@
     <p>Of toch niet? Het lijkt erop dat niet enkel de temperatuur, maar ook de wind een impact heeft op wie er die dag de fiets bovenhaalt.
     </p>
     <div id="wind-influence-vis"></div>
+    <div id="wind-scatter"/>
     <br>
     <h3>Hoe zit het met de regen?</h3>
     <p>(todo) Hier moet nog een betere grafiek/methode gevonden worden voor een verklaring.</p>
@@ -148,6 +149,8 @@ export default {
 
       vegaEmbed('#rain-influence-vis', chart_rain);
 
+      // ====================================================================================================
+
       const rainTotalsByDataset = {}
       Object.entries(bikesByDayByDataset).forEach(([stationName, bikes]) => {
         rainTotalsByDataset[stationName] = this.cleanUpTotals(bucketObject(this.cleanUpTotals(this.makeTotalsListFor(bikes, dayToData, "rainVolume")), 30))
@@ -201,6 +204,36 @@ export default {
       vegaEmbed('#wind-influence-vis', chart_wind);
 
       // ====================================================================================================
+
+      const windTotalsByDataset = {}
+      Object.entries(bikesByDayByDataset).forEach(([stationName, bikes]) => {
+        windTotalsByDataset[stationName] = this.cleanUpTotals(bucketObject(this.cleanUpTotals(this.makeTotalsListFor(bikes, dayToData, "averageWindSpeed")), 30))
+      })
+
+      const windScatterData = Object.entries(windTotalsByDataset).map(([stationName, data]) => {
+        return Object.entries(data).map(([averageWindSpeed, totals]) => {
+          return {
+            averageWindSpeed: parseInt(averageWindSpeed),
+            average: totals.reduce((a, b) => a + b) / totals.length,
+            station: stationName,
+          }
+        });
+      }).flat()
+
+      const windscater = {
+        $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+        data: {values: windScatterData},
+        width: 700,
+        mark: 'point',
+        encoding: {
+          x: {field: 'averageWindSpeed', type: 'quantitative', title: 'neerslag in l/m^2' },
+          y: {field: 'average', type: 'quantitative', title: 'aantal fietsers'},
+          color: {field: 'station', type: 'nominal'}
+        }
+      };
+
+      vegaEmbed('#wind-scatter', windscater);
+
     },
   },
   mounted() {
