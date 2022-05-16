@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="selectedStation">
     <el-select v-if="datasets" v-model="viewType" placeholder="Selecteer">
       <el-option label="geselecteerde paal" value="station"/>
       <el-option label="per jaar" value="year"/>

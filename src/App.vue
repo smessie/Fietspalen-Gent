@@ -16,38 +16,53 @@
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
             <br>
             <br>
-            <h3>Hoeveel fietsers komen hier per dag?</h3>
-            <p>Hier wordt per jaar getoond hoeveel fietsers er waren op alle dagen van het jaar. Neem eens een kijkje
-              over de jaren heen,
-              of door de weken heen!</p>
-            <p>Er is ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar. Selecteer hier
-              of u
-              per paal of per jaar wilt bekijken:
-            </p>
-            <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX" :offset-y="offsetY"
+            <div v-if="!selectedStation">
+              <p>Selecteer een fietstelpaal op de kaart om specifieke visualisaties te zien te krijgen.</p>
+            </div>
+            <div v-if="selectedStation">
+              <h3>Hoeveel fietsers komen hier per dag?</h3>
+              <p>Hier wordt per jaar getoond hoeveel fietsers er waren op alle dagen van het jaar. Neem eens een kijkje
+                over de jaren heen,
+                of door de weken heen!</p>
+              <p>Er is ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar. Selecteer
+                hier
+                of u
+                per paal of per jaar wilt bekijken:
+              </p>
+            </div>
+            <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX"
+                      :offset-y="offsetY"
                       :selectedStation="selectedStation"/>
-            <br>
-            <h3>Wat is de evolutie over de jaren heen?</h3>
-            <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Een lijn die plots stopt is het gevolg van
-              tijdelijk problemen bij de fietstelpaal.
-            </p>
+            <div v-if="selectedStation">
+              <br>
+              <h3>Wat is de evolutie over de jaren heen?</h3>
+              <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Een lijn die plots stopt is het gevolg
+                van
+                tijdelijk problemen bij de fietstelpaal.
+              </p>
+            </div>
             <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
-            <br>
-            <h3>Hoe ziet een gemiddelde week eruit?</h3>
-            <p>Als u benieuwd bent hoeveel fietsers er per dag deze fietstelpaal passeren, is hier een overzicht gegeven
-              voor het
-              gemiddeld aantal fietsers per dag van de week. Vergelijk eens de weekdagen met het weekend, valt er iets
-              op? Het is vaak
-              zo dat er minder gefietst wordt tijdens het weekend.
-            </p>
+            <div v-if="selectedStation">
+              <br>
+              <h3>Hoe ziet een gemiddelde week eruit?</h3>
+              <p>Als u benieuwd bent hoeveel fietsers er per dag deze fietstelpaal passeren, is hier een overzicht
+                gegeven
+                voor het
+                gemiddeld aantal fietsers per dag van de week. Vergelijk eens de weekdagen met het weekend, valt er iets
+                op? Het is vaak
+                zo dat er minder gefietst wordt tijdens het weekend.
+              </p>
+            </div>
             <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
-            <br>
-            <h3>Liever wat meer details?</h3>
-            <p>Selecteer hieronder de datum waarvoor u het exact aantal fietsers wilt zien. Er wordt zowel een totaal
-              getoond, als de 2
-              mogelijke richtingen. Om te weten hoeveel fietsers er weggaan uit Gent, kijk naar "Gent uit". Het aantal
-              fietsers dat
-              richting Gent rijdt, wordt aangeduid door "Gent in".</p>
+            <div v-if="selectedStation">
+              <br>
+              <h3>Liever wat meer details?</h3>
+              <p>Selecteer hieronder de datum waarvoor u het exact aantal fietsers wilt zien. Er wordt zowel een totaal
+                getoond, als de 2
+                mogelijke richtingen. Om te weten hoeveel fietsers er weggaan uit Gent, kijk naar "Gent uit". Het aantal
+                fietsers dat
+                richting Gent rijdt, wordt aangeduid door "Gent in".</p>
+            </div>
             <DailyLineGraph :datasets="datasets" :selectedStation="selectedStation"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
@@ -161,6 +176,9 @@ export default {
   methods: {
     changeSelected(newStation) {
       this.selectedStation = newStation;
+      if (newStation !== null) {
+        this.configureHeatmapsOffset();
+      }
     },
     configureHeatmapsOffset() {
       this.$nextTick(() => {
@@ -180,16 +198,10 @@ export default {
   mounted() {
     loadWeatherData().then(() => {
       this.weatherDataLoaded = true;
-      if (this.bicycleDataLoaded) {
-        this.configureHeatmapsOffset();
-      }
     });
     loadBicyclingData().then(() => {
       this.bicycleDataLoaded = true;
       this.setupSpecialHeatmapLockdown();
-      if (this.weatherDataLoaded) {
-        this.configureHeatmapsOffset();
-      }
     });
   }
 }

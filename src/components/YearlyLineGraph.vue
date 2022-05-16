@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="selectedDatasets">
+    <div v-if="selectedDatasets && selectedStation">
       <div id="year-compare-vis"></div>
     </div>
   </div>

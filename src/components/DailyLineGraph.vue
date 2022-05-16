@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="display:flex">
+    <div v-if="selectedDataset" style="display:flex">
       <el-select v-model="selectedDataset" placeholder="Select">
         <el-option v-for="dataset in datasets"
                    :key="dataset.name"
@@ -25,7 +25,7 @@
       <VegaLineGraph :data="hourlyDayRecords"/>
       <MultipleLineGraph :data="hourlyDayRecords" :station="selectedDataset.substring(0, selectedDataset.length - 5)"/>
     </div>
-    <p v-else>Selecteer eerst een fietstelpaal en datum om de visualisatie te zien te krijgen.</p>
+    <p v-else-if="selectedDataset">Selecteer eerst een fietstelpaal en datum om de visualisatie te zien te krijgen.</p>
   </div>
 </template>
 

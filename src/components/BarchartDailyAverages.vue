@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="selectedDatasets">
+    <div v-if="selectedDatasets && selectedStation">
       <BarChart :name="'barchart'" :data="dailyData"/>
     </div>
   </div>
