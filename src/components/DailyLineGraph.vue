@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="selectedDataset" style="display:flex">
+    <div v-if="selectedDataset">
       <el-select v-model="selectedDataset" placeholder="Select">
         <el-option v-for="dataset in datasets"
                    :key="dataset.name"
