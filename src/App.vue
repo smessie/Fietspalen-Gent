@@ -84,7 +84,7 @@
                              :value="specialHeatmapLockdownDataset.name"
                              :values="groupDataset(specialHeatmapLockdownDataset.name)"
                              :year="specialHeatmapLockdownDataset.year"
-                             highlight="80"
+                             highlight="79"
             />
             <p>Herinner je je 18 maart 2020 nog? Waarschijnlijk helaas wel, het is de dag waarop de Belgische overheid
               de <b>eerste lockdown</b> aankondigde omwille van Covid-19. Plots mochten we niet meer buiten komen, het
