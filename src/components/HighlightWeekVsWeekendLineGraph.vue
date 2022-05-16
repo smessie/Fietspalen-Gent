@@ -41,7 +41,12 @@ export default {
             encoding: {
               x: {field: 'd1.time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag', sort: null},
               y: {field: 'd1.totaal', type: 'quantitative', title: 'Totaal aantal fietsers'},
-              color: {datum: 'Zondag'}
+              color: {
+                datum: 'Zondag',
+                scale: {
+                  range: ['#92d28f', '#0266d4']
+                }
+              }
             }
           },
           {
@@ -49,7 +54,12 @@ export default {
             encoding: {
               x: {field: 'd2.time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag', sort: null},
               y: {field: 'd2.totaal', type: 'quantitative', title: 'Totaal aantal fietsers'},
-              color: {datum: 'Maandag'}
+              color: {
+                datum: 'Maandag',
+                scale: {
+                  range: ['#92d28f', '#0266d4']
+                }
+              }
             },
           },
         ],
