@@ -76,7 +76,8 @@
             <BarchartsRain :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
-            <h2>Populariteit van de locaties per jaar</h2>
+            <h2>Wat zijn de populairste locaties van het jaar?</h2>
+            <p>Bekijk hier welke fietsstraten het meest gebruikt werden. </p>
             <YearData :datasets="datasets"/>
 
             <h2>Kan jij zien wanneer de eerste Covid-19 lockdown inging?</h2>
