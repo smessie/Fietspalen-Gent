@@ -87,7 +87,7 @@
                              :value="specialHeatmapLockdownDataset.name"
                              :values="groupDataset(specialHeatmapLockdownDataset.name)"
                              :year="specialHeatmapLockdownDataset.year"
-                             highlight="80"
+                             highlight="79"
             />
             <p>Herinner je je 18 maart 2020 nog? Waarschijnlijk helaas wel, het is de dag waarop de Belgische overheid
               de <b>eerste lockdown</b> aankondigde omwille van Covid-19. Plots mochten we niet meer buiten komen, het
@@ -138,6 +138,9 @@
         </el-tabs>
       </el-main>
     </el-container>
+    <footer>
+      <small>Gevisualiseerd met dank aan de datasets van <a href="https://data.stad.gent/explore/?disjunctive.keyword&disjunctive.theme&sort=modified&q=fietstelpaal">Open Data Portaal Stad Gent</a> en het <a href="https://vlinder.ugent.be/">VLINDER project</a>.</small>
+    </footer>
   </div>
 </template>
 
@@ -246,6 +249,10 @@ p {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+
+footer {
+  margin-top: 4em;
 }
 
 /* BICYCLING LOADING ANIMATION, src: https://cssloaders.github.io */

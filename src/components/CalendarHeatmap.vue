@@ -23,7 +23,7 @@ export default {
   methods: {
     makeGraph: function () {
       const firstDayOfYear = new Date(this.year, 0, 1);
-      const daysOffset = new Date(this.year, 0, 1).getDay() - 1;
+      const daysOffset = new Date(this.year, 0, 1).getDay() - 2;
       const dataset = Array.from(Array(371).keys()).map(i => ({
         date: new Date(new Date().setTime(firstDayOfYear.getTime() + (i - daysOffset - 1) * (24 * 60 * 60 * 1000))),
         totaal: 0,
