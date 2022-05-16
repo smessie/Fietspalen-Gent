@@ -59,18 +59,19 @@ export default {
       return totals
     },
     async setLineGraph() {
+      // for lines
       const bikesByDay = groupDatasetsByDay(getAllDatasets())
       const weatherByDay = groupWeatherByDay(getWeatherData())
       const dayToData = d3.group(weatherByDay, (day) => day.date);
 
-      // ====================================================================================================
-
+      // for scatters
       const stationDatasets = groupDatasetsByStation(getDatasets())
       const bikesByDayByDataset = {}
-
       Array.from(stationDatasets).forEach(([station, datasets]) => {
         bikesByDayByDataset[station] = groupDatasetsByDay(datasets.map(dataset => getDataset(dataset.name)))
       })
+
+      // ====================================================================================================
 
       const temperatureTotalsByDataset = {}
       Object.entries(bikesByDayByDataset).forEach(([stationName, bikes]) => {
@@ -87,7 +88,7 @@ export default {
         });
       }).flat()
 
-      const testchart = {
+      const tempscatter = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {values: temperatureScatterData},
         width: 700,
@@ -99,7 +100,7 @@ export default {
         }
       };
 
-      vegaEmbed('#temperature-scatter', testchart);
+      vegaEmbed('#temperature-scatter', tempscatter);
 
       // ====================================================================================================
 
@@ -146,6 +147,35 @@ export default {
       };
 
       vegaEmbed('#rain-influence-vis', chart_rain);
+
+      const rainTotalsByDataset = {}
+      Object.entries(bikesByDayByDataset).forEach(([stationName, bikes]) => {
+        rainTotalsByDataset[stationName] = this.cleanUpTotals(bucketObject(this.cleanUpTotals(this.makeTotalsListFor(bikes, dayToData, "rainVolume")), 30))
+      })
+
+      const rainScatterData = Object.entries(rainTotalsByDataset).map(([stationName, data]) => {
+        return Object.entries(data).map(([rainVolume, totals]) => {
+          return {
+            rainVolume: parseInt(rainVolume),
+            average: totals.reduce((a, b) => a + b) / totals.length,
+            station: stationName,
+          }
+        });
+      }).flat()
+
+      const rainscater = {
+        $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+        data: {values: rainScatterData},
+        width: 700,
+        mark: 'point',
+        encoding: {
+          x: {field: 'rainVolume', type: 'quantitative', title: 'neerslag in l/m^2' },
+          y: {field: 'average', type: 'quantitative', title: 'aantal fietsers'},
+          color: {field: 'station', type: 'nominal'}
+        }
+      };
+
+      vegaEmbed('#rain-scatter', rainscater);
 
       // ====================================================================================================
 
