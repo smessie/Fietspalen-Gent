@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="selectedDatasets">
+    <div v-if="selectedDatasets && selectedStation">
       <div id="year-compare-vis"></div>
     </div>
   </div>
@@ -47,7 +47,7 @@ export default {
         encoding: {
           x: {field: 'week', type: 'nominal', title: 'Week nummer'},
           y: {field: 'totaal', type: 'quantitative', title: 'Totaal aantal fietsers'},
-          color: {field: 'year', type: 'ordinal'}
+          color: {field: 'year', type: 'ordinal', 'scale': {range: ["#e1edfa", "#a2ccfa", "#4ca1fc", "#0266d4"], type:"linear"},},
         }
       };
 

@@ -35,6 +35,7 @@ export default {
                 sort: weekdays
               },
               y: {field: 'total', aggregate: 'sum', title: 'Gemiddeld aantal fietsers'},
+              color: {value:'#92d28f'},
             }
           },
         ],

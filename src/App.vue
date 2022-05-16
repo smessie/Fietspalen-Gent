@@ -10,22 +10,66 @@
         <p>De data wordt momenteel ingeladen...</p>
       </el-main>
       <el-main v-else>
-        <el-tabs v-model="activeName" class="demo-tabs">
-          <el-tab-pane label="Fietspalen" name="first">
+        <el-tabs v-model="activeName" class="demo-tabs" stretch="true">
+          <el-tab-pane label="Fietstelpalen" name="first">
+            <h3>In welke locatie bent u geïnteresseerd?</h3>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
-            <h2>Heatmap visualisatie van aantal fietsers voor bepaald station</h2>
-            <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX" :offset-y="offsetY"
+            <br>
+            <br>
+            <div v-if="!selectedStation">
+              <p>Selecteer een fietstelpaal op de kaart om specifieke visualisaties te zien te krijgen.</p>
+            </div>
+            <div v-if="selectedStation">
+              <h3>Hoeveel fietsers komen hier per dag?</h3>
+              <p>Hier wordt per jaar getoond hoeveel fietsers er waren op alle dagen van het jaar. Neem eens een kijkje
+                over de jaren heen,
+                of door de weken heen!</p>
+              <p>Er is ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar. Selecteer
+                hier
+                of u
+                per paal of per jaar wilt bekijken:
+              </p>
+            </div>
+            <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX"
+                      :offset-y="offsetY"
                       :selectedStation="selectedStation"/>
-            <h2>Visualisatie van gemiddeld aantal fietsers per dag</h2>
-            <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
-            <h2>Visualisatie fietsers door de jaren heen</h2>
+            <div v-if="selectedStation">
+              <br>
+              <h3>Wat is de evolutie over de jaren heen?</h3>
+              <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Een lijn die plots stopt is het gevolg
+                van
+                tijdelijk problemen bij de fietstelpaal.
+              </p>
+            </div>
             <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
-            <h2>Dag visualisatie van aantal fietsers voor bepaald station</h2>
+            <div v-if="selectedStation">
+              <br>
+              <h3>Hoe ziet een gemiddelde week eruit?</h3>
+              <p>Als u benieuwd bent hoeveel fietsers er per dag deze fietstelpaal passeren, is hier een overzicht
+                gegeven
+                voor het
+                gemiddeld aantal fietsers per dag van de week. Vergelijk eens de weekdagen met het weekend, valt er iets
+                op? Het is vaak
+                zo dat er minder gefietst wordt tijdens het weekend.
+              </p>
+            </div>
+            <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
+            <div v-if="selectedStation">
+              <br>
+              <h3>Liever wat meer details?</h3>
+              <p>Selecteer hieronder de datum waarvoor u het exact aantal fietsers wilt zien. Er wordt zowel een totaal
+                getoond, als de 2
+                mogelijke richtingen. Om te weten hoeveel fietsers er weggaan uit Gent, kijk naar "Gent uit". Het aantal
+                fietsers dat
+                richting Gent rijdt, wordt aangeduid door "Gent in".</p>
+            </div>
             <DailyLineGraph :datasets="datasets" :selectedStation="selectedStation"/>
           </el-tab-pane>
           <el-tab-pane label="Weer" name="second">
+            <h2>De invloed van het weer op fietsend Gent</h2>
+            <br>
             <weather-influence :datasets="datasets"/>
-            <h2>Visualisatie van gemiddeldes op regen en niet-regen dagen</h2>
+            <br>
             <BarchartsRain :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
@@ -43,9 +87,39 @@
                              highlight="80"
             />
             <p>Herinner je je 18 maart 2020 nog? Waarschijnlijk helaas wel, het is de dag waarop de Belgische overheid
-              de eerste lockdown aankondigde omwille van Covid-19. Plots mochten we niet meer buiten komen, het ganse
-              leven viel stil, alsook onze fiets. Vanaf 18 maart zie je namelijk dat het aantal fietsers die langs de
-              fietspaal op Dampoort-Zuid passeren drastisch kelderen.</p>
+              de <b>eerste lockdown</b> aankondigde omwille van Covid-19. Plots mochten we niet meer buiten komen, het
+              ganse leven viel stil, alsook onze fiets. Vanaf 18 maart zie je namelijk dat het aantal fietsers die langs
+              de fietspaal op <b>Dampoort-Zuid</b> passeren drastisch kelderen.</p>
+
+            <h2>Fietsend Nieuwjaar tijdens Corona, daar stak de avondklok toch flink een stokje voor!</h2>
+            <HighlightNewYearLineGraph></HighlightNewYearLineGraph>
+            <p>Helaas, nog een Corona-highlight, maar wel een mooie! Tijdens de jaarwissel van 2020 naar <b>2021</b>
+              geldde er een <b>avondklok</b> in ons land wat ons niet toeliet buiten te komen na middernacht. Laten we
+              even inzoomen op het aantal fietsers tijdens deze bijzondere jaarwisseling en deze van het jaar ervoor
+              voor de fietstelpaal aan <b>Dampoort-Zuid</b>. We zien meteen een groot verschil in het aantal fietsers na
+              middernacht. Waar er begin 2020 na middernacht nog veel fietsers reden, was dit begin 2021 totaal niet het
+              geval. Slechts enkelingen waagden zich nog op de fiets om middernacht, maar daarna is er voor enkele uren
+              nagenoeg niemand op de baan.</p>
+
+
+            <h2>Ochtendstond heeft goud in de mond, maar precies niet tijdens het weekend.</h2>
+            <HighlightWeekVsWeekendLineGraph></HighlightWeekVsWeekendLineGraph>
+            <p>Laten we nu even kijken naar het verschil tussen een weekdag en een dag in het weekend. Bijvoorbeeld <b>zondag
+              19 september</b> 2021 en <b>maandag 20 september</b> 2021 bij de fietstelpaal <b>Coupure-Links</b>. We
+              zien duidelijk dat op de weekdag er veel fietsverkeer is rond 8 uur. Dit is hoogswaarschijnlijk te
+              verklaren door alle volwassenen en jongeren die naar hun werk of de les moeten. Dit is niet het geval op
+              een zondag en dat zien we dan ook duidelijk terug op bovenstaande grafiek, waar het fietsverkeer pas
+              gestaag opgang komt vanaf 10 uur. Ook de piek in de avond rond 17 uur wanneer mensen gedaan hebben met
+              werken of met school en huiswaarts keren valt niet te bespeuren tijdens het <b>weekend</b>. Daar merken we
+              eerder een <b>constante drukte</b> de ganse dag door, eerder dan <b>2 pieken</b> tijdens een
+              <b>werkdag</b>.</p>
+            <p>Zoals reeds naar gehint kan dus ook opgemerkt worden dat de piek die we op een <b>weekdag</b> merken in
+              de <b>ochtend veel hoger en smaller</b> is dan deze in de avond. Dit zouden we logisch kunnen verklaren
+              door het feit dat velen rond 8:30 beginnen met werken of aan hun schooldag beginnen. Iedereen moet dus
+              rond hetzelfde tijdstip op locatie zijn in de ochtend. Als we dit nu dus vergelijken met de
+              <b>avondpiek</b> dan zien we dat deze <b>veel meer verspreid</b> is. Niet iedereen heeft namelijk op
+              hetzelfde moment gedaan met school of werk, en sommigen passeren misschien nog langs bijvoorbeeld de
+              winkel voor ze hun fietsroute huiswaarts aanvatten of verderzetten.</p>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -68,9 +142,13 @@ import WeatherInfluence from './components/WeatherInfluence.vue';
 import BarchartsRain from './components/BarchartsRain.vue';
 import * as d3 from 'd3';
 import CalendarHeatmap from './components/CalendarHeatmap.vue';
+import HighlightNewYearLineGraph from './components/HighlightNewYearLineGraph.vue';
+import HighlightWeekVsWeekendLineGraph from './components/HighlightWeekVsWeekendLineGraph.vue';
 
 export default {
   components: {
+    HighlightWeekVsWeekendLineGraph,
+    HighlightNewYearLineGraph,
     BarLineGraph,
     Heatmaps,
     DailyLineGraph,
@@ -98,6 +176,9 @@ export default {
   methods: {
     changeSelected(newStation) {
       this.selectedStation = newStation;
+      if (newStation !== null) {
+        this.configureHeatmapsOffset();
+      }
     },
     configureHeatmapsOffset() {
       this.$nextTick(() => {
@@ -117,16 +198,10 @@ export default {
   mounted() {
     loadWeatherData().then(() => {
       this.weatherDataLoaded = true;
-      if (this.bicycleDataLoaded) {
-        this.configureHeatmapsOffset();
-      }
     });
     loadBicyclingData().then(() => {
       this.bicycleDataLoaded = true;
       this.setupSpecialHeatmapLockdown();
-      if (this.weatherDataLoaded) {
-        this.configureHeatmapsOffset();
-      }
     });
   }
 }
@@ -149,6 +224,12 @@ export default {
 
 h2 {
   padding-top: 32px;
+}
+
+p {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* BICYCLING LOADING ANIMATION, src: https://cssloaders.github.io */

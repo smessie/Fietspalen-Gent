@@ -1,15 +1,15 @@
 <template>
-  <el-row>
+  <el-row justify="center">
     <div v-for="year in Object.keys(yeardata)" :key="year">
       <h3>{{ year }}</h3>
-      <year-total-pie-chart :name="'piechart-' + year" :data="yeardata[year]"/>
+      <year-total-pie-chart :data="yeardata[year]" :name="'piechart-' + year"/>
     </div>
   </el-row>
 </template>
 
 <script>
 import {calculateTotalsByYear} from '../js/bicycling-data';
-import YearTotalPieChart from './YearTotalPieChart.vue'
+import YearTotalPieChart from './YearTotalPieChart.vue';
 
 export default {
   name: 'YearData',

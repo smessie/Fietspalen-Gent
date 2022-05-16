@@ -1,13 +1,22 @@
 <template>
   <div>
-    <h2>Visualisatie van verband tussen temperatuur en gemiddeld aantal fietsers</h2>
-    <div id="temperature-influence-vis"></div>
-    <div id="temperature-scatter"></div>
-    <h2>Visualisatie van verband tussen hoeveelheid regen en gemiddeld aantal fietsers</h2>
-    <div id="rain-influence-vis"></div>
-    <div id="rain-scatter"></div>
-    <h2>Visualisatie van verband tussen hoeveelheid wind en gemiddeld aantal fietsers</h2>
+    <h3>Hoe warm is te warm?</h3>
+    <p>Hier bekijken we de invloed van de temperatuur.
+      Er is duidelijk een stijging van het dagelijks aantal fietsers te zien bij warmere temperaturen. Merk op dat vanaf 30°C, het toch wat te 
+      heet wordt voor de Gentenaars. Ook bij heel koude temperaturen wordt er minder voor de fiets gekozen.
+    </p>
+    <div id="temperature-influence-vis"/>
+    <div id="temperature-scatter"/>
+    <br>
+    <h3>Een beetje tegenwind moet wel kunnen...</h3>
+    <p>Of toch niet? Het lijkt erop dat niet enkel de temperatuur, maar ook de wind een impact heeft op wie er die dag de fiets bovenhaalt.
+    </p>
     <div id="wind-influence-vis"></div>
+    <br>
+    <h3>Hoe zit het met de regen?</h3>
+    <p>(todo) Hier moet nog een betere grafiek/methode gevonden worden voor een verklaring.</p>
+    <div id="rain-influence-vis"/>
+    <div id="rain-scatter"/>
   </div>
 </template>
 
@@ -108,8 +117,8 @@ export default {
         data: {values: temperatureAverageTotal},
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'temperature', type: 'nominal', title: 'temperatuur in °C'},
-          y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers'},
+          x: {field: 'temperature', type: 'nominal', title: 'maximum temperatuur in °C'},
+          y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
         }
       };
 
@@ -132,7 +141,7 @@ export default {
         mark: {type: 'line', point: true},
         encoding: {
           x: {field: 'rainVolume', type: 'nominal', title: 'neerslag in l/m^2'},
-          y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers'},
+          y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
         }
       };
 
@@ -154,8 +163,8 @@ export default {
         data: {values: windAverageTotal},
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'averageWindSpeed', type: 'nominal', title: 'windsnelheid in km/u'},
-          y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers'},
+          x: {field: 'averageWindSpeed', type: 'nominal', title: 'gemiddelde windsnelheid in km/u'},
+          y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
         }
       };
 

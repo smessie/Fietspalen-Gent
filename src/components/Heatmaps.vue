@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="selectedStation">
     <el-select v-if="datasets" v-model="viewType" placeholder="Selecteer">
       <el-option label="geselecteerde paal" value="station"/>
       <el-option label="per jaar" value="year"/>
@@ -11,6 +11,9 @@
       <el-option :value="2020"/>
       <el-option :value="2021"/>
     </el-select>
+    <br>
+    <br>
+    <br>
     <div v-for="dataset in getAllDatasets()" :key="dataset">
       <CalendarHeatmap :max="maxValue"
                        :name="dataset.station.naam"

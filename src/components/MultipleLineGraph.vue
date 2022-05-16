@@ -34,7 +34,12 @@ export default {
             encoding: {
               x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag'},
               y: {field: 'hoofdrichting', type: 'quantitative', title: 'Totaal aantal fietsers'},
-              color: {datum: getLabelForDirection(this.station, 'hoofdrichting')}
+              color: {
+                datum: getLabelForDirection(this.station, 'hoofdrichting'),
+                scale: {
+                  range: ['#92d28f', '#0266d4']
+                }
+              }
             }
           },
           {
@@ -42,7 +47,12 @@ export default {
             encoding: {
               x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag'},
               y: {field: 'tegenrichting', type: 'quantitative', title: 'Totaal aantal fietsers'},
-              color: {datum: getLabelForDirection(this.station, 'tegenrichting')}
+              color: {
+                datum: getLabelForDirection(this.station, 'tegenrichting'),
+                scale: {
+                  range: ['#92d28f', '#0266d4']
+                }
+              }
             },
           },
         ].sort((x, y) => x.encoding.color.datum < y.encoding.color.datum ? -1 : 1),
