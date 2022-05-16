@@ -135,6 +135,9 @@
         </el-tabs>
       </el-main>
     </el-container>
+    <footer>
+      <small>Gevisualiseerd met dank aan de datasets van <a href="https://data.stad.gent/explore/?disjunctive.keyword&disjunctive.theme&sort=modified&q=fietstelpaal">Open Data Portaal Stad Gent</a> en het <a href="https://vlinder.ugent.be/">VLINDER project</a>.</small>
+    </footer>
   </div>
 </template>
 
@@ -243,6 +246,10 @@ p {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+
+footer {
+  margin-top: 4em;
 }
 
 /* BICYCLING LOADING ANIMATION, src: https://cssloaders.github.io */
