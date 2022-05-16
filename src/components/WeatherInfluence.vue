@@ -2,8 +2,10 @@
   <div>
     <h2>Visualisatie van verband tussen temperatuur en gemiddeld aantal fietsers</h2>
     <div id="temperature-influence-vis"></div>
+    <div id="temperature-scatter"></div>
     <h2>Visualisatie van verband tussen hoeveelheid regen en gemiddeld aantal fietsers</h2>
     <div id="rain-influence-vis"></div>
+    <div id="rain-scatter"></div>
     <h2>Visualisatie van verband tussen hoeveelheid wind en gemiddeld aantal fietsers</h2>
     <div id="wind-influence-vis"></div>
   </div>
@@ -12,7 +14,7 @@
 <script>
 import * as d3 from 'd3';
 import vegaEmbed from 'vega-embed'
-import { getAllDatasets, groupDatasetsByDay, bucketObject } from '../js/bicycling-data';
+import { getAllDatasets, groupDatasetsByDay, bucketObject, getDatasets, groupDatasetsByStation, getDataset } from '../js/bicycling-data';
 import { getWeatherData, groupWeatherByDay } from '../js/weather-data';
 
 export default {
@@ -52,6 +54,46 @@ export default {
       const weatherByDay = groupWeatherByDay(getWeatherData())
       const dayToData = d3.group(weatherByDay, (day) => day.date);
 
+      // ====================================================================================================
+
+      const stationDatasets = groupDatasetsByStation(getDatasets())
+      const bikesByDayByDataset = {}
+
+      Array.from(stationDatasets).forEach(([station, datasets]) => {
+        bikesByDayByDataset[station] = groupDatasetsByDay(datasets.map(dataset => getDataset(dataset.name)))
+      })
+
+      const temperatureTotalsByDataset = {}
+      Object.entries(bikesByDayByDataset).forEach(([stationName, bikes]) => {
+        temperatureTotalsByDataset[stationName] = this.cleanUpTotals(this.makeTotalsListFor(bikes, dayToData, "maxTemp"))
+      })
+
+      const temperatureScatterData = Object.entries(temperatureTotalsByDataset).map(([stationName, data]) => {
+        return Object.entries(data).map(([temperature, totals]) => {
+          return {
+            temperature: parseInt(temperature),
+            average: totals.reduce((a, b) => a + b) / totals.length,
+            station: stationName,
+          }
+        });
+      }).flat()
+
+      const testchart = {
+        $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+        data: {values: temperatureScatterData},
+        width: 700,
+        mark: 'point',
+        encoding: {
+          x: {field: 'temperature', type: 'quantitative', title: 'temperatuur in °C' },
+          y: {field: 'average', type: 'quantitative', title: 'aantal fietsers'},
+          color: {field: 'station', type: 'nominal'}
+        }
+      };
+
+      vegaEmbed('#temperature-scatter', testchart);
+
+      // ====================================================================================================
+
       const temperatureToTotals = this.cleanUpTotals(this.makeTotalsListFor(bikesByDay, dayToData, "maxTemp"))
 
       const temperatureAverageTotal = Object.entries(temperatureToTotals).map(([temperature, totals]) => {
@@ -72,6 +114,8 @@ export default {
       };
 
       vegaEmbed('#temperature-influence-vis', chart_temp);
+
+      // ====================================================================================================
 
       const rainToTotals = this.cleanUpTotals(bucketObject(this.cleanUpTotals(this.makeTotalsListFor(bikesByDay, dayToData, "rainVolume")), 30))
 
@@ -94,6 +138,8 @@ export default {
 
       vegaEmbed('#rain-influence-vis', chart_rain);
 
+      // ====================================================================================================
+
       const windToTotals = this.cleanUpTotals(bucketObject(this.cleanUpTotals(this.makeTotalsListFor(bikesByDay, dayToData, "averageWindSpeed")), 30))
 
       const windAverageTotal = Object.entries(windToTotals).map(([averageWindSpeed, totals]) => {
@@ -114,6 +160,8 @@ export default {
       };
 
       vegaEmbed('#wind-influence-vis', chart_wind);
+
+      // ====================================================================================================
     },
   },
   mounted() {

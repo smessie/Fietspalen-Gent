@@ -253,6 +253,9 @@ export function getDatasets() {
   return datasets;
 }
 
+export function groupDatasetsByStation(datasets) {
+  return d3.group(datasets, (dataset) => dataset.station.naam);
+}
 
 export function calculateDailyAverages(datasets) {
   let weekdays = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
