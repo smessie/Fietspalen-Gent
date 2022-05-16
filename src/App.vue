@@ -10,7 +10,7 @@
         <p>De data wordt momenteel ingeladen...</p>
       </el-main>
       <el-main v-else>
-        <el-tabs v-model="activeName" class="demo-tabs">
+        <el-tabs v-model="activeName" class="demo-tabs" stretch="true">
           <el-tab-pane label="Fietstelpalen" name="first">
             <h3>In welke locatie bent u geïnteresseerd?</h3>
             <Map :selectedStation="selectedStation" @change-selected="changeSelected"/>
