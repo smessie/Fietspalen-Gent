@@ -4,17 +4,17 @@
 
 <script>
 import vegaEmbed from 'vega-embed'
-import {combineMinutesToHours, getDataForDate, getDataset} from '../js/bicycling-data';
+import {getDataForDate, getDataset} from '../js/bicycling-data';
 
 export default {
   name: 'HighlightNewYearLineGraph',
   props: [],
   methods: {
     setup() {
-      const end2019data = combineMinutesToHours(getDataForDate(getDataset('dampoort-zuid-2019'), '2019-12-31'));
-      const begin2020data = combineMinutesToHours(getDataForDate(getDataset('dampoort-zuid-2020'), '2020-01-01'));
-      const end2020data = combineMinutesToHours(getDataForDate(getDataset('dampoort-zuid-2020'), '2020-12-31'));
-      const begin2021data = combineMinutesToHours(getDataForDate(getDataset('dampoort-zuid-2021'), '2021-01-01'));
+      const end2019data = getDataForDate(getDataset('dampoort-zuid-2019'), '2019-12-31');
+      const begin2020data = getDataForDate(getDataset('dampoort-zuid-2020'), '2020-01-01');
+      const end2020data = getDataForDate(getDataset('dampoort-zuid-2020'), '2020-12-31');
+      const begin2021data = getDataForDate(getDataset('dampoort-zuid-2021'), '2021-01-01');
 
       const newYear2020data = end2019data.slice(-12).concat(begin2020data.slice(0, 12));
       const newYear2021data = end2020data.slice(-12).concat(begin2021data.slice(0, 12));

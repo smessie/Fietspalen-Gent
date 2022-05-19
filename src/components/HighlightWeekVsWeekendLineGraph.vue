@@ -4,15 +4,15 @@
 
 <script>
 import vegaEmbed from 'vega-embed'
-import {combineMinutesToHours, getDataForDate, getDataset} from '../js/bicycling-data';
+import {getDataForDate, getDataset} from '../js/bicycling-data';
 
 export default {
   name: 'HighlightWeekVsWeekendLineGraph',
   props: [],
   methods: {
     setup() {
-      const weekendData = combineMinutesToHours(getDataForDate(getDataset('coupure-links-2021'), '2021-09-19'));
-      const weekdayData = combineMinutesToHours(getDataForDate(getDataset('coupure-links-2021'), '2021-09-20'));
+      const weekendData = getDataForDate(getDataset('coupure-links-2021'), '2021-09-19');
+      const weekdayData = getDataForDate(getDataset('coupure-links-2021'), '2021-09-20');
 
       this.setLineGraph(weekendData, weekdayData);
     },
