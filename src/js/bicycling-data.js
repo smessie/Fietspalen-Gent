@@ -179,7 +179,7 @@ export function getStations() {
 }
 
 export function getDataset(name) {
-  return data[name].map(el => el.fields);
+  return data[name];
 }
 
 export function getCompleteDataset(name) {

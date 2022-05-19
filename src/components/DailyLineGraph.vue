@@ -90,7 +90,7 @@ export default {
       if (this.selectedDataset && this.date) {
         const data = getDataset(this.selectedDataset);
         const dayRecords = getDataForDate(data, this.date);
-        this.hourlyDayRecords = combineMinutesToHours(dayRecords);
+        this.hourlyDayRecords = dayRecords;
       }
     },
     disableDate(date) {
