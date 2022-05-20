@@ -2,7 +2,7 @@
   <div>
     <h3>Hoe warm is te warm?</h3>
     <p>Hier bekijken we de invloed van de temperatuur.
-      Er is duidelijk een stijging van het dagelijks aantal fietsers te zien bij warmere temperaturen. Merk op dat vanaf 31°C, het toch wat te 
+      Er is duidelijk een stijging van het dagelijks aantal fietsers te zien bij warmere temperaturen. Merk op dat vanaf 31°C, het toch wat te
       heet wordt voor de Gentenaars. Ook bij heel koude temperaturen wordt er minder voor de fiets gekozen.
     </p>
     <div id="temperature-influence-vis"/>
@@ -154,7 +154,7 @@ export default {
         data: {values: rainAverageTotal},
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'rainVolume', type: 'nominal', title: 'totale dagneerslag in l/m^2'},
+          x: {field: 'rainVolume', type: 'nominal', title: 'totale dagneerslag in l/m²'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
         }
       };
@@ -184,7 +184,7 @@ export default {
         width: 700,
         mark: 'point',
         encoding: {
-          x: {field: 'rainVolume', type: 'quantitative', title: 'totale dagneerslag in l/m^2' },
+          x: {field: 'rainVolume', type: 'quantitative', title: 'totale dagneerslag in l/m²' },
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
           color: {field: 'station', type: 'nominal'}
         }
