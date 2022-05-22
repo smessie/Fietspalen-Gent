@@ -293,7 +293,7 @@ export function calculateDailyAverages(datasets) {
   return result;
 }
 
-// todo: dit opkuisen -> maak dit async (aka zorg dat alle dagen appart en parallel kunnen worden opgeroepen) 
+// todo: dit opkuisen -> maak dit async (aka zorg dat alle dagen appart en parallel kunnen worden opgeroepen)
 export function calculateDailyAveragesRain(datasets) {
   let weekdays = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
   let totalRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
@@ -354,12 +354,16 @@ export function calculateDailyAveragesRain(datasets) {
 }
 
 function calculateYearTotal(dataset) {
-  return getDataset(dataset.name).reduce((total, newDay) => {
+  return dataset.reduce((total, newDay) => {
     if (parseInt(newDay.totaal)) {
       return parseInt(newDay.totaal) + total;
     }
     return total;
   }, 0);
+}
+
+function getActiveDaysInYear(dataset) {
+  return groupPerDay(dataset).filter(e => e.totaal !== 0).length;
 }
 
 export function calculateTotalsByYear(datasets) {
@@ -368,7 +372,9 @@ export function calculateTotalsByYear(datasets) {
     if (!years[dataset.year]) {
       years[dataset.year] = [];
     }
-    years[dataset.year].push({name: dataset.station.naam, amount: calculateYearTotal(dataset)});
+    const data = getDataset(dataset.name);
+    const totalBikersRelativeToActiveDays = Math.round((calculateYearTotal(data) / getActiveDaysInYear(data)) * 365);
+    years[dataset.year].push({name: dataset.station.naam, amount: totalBikersRelativeToActiveDays});
   });
   return years;
 }
