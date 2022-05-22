@@ -129,9 +129,10 @@ export default {
       const chart_temp = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {values: temperatureAverageTotal},
+        width: 700,
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'temperature', type: 'nominal', title: 'maximum temperatuur in °C'},
+          x: {field: 'temperature', type: 'quantitative', title: 'maximum temperatuur in °C'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
         }
       };
@@ -152,9 +153,10 @@ export default {
       const chart_rain = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {values: rainAverageTotal},
+        width: 700,
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'rainVolume', type: 'nominal', title: 'totale dagneerslag in l/m²'},
+          x: {field: 'rainVolume', type: 'quantitative', title: 'totale dagneerslag in l/m²'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
         }
       };
@@ -206,9 +208,10 @@ export default {
       const chart_wind = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {values: windAverageTotal},
+        width: 700,
         mark: {type: 'line', point: true},
         encoding: {
-          x: {field: 'averageWindSpeed', type: 'nominal', title: 'gemiddelde windsnelheid in km/u'},
+          x: {field: 'averageWindSpeed', type: 'quantitative', title: 'gemiddelde windsnelheid in km/u'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
         }
       };
