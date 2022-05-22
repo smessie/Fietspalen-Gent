@@ -288,12 +288,11 @@ export function calculateDailyAverages(datasets) {
   let result = [];
 
   for (let key in total) {
-    result.push({day: key, total: total[key] / counts[key]});
+    result.push({day: key, total: Math.ceil(total[key] / counts[key])});
   }
   return result;
 }
 
-// todo: dit opkuisen -> maak dit async (aka zorg dat alle dagen appart en parallel kunnen worden opgeroepen)
 export function calculateDailyAveragesRain(datasets) {
   let weekdays = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
   let totalRain = {Zondag: 0, Maandag: 0, Dinsdag: 0, Woensdag: 0, Donderdag: 0, Vrijdag: 0, Zaterdag: 0};
@@ -342,12 +341,11 @@ export function calculateDailyAveragesRain(datasets) {
 
   let result = [];
   for (let key in totalRain) {
-    result.push({day: key, total: totalRain[key] / countsRain[key], rainy: true, 'type dag': "Regen dag"});
+    result.push({day: key, total: Math.ceil(totalRain[key] / countsRain[key]), rainy: true, 'type dag': "Regen dag"});
   }
 
-  let noRainResult = [];
   for (let key in totalNoRain) {
-    result.push({day: key, total: totalNoRain[key] / countsNoRain[key], rainy: false, 'type dag': "Droge dag"});
+    result.push({day: key, total: Math.ceil(totalNoRain[key] / countsNoRain[key]), rainy: false, 'type dag': "Droge dag"});
   }
   //return { normalDays: noRainResult, rainyDays: rainResult };
   return result;

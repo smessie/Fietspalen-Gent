@@ -109,7 +109,10 @@ export default {
         encoding: {
           x: {field: 'temperature', type: 'quantitative', title: 'maximum temperatuur in °C' },
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
-          color: {field: 'station', type: 'nominal'}
+          color: {field: 'station', type: 'nominal'},
+          tooltip: [
+            {field: 'temperature', title: 'Temperatuur'},
+            {field: 'average', title: 'Gemiddelde'}],
         }
       };
 
@@ -134,7 +137,10 @@ export default {
         encoding: {
           x: {field: 'temperature', type: 'quantitative', title: 'maximum temperatuur in °C'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
-        }
+        tooltip: [
+          {field: 'temperature', title: 'Temperatuur'},
+          {field: 'average', title: 'Gemiddelde'}],
+        },
       };
 
       vegaEmbed('#temperature-influence-vis', chart_temp);
@@ -158,7 +164,10 @@ export default {
         encoding: {
           x: {field: 'rainVolume', type: 'quantitative', title: 'totale dagneerslag in l/m²'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
-        }
+        tooltip: [
+          {field: 'rainVolume', title: 'Regen'},
+          {field: 'average', title: 'Gemiddelde'}],
+        },
       };
 
       vegaEmbed('#rain-influence-vis', chart_rain);
@@ -188,8 +197,11 @@ export default {
         encoding: {
           x: {field: 'rainVolume', type: 'quantitative', title: 'totale dagneerslag in l/m²' },
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
-          color: {field: 'station', type: 'nominal'}
-        }
+          color: {field: 'station', type: 'nominal'},
+          tooltip: [
+          {field: 'rainVolume', title: 'Regen'},
+          {field: 'average', title: 'Gemiddelde'}],
+        },
       };
 
       vegaEmbed('#rain-scatter', rainscater);
@@ -213,6 +225,9 @@ export default {
         encoding: {
           x: {field: 'averageWindSpeed', type: 'quantitative', title: 'gemiddelde windsnelheid in km/u'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
+          tooltip: [
+          {field: 'avrageWindSpeed', title: 'Wind'},
+          {field: 'average', title: 'Gemiddelde'}],
         }
       };
 
@@ -243,7 +258,10 @@ export default {
         encoding: {
           x: {field: 'averageWindSpeed', type: 'quantitative', title: 'gemiddelde windsnelheid in km/u' },
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
-          color: {field: 'station', type: 'nominal'}
+          color: {field: 'station', type: 'nominal'},
+          tooltip: [
+          {field: 'averageWindSpeed', title: 'Wind'},
+          {field: 'average', title: 'Gemiddelde'}],
         }
       };
 

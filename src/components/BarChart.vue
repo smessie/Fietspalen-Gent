@@ -36,6 +36,8 @@ export default {
               },
               y: {field: 'total', aggregate: 'sum', title: 'Gemiddeld aantal fietsers'},
               color: {value:'#92d28f'},
+              tooltip: [
+                {field: 'total', title: 'Fietsers'}],
             }
           },
         ],

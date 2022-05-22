@@ -20,21 +20,18 @@ export default {
     addDayLines(chart, weekdays) {
       for (let weekday of weekdays){
         let dayData = this.$props.data.filter(r => r.day == weekday);
-        console.log(dayData);
-        let rain = this.$props.data.filter(r => r.rainy == true)[0];
-        let norain = this.$props.data.filter(r => r.rainy == false)[0];
-        console.log(norain);
+        let rain = dayData.filter(r => r.rainy == true)[0];
+        let norain = dayData.filter(r => r.rainy == false)[0];
         let part = {
-              mark: {type: 'rule', width: {band: 0.8}, color: 'lightgrey'},
+              mark: {type: 'rule', width: {band: 0.8}},
               encoding: {
-                color: 'lightgrey',
                 x: {field: 'total', datum: rain.total, aggregate: 'sum'},
                 y: {
                   field: 'day', datum: weekday, type: 'ordinal',
                 },
                 x2: {field: 'total', datum: norain.total, aggregate: 'sum'},
-                },
-
+                color: {'value': 'gray'},
+              },
               }
         chart.layer.push(part);
       }
@@ -60,13 +57,17 @@ export default {
                   scale: { domain: [min - 100 - ((min-100)%500), max + 600 -((max+100)%500)], nice: false }},
               y: {
                 field: 'day', title: '', type: 'ordinal',
-                sort: weekdays
+                sort: weekdays,
               },
               color: {'field': 'type dag',
               'legend': {},
               "scale": {"domain": ["Regen dag", "Droge dag"], "range": ["#46A0F0", "#F55442"]}
 
               },
+               "tooltip": [
+              {"field": "total", "title": "Gemiddeld"},
+              {"field": "day", "title": "Dag"},
+    ]
 
             }
           },

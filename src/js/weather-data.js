@@ -7,7 +7,7 @@ export let data = [];
 export let rainyDayMap = new Map();
 export let dailyWeatherData = [];
 
-const RAIN_THRESHOLD = 8;
+const RAIN_THRESHOLD = 11;
 
 export async function load() {
   const start = new Date('01/01/2020');
