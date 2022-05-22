@@ -125,7 +125,7 @@ export default {
       const temperatureAverageTotal = Object.entries(temperatureToTotals).map(([temperature, totals]) => {
         return {
           temperature: parseInt(temperature),
-          average: Math.ceil(totals.reduce((a, b) => a + b) / totals.lengt),
+          average: Math.ceil(totals.reduce((a, b) => a + b) / totals.length),
         }
       });
 
