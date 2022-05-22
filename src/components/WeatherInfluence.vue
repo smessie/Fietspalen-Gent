@@ -95,7 +95,7 @@ export default {
         return Object.entries(data).map(([temperature, totals]) => {
           return {
             temperature: parseInt(temperature),
-            average: totals.reduce((a, b) => a + b) / totals.length,
+            average: Math.ceil(totals.reduce((a, b) => a + b) / totals.length),
             station: stationName,
           }
         });
@@ -125,7 +125,7 @@ export default {
       const temperatureAverageTotal = Object.entries(temperatureToTotals).map(([temperature, totals]) => {
         return {
           temperature: parseInt(temperature),
-          average: totals.reduce((a, b) => a + b) / totals.length
+          average: Math.ceil(totals.reduce((a, b) => a + b) / totals.lengt),
         }
       });
 
@@ -152,7 +152,7 @@ export default {
       const rainAverageTotal = Object.entries(rainToTotals).map(([rainVolume, totals]) => {
         return {
           rainVolume: parseInt(rainVolume),
-          average: totals.reduce((a, b) => a + b) / totals.length
+          average: Math.ceil(totals.reduce((a, b) => a + b) / totals.length)
         }
       });
 
@@ -183,7 +183,7 @@ export default {
         return Object.entries(data).map(([rainVolume, totals]) => {
           return {
             rainVolume: parseInt(rainVolume),
-            average: totals.reduce((a, b) => a + b) / totals.length,
+            average: Math.ceil(totals.reduce((a, b) => a + b) / totals.length),
             station: stationName,
           }
         });
@@ -213,7 +213,7 @@ export default {
       const windAverageTotal = Object.entries(windToTotals).map(([averageWindSpeed, totals]) => {
         return {
           averageWindSpeed: parseFloat(averageWindSpeed),
-          average: totals.reduce((a, b) => a + b) / totals.length
+          average: Math.ceil(totals.reduce((a, b) => a + b) / totals.length)
         }
       });
 
@@ -244,7 +244,7 @@ export default {
         return Object.entries(data).map(([averageWindSpeed, totals]) => {
           return {
             averageWindSpeed: parseInt(averageWindSpeed),
-            average: totals.reduce((a, b) => a + b) / totals.length,
+            average: Math.ceil(totals.reduce((a, b) => a + b) / totals.length),
             station: stationName,
           }
         });
