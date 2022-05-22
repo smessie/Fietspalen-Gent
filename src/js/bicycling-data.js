@@ -373,7 +373,7 @@ export function calculateTotalsByYear(datasets) {
       years[dataset.year] = [];
     }
     const data = getDataset(dataset.name);
-    const totalBikersRelativeToActiveDays = Math.round((calculateYearTotal(data) / getActiveDaysInYear(data)) * 365);
+    const totalBikersRelativeToActiveDays = Math.round(calculateYearTotal(data) / getActiveDaysInYear(data));
     years[dataset.year].push({name: dataset.station.naam, amount: totalBikersRelativeToActiveDays});
   });
   return years;

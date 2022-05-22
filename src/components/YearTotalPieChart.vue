@@ -53,7 +53,7 @@ export default {
           },
           tooltip: [
             {'field': 'name', 'type': 'nominal', 'title': 'Locatie'},
-            {'field': 'amount', 'type': 'quantitative', 'title': 'Fietsers'},
+            {'field': 'amount', 'type': 'quantitative', 'title': 'Gemiddeld fietsers per dag'},
             {'field': 'PercentOfTotal', 'type': 'quantitative', 'title': '% van totaal'}]
         },
         layer: [
