@@ -21,13 +21,12 @@
 
 <script>
 import {getDataForDate, getDataset, groupPerDay} from '../js/bicycling-data';
-import LineGraph from './LineGraph.vue'
 import VegaLineGraph from './VegaLineGraph.vue'
 import MultipleLineGraph from './MultipleLineGraph.vue'
 
 export default {
   name: 'DailyLineGraph',
-  components: {LineGraph, MultipleLineGraph, VegaLineGraph},
+  components: {MultipleLineGraph, VegaLineGraph},
   props: [
     'selectedStation',
     'datasets'
