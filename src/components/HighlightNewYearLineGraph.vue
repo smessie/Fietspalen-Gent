@@ -5,6 +5,7 @@
 <script>
 import vegaEmbed from 'vega-embed'
 import {getDataForDate, getDataset} from '../js/bicycling-data';
+import moment from 'moment';
 
 export default {
   name: 'HighlightNewYearLineGraph',
@@ -23,11 +24,11 @@ export default {
     },
     setLineGraph(dataset1, dataset2) {
       dataset1 = dataset1.map((elem) => {
-        elem.time = new Date(elem.datum + ' ' + elem.uur5minuten);
+        elem.time = moment(elem.datum + ' ' + elem.uur5minuten, 'YYYY-MM-DD HH:mm').toDate();
         return elem;
       });
       dataset2 = dataset2.map((elem) => {
-        elem.time = new Date(elem.datum + ' ' + elem.uur5minuten);
+        elem.time = moment(elem.datum + ' ' + elem.uur5minuten, 'YYYY-MM-DD HH:mm').toDate();
         return elem;
       });
       const dataset = dataset1.map((elem1, index) => {

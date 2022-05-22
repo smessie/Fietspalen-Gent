@@ -4,6 +4,7 @@
 
 <script>
 import vegaEmbed from 'vega-embed';
+import moment from 'moment';
 
 export default {
   name: 'VegaLineGraph',
@@ -17,10 +18,10 @@ export default {
     setLineGraph() {
       if (!this.$props.data) return;
       const data = this.$props.data.map((elem) => {
-        elem.time = new Date(elem.datum + ' ' + elem.uur5minuten);
+        elem.time = moment(elem.datum + ' ' + elem.uur5minuten, 'YYYY-MM-DD HH:mm').toDate();
         return elem;
       });
-
+      console.log(data);
       const chart = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {values: data},
@@ -29,7 +30,7 @@ export default {
             mark: {type: 'line', point: true, interpolate: 'natural'},
             encoding: {
               x: {field: 'time', timeUnit: 'hoursminutes', type: 'ordinal', title: 'Uur van de dag'},
-              y: {field: 'totaal', type: 'quantitative', title: 'Totaal aantal fietsers'},
+              y: {field: 'totaal', type: 'quantitative', title: 'Totaal aantal fietsers '},
               color: {value:"#4ca1fc"},
             }
           },

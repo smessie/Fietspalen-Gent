@@ -5,6 +5,7 @@
 <script>
 import vegaEmbed from 'vega-embed'
 import {getLabelForDirection} from '../js/bicycling-data';
+import moment from 'moment';
 
 export default {
   name: 'MultipleLineGraph',
@@ -21,7 +22,7 @@ export default {
     setLineGraph() {
       if (!this.$props.data) return
       const data = this.$props.data.map((elem) => {
-        elem.time = new Date(elem.datum + ' ' + elem.uur5minuten);
+        elem.time = moment(elem.datum + ' ' + elem.uur5minuten, 'YYYY-MM-DD HH:mm').toDate();
         return elem;
       });
 

@@ -5,6 +5,7 @@
 <script>
 import vegaEmbed from 'vega-embed'
 import {getDataForDate, getDataset} from '../js/bicycling-data';
+import moment from 'moment';
 
 export default {
   name: 'HighlightPeaksLineGraph',
@@ -17,7 +18,7 @@ export default {
     },
     setLineGraph(dataset) {
       dataset = dataset.map((elem) => {
-        elem.time = new Date(elem.datum + ' ' + elem.uur5minuten);
+        elem.time = moment(elem.datum + ' ' + elem.uur5minuten, 'YYYY-MM-DD HH:mm').toDate();
         return elem;
       });
 
