@@ -226,7 +226,7 @@ export default {
           x: {field: 'averageWindSpeed', type: 'quantitative', title: 'gemiddelde windsnelheid in km/u'},
           y: {field: 'average', type: 'quantitative', title: 'gemiddeld aantal fietsers per dag'},
           tooltip: [
-          {field: 'avrageWindSpeed', title: 'Wind'},
+          {field: 'averageWindSpeed', title: 'Wind'},
           {field: 'average', title: 'Gemiddelde'}],
         }
       };
