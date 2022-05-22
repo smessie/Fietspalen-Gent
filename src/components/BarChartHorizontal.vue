@@ -17,6 +17,29 @@ export default {
     }
   },
   methods: {
+    addDayLines(chart, weekdays) {
+      for (let weekday of weekdays){
+        let dayData = this.$props.data.filter(r => r.day == weekday);
+        console.log(dayData);
+        let rain = this.$props.data.filter(r => r.rainy == true)[0];
+        let norain = this.$props.data.filter(r => r.rainy == false)[0];
+        console.log(norain);
+        let part = {
+              mark: {type: 'rule', width: {band: 0.8}, color: 'lightgrey'},
+              encoding: {
+                color: 'lightgrey',
+                x: {field: 'total', datum: rain.total, aggregate: 'sum'},
+                y: {
+                  field: 'day', datum: weekday, type: 'ordinal',
+                },
+                x2: {field: 'total', datum: norain.total, aggregate: 'sum'},
+                },
+
+              }
+        chart.layer.push(part);
+      }
+      return chart;
+    },
     setLineGraph() {
       const weekdays = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'];
       if (!this.$props.data) return;
@@ -24,7 +47,7 @@ export default {
       const min = Math.min(...totals);
       const max = Math.max(...totals);
 
-      const chart = {
+      let chart = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {values: this.$props.data},
         layer: [
@@ -34,7 +57,7 @@ export default {
             mark: {type: 'point', width: {band: 0.8}},
             encoding: {
               x: {field: 'total', aggregate: 'sum', title: 'gemiddeld aantal fietsers', 
-                  scale: { domain: [min - (min%500), max + (500-(max%500))], nice: false }},
+                  scale: { domain: [min - 100 - ((min-100)%500), max + 600 -((max+100)%500)], nice: false }},
               y: {
                 field: 'day', title: '', type: 'ordinal',
                 sort: weekdays
@@ -49,6 +72,7 @@ export default {
           },
         ],
       };
+      chart = this.addDayLines(chart, weekdays);
       vegaEmbed("#"+this.$props.name, chart);
     },
   },

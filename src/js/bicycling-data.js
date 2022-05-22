@@ -342,12 +342,12 @@ export function calculateDailyAveragesRain(datasets) {
 
   let result = [];
   for (let key in totalRain) {
-    result.push({day: key, total: totalRain[key] / countsRain[key], 'type dag': "Regen dag"});
+    result.push({day: key, total: totalRain[key] / countsRain[key], rainy: true, 'type dag': "Regen dag"});
   }
 
   let noRainResult = [];
   for (let key in totalNoRain) {
-    result.push({day: key, total: totalNoRain[key] / countsNoRain[key], 'type dag': "Droge dag"});
+    result.push({day: key, total: totalNoRain[key] / countsNoRain[key], rainy: false, 'type dag': "Droge dag"});
   }
   //return { normalDays: noRainResult, rainyDays: rainResult };
   return result;
