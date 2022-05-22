@@ -47,7 +47,7 @@ export default {
         encoding: {
           x: {field: 'week', type: 'nominal', title: 'Week nummer'},
           y: {field: 'totaal', type: 'quantitative', title: 'Totaal aantal fietsers'},
-          color: {field: 'year', type: 'ordinal', 'scale': {range: ["#e1edfa", "#a2ccfa", "#4ca1fc", "#0266d4"], type:"linear"},},
+          color: {field: 'year', type: 'ordinal', 'scale': {range: ["#e1edfa", "#a2ccfa", "#4ca1fc", "#0266d4"].slice(-this.selectedDatasets.length), type:"linear"},},
         }
       };
 
