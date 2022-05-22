@@ -1,18 +1,8 @@
 <template>
   <div>
-    <div v-if="selectedDataset">
-      <el-select v-model="selectedDataset" placeholder="Select">
-        <el-option v-for="dataset in datasets"
-                   :key="dataset.name"
-                   :label="dataset.station.naam + ' ' + dataset.year"
-                   :value="dataset.name"
-        >
-          <span style="float: left">{{ dataset.station.naam }}</span>
-          <span style="float: right; color: var(--el-text-color-secondary); font-size: 13px;">{{ dataset.year }}</span>
-        </el-option>
-      </el-select>
+    <div v-if="selectedDatasets">
       <el-date-picker
-          v-if="selectedDataset"
+          v-if="selectedDatasets"
           v-model="date"
           type="date"
           format="DD/MM/YYYY"
@@ -21,16 +11,16 @@
           :disabled-date="disableDate"
       />
     </div>
-    <div v-if="selectedDataset && date">
+    <div v-if="selectedDatasets && date">
       <VegaLineGraph :data="hourlyDayRecords"/>
-      <MultipleLineGraph :data="hourlyDayRecords" :station="selectedDataset.substring(0, selectedDataset.length - 5)"/>
+      <MultipleLineGraph :data="hourlyDayRecords" :station="selectedDatasets[0].substring(0, selectedDatasets[0].length - 5)"/>
     </div>
-    <p v-else-if="selectedDataset">Selecteer eerst een fietstelpaal en datum om de visualisatie te zien te krijgen.</p>
+    <p v-else-if="selectedDatasets">Selecteer eerst een fietstelpaal en datum om de visualisatie te zien te krijgen.</p>
   </div>
 </template>
 
 <script>
-import {getDataset, getDataForDate, combineMinutesToHours, groupPerDay} from '../js/bicycling-data';
+import {getDataForDate, getDataset, groupPerDay} from '../js/bicycling-data';
 import LineGraph from './LineGraph.vue'
 import VegaLineGraph from './VegaLineGraph.vue'
 import MultipleLineGraph from './MultipleLineGraph.vue'
@@ -44,29 +34,29 @@ export default {
   ],
   data() {
     return {
-      selectedDataset: null,
+      selectedDatasets: null,
       date: null,
       hourlyDayRecords: null,
       disableMap: null,
     };
   },
   watch: {
-    selectedDataset: function () {
-      if (this.selectedDataset) {
-        const dataByDay = groupPerDay(getDataset(this.selectedDataset))
+    selectedDatasets: function () {
+      if (this.selectedDatasets) {
+        const dataByDay = groupPerDay(this.selectedDatasets.map(name => getDataset(name)).flat());
 
         // make map to see when date needs to be disabled
-        this.disableMap = new Map()
+        this.disableMap = new Map();
         dataByDay.forEach(day => {
-          this.disableMap.set(day.date.setHours(0,0,0,0), day.totaal)
-        })
+          this.disableMap.set(day.date.setHours(0,0,0,0), day.totaal);
+        });
 
-        // set first non zero day as current date
-        let currentIndex = 0
+        // set first non-zero day as current date
+        let currentIndex = 0;
         while (this.disableDate(dataByDay[currentIndex].date)) {
           currentIndex++;
         }
-        this.date = dataByDay[currentIndex + 1].date.toISOString().split('T')[0]
+        this.date = dataByDay[currentIndex + 1].date.toISOString().split('T')[0];
       }
     },
     date: function () {
@@ -74,28 +64,26 @@ export default {
     },
     selectedStation: function (newStation) {
       if (newStation) {
-        this.selectedDataset = this.getDatasetFor(newStation);
+        this.selectedDatasets = this.getDatasetsFor(newStation);
       } else {
-        this.selectedDataset = null;
+        this.selectedDatasets = null;
         this.disableMap = null;
       }
     },
   },
   methods: {
-    getDatasetFor(station) {
-      // !!!!!! takes last element not all
-      return this.$props.datasets.filter((dataset) => dataset.station.naam === station.naam).map(d => d.name)[0];
+    getDatasetsFor(station) {
+      return this.$props.datasets.filter((dataset) => dataset.station.naam === station.naam).map(d => d.name);
     },
     updateDailyData() {
-      if (this.selectedDataset && this.date) {
-        const data = getDataset(this.selectedDataset);
-        const dayRecords = getDataForDate(data, this.date);
-        this.hourlyDayRecords = dayRecords;
+      if (this.selectedDatasets && this.date) {
+        const data = this.selectedDatasets.map(name => getDataset(name)).flat();
+        this.hourlyDayRecords = getDataForDate(data, this.date);
       }
     },
     disableDate(date) {
-      date = new Date(date)
-      if (!this.selectedDataset || !this.disableMap) return false;
+      date = new Date(date);
+      if (!this.selectedDatasets || !this.disableMap) return false;
       if (!this.disableMap.get(date.setHours(0,0,0,0))) return true;
       return this.disableMap.get(date.setHours(0,0,0,0)) <= 0;
     }
