@@ -305,9 +305,10 @@ export function calculateDailyAveragesRain(datasets) {
     let prevDate;
     let weekday;
     let totalPerDay = 0;
+    let date;
 
     data.forEach(record => {
-      let date = new Date(record.datum);
+      date = new Date(record.datum);
       if (prevDate == null){
         prevDate = date;
         previous = weekdays[date.getDay()];
@@ -318,12 +319,12 @@ export function calculateDailyAveragesRain(datasets) {
       if (previous !== weekday) {
         // dont count the day if there were 0 bikers, as this is an error in the station
         let rain = isRainyDay(prevDate);
-        if (rain == true){
+        if (rain){
           totalRain[previous] += totalPerDay;
           if (totalPerDay > 0) {
             countsRain[previous] += 1;
           }
-        } else if (rain == false){
+        } else if (rain !== undefined){
           totalNoRain[previous] += totalPerDay;
           if (totalPerDay > 0) {
             countsNoRain[previous] += 1;
@@ -335,8 +336,18 @@ export function calculateDailyAveragesRain(datasets) {
       }
     })
 
-    // todo: fix dat laatste dag ook juist wordt geteld
-    //counts[weekday] += 1;
+    let rain = isRainyDay(date);
+    if (rain){
+      totalRain[weekday] += totalPerDay;
+      if (totalPerDay > 0) {
+        countsRain[weekday] += 1;
+      }
+    } else if (rain !== undefined){
+      totalNoRain[weekday] += totalPerDay;
+      if (totalPerDay > 0) {
+        countsNoRain[weekday] += 1;
+      }
+    }
   })
 
   let result = [];

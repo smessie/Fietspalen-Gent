@@ -23,11 +23,9 @@
               <h3>Hoeveel fietsers komen hier per dag?</h3>
               <p>Hier wordt per jaar getoond hoeveel fietsers er waren op alle dagen van het jaar. Neem eens een kijkje
                 over de jaren heen,
-                of door de weken heen!</p>
-              <p>Er is ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar. Selecteer
-                hier
-                of u
-                per paal of per jaar wilt bekijken:
+                of door de weken heen!
+              Om je nog wat meer te verdiepen, is er ook de optie om een overzicht te krijg over alle fietstelpalen van een bepaald jaar. Selecteer
+                hier of u per paal of per jaar wilt kijken:
               </p>
             </div>
             <Heatmaps id="heatmaps" :datasets="datasets" :offset-x="offsetX"
@@ -36,9 +34,9 @@
             <div v-if="selectedStation">
               <br>
               <h3>Wat is de evolutie over de jaren heen?</h3>
-              <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Een lijn die plots stopt is het gevolg
+              <p>Bekijk hieronder de verschillende jaren met elkaar vergeleken. Een lijn die plots stopt en/of start is het gevolg
                 van
-                tijdelijk problemen bij de fietstelpaal.
+                tijdelijk problemen bij de fietstelpaal, of een teken dat die fietstelpaal pas later in het jaar is geactiveerd.
               </p>
             </div>
             <yearly-line-graph :datasets="datasets" :selectedStation="selectedStation"/>
@@ -50,7 +48,8 @@
                 voor het
                 gemiddeld aantal fietsers per dag van de week. Vergelijk eens de weekdagen met het weekend, valt er iets
                 op? Het is vaak
-                zo dat er minder gefietst wordt tijdens het weekend.
+                zo dat er minder gefietst wordt tijdens het weekend. Dit kan het gevolg zijn van de plaatsing van de fietstelpalen, 
+                die op locaties staan waar veel pendelaars moeten passeren, zoals studenten en mensen die werken binnen of buiten Gent.
               </p>
             </div>
             <BarchartDailyAverages :datasets="datasets" :selectedStation="selectedStation"/>
@@ -58,7 +57,7 @@
               <br>
               <h3>Liever wat meer details?</h3>
               <p>Selecteer hieronder de datum waarvoor u het exact aantal fietsers wilt zien. Er wordt zowel een totaal
-                getoond, als de 2
+                getoond, als de twee 
                 mogelijke richtingen. Om te weten hoeveel fietsers er weggaan uit Gent, kijk naar "Gent uit". Het aantal
                 fietsers dat
                 richting Gent rijdt, wordt aangeduid door "Gent in".</p>
@@ -70,14 +69,20 @@
             <br>
             <weather-influence :datasets="datasets"/>
             <br>
-            <p>Om toch een overzicht te kunnen krijgen van de algemene invloed van de regen, tonen we hier het verschil
+            <p>Om toch een beter overzicht te kunnen krijgen van de algemene invloed van de regen, tonen we hier het verschil
               tussen het gemiddeld aantal fietsers over alle locaties op een regendag of een droge dag doorheen de week.
+              Voor sommige dagen is er een kleine invloed, of zijn er zelfs wat meer fietsers. We zien voor dinsdag t.e.m. vrijdag
+              dat er veel minder fietsers zijn. Een verklaring hiervoor kan zijn dat de pendelaars die normaal voorbij de fietstelpalen
+              passeren, opteren om met de auto of het openbaar vervoer zich te verplaatsen, aangezien zij een langere afstand moeten
+              afleggen dan de niet-pendelaars. Natuurlijk is dit niet het geval voor maandag.. is dit een uitzondering, of is er toch meer data nodig
+              om betere conclusies te kunnen trekken?
             </p>
             <BarchartsRain :datasets="datasets"/>
           </el-tab-pane>
           <el-tab-pane label="Uitgelicht" name="third">
             <h2>Wat zijn de populairste locaties van het jaar?</h2>
-            <p>Bekijk hier welke fietsstraten het meest gebruikt werden. </p>
+            <p>Bekijk hier welke fietsstraten het meest gebruikt werden. Er wordt procentueel vergeleken tussen
+              het gemiddeld aantal fietsters per dag. Ga met uw muis over de grafieken voor meer informatie.</p>
             <YearData :datasets="datasets"/>
 
             <h2>Kan jij zien wanneer de eerste Covid-19 lockdown inging?</h2>
@@ -92,7 +97,7 @@
             />
             <p>Herinner je je 18 maart 2020 nog? Waarschijnlijk helaas wel, het is de dag waarop de Belgische overheid
               de <b>eerste lockdown</b> aankondigde omwille van Covid-19. Plots mochten we niet meer buiten komen, het
-              ganse leven viel stil, alsook onze fiets. Vanaf 18 maart zie je namelijk dat het aantal fietsers die langs
+              hele leven viel stil, alsook onze fiets. Vanaf 18 maart zie je namelijk dat het aantal fietsers die langs
               de fietspaal op <b>Dampoort-Zuid</b> passeren drastisch kelderen.</p>
 
             <h2>Fietsend Nieuwjaar tijdens Corona, daar stak de avondklok toch flink een stokje voor!</h2>
@@ -115,7 +120,7 @@
               een zondag en dat zien we dan ook duidelijk terug op bovenstaande grafiek, waar het fietsverkeer pas
               gestaag opgang komt vanaf 10 uur. Ook de piek in de avond rond 17 uur wanneer mensen gedaan hebben met
               werken of met school en huiswaarts keren valt niet te bespeuren tijdens het <b>weekend</b>. Daar merken we
-              eerder een <b>constante drukte</b> de ganse dag door, eerder dan <b>2 pieken</b> tijdens een
+              eerder een <b>constante drukte</b> de hele dag door, eerder dan <b>2 pieken</b> tijdens een
               <b>werkdag</b>.</p>
 
             <br>
@@ -131,7 +136,7 @@
               <b>avondpiek</b> dan zien we dat deze <b>veel meer verspreid</b> is. Niet iedereen heeft namelijk op
               hetzelfde moment gedaan met school of werk, en sommigen passeren misschien nog langs bijvoorbeeld de
               winkel voor ze hun fietsroute huiswaarts aanvatten of verderzetten.</p>
-            <p>Kijken we specifiek naar het verschil tussen de 2 lijnen dan kunnen we opmerken dat voor deze
+            <p>Kijken we specifiek naar het verschil tussen de 2 lijnen, dan kunnen we opmerken dat voor deze
               fietstelpaal er een duidelijk verschil te merken is. We zien dat mensen die deze weg nemen voornamelijk
               buiten het stadscentrum wonen en voor hun werk of school inwaarts moeten aangezien de piek in de ochtend
               het grootst is voor Gent in.</p>

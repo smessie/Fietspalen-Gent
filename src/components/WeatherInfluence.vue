@@ -1,33 +1,35 @@
 <template>
   <div>
     <h3>Hoe warm is te warm?</h3>
-    <p>Hier bekijken we de invloed van de temperatuur.
-      Er is duidelijk een stijging van het dagelijks aantal fietsers te zien bij warmere temperaturen. Merk op dat vanaf 31°C, het toch wat te
+    <p>Op de grafiek is er duidelijk een stijging van het dagelijks aantal fietsers te zien bij warmere temperaturen. Merk op dat vanaf 31°C, het toch wat te
       heet wordt voor de Gentenaars. Ook bij heel koude temperaturen wordt er minder voor de fiets gekozen.
     </p>
     <div id="temperature-influence-vis"/>
     <p>Hieronder wordt meer in detail getoond wat de invloed is van het weer per fietstelpaal. Aangezien niet alle fietstelpalen beschikbaar waren
-      op dezelfde momenten, zijn er soms geen metingen gebeurd. Toch kunnen we dezelfde conclusie trekken voor de meeste locaties. Bij heel lage of heel hoge metingen,
-      zijn er minder fietsers. Het is valt ook op dat voor sommige locaties, het weer minder invloed heeft.
+      op dezelfde momenten, zijn er soms geen metingen gebeurd. Toch kunnen we dezelfde conclusie als hierboven trekken voor de meeste locaties. Bij heel lage of heel hoge metingen,
+      zijn er vaak wat minder fietsers, alhoewel het toch de koude is die de meeste fietsers lijken te willen vermijden. Het valt ook op dat voor sommige locaties, de temperatuur minder invloed heeft.
     </p>
     <div id="temperature-scatter"/>
+    <br>
     <br>
     <h3>Een beetje tegenwind moet wel kunnen...</h3>
     <p>Of toch niet? Het lijkt erop dat niet enkel de temperatuur, maar ook de wind een impact heeft op wie er die dag de fiets bovenhaalt.
     </p>
     <div id="wind-influence-vis"></div>
-    <p>Als we hier ook meer in detail gaan, zien we opnieuw dat voor sommige fietstelpalen er niet zo veel invloed is. Neem bv. eens een kijkje
+    <p>Als we hier ook meer in detail gaan, zien we opnieuw dat voor sommige fietstelpalen er niet zo veel invloed is. Neem bijvoorbeeld eens een kijkje
       naar Bataviabrug.
-      De invloed over de andere fietstelpalen is ook niet heel sterk, maar op een heel winderige dag (zie bv. 63km/u) is het toch wel opmerkzaam dat het fietsen zo goed als stil ligt.
+      De invloed op sommige andere fietstelpalen is er wel, maar ook niet zo sterk, en kan beïnvloed zijn door het aantal metingen die er zijn geweest voor bepaalde windsnelheden. Op een heel winderige dag (zie bv. 63km/u) is het toch wel opmerkzaam dat het fietsen zeer sterk vermindert.
     </p>
     <div id="wind-scatter"/>
     <br>
     <h3>Hoe zit het met de regen?</h3>
-    <p>In onderstaande grafiek is er een lichte dalende trend te zien in het aantal fietsers tegenover de regen, maar dit is niet zo duidelijk door een paar uitschieters.</p>
+    <p>In onderstaande grafiek is er een licht dalende trend te zien in het aantal fietsers tegenover de regen, maar dit is niet zo duidelijk door een paar uitschieters.
+      Het is dus hier ook beter om even meer in detail te gaan kijken.
+    </p>
     <div id="rain-influence-vis"/>
-    <p>Hieronder zien we wel een verschil tussen de uitsterte punten. Het aantal fietsers op een helemaal droge dag (0 liter neerslag),
-      of op een heel natte dag (19 liter neerslag) is opvallend. De punten hiertussen, lijken in het algemeen wel te dalen, maar het is interessant om te zien
-      dat het ook heel hard kan schommelen, en misschien zelfs wat op toeval kan aankomen.
+    <p>De trend afgeleid uit de bovenste grafiek was wel correct. De daling valt vooral op door te kijken naar het verschil tussen de uitsterte punten. Het aantal fietsers op een helemaal droge dag (0 liter neerslag),
+      of op een heel natte dag (19 liter neerslag) is opvallend. De punten hiertussen lijken in het algemeen wel te dalen, maar het is interessant om te zien
+      dat het ook heel hard kan schommelen, en dat dus een beetje regen niet altijd veel invloed heeft.
     </p>
     <div id="rain-scatter"/>
   </div>
